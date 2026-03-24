@@ -23,8 +23,6 @@ import {
 } from "@seashore/content";
 import LocalBusinessJsonLd from "./LocalBusinessJsonLd";
 
-const HOME_LOADER_SEEN_KEY = "seashore-home-loader-seen";
-
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
   visible: { opacity: 1, y: 0 },
@@ -162,56 +160,11 @@ const serviceIcons: Record<string, React.ReactNode> = {
 };
 
 export default function HomePage() {
-  const [loading, setLoading] = useState(true);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  useEffect(() => {
-    const hasSeenLoader = window.sessionStorage.getItem(HOME_LOADER_SEEN_KEY) === "true";
-    if (hasSeenLoader) {
-      setLoading(false);
-      return;
-    }
-
-    const video = videoRef.current;
-    const finishLoading = () => {
-      window.sessionStorage.setItem(HOME_LOADER_SEEN_KEY, "true");
-      setLoading(false);
-    };
-    const fallbackTimer = window.setTimeout(finishLoading, 5000);
-    if (!video) return () => window.clearTimeout(fallbackTimer);
-    const handleEnd = () => finishLoading();
-    const handleError = () => finishLoading();
-    video.addEventListener("ended", handleEnd);
-    video.addEventListener("error", handleError);
-    return () => {
-      window.clearTimeout(fallbackTimer);
-      video.removeEventListener("ended", handleEnd);
-      video.removeEventListener("error", handleError);
-    };
-  }, []);
-
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
-
-  if (loading) {
-    return (
-      <div className="fixed inset-0 z-[999] bg-black">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          playsInline
-          className="absolute inset-0 h-full w-full object-cover"
-        >
-          <source src="/loader.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-black/40" />
-      </div>
-    );
-  }
 
   return (
     <motion.div
