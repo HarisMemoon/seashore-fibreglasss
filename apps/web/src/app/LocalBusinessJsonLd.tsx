@@ -1,9 +1,11 @@
 import { ADDRESS, EMAIL, PHONE, SERVICE_AREAS, SITE_NAME } from "@seashore/content";
+import { getSiteUrl } from "@/lib/site";
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: SITE_NAME,
+  url: `${getSiteUrl()}/`,
   address: {
     "@type": "PostalAddress",
     streetAddress: ADDRESS.street,

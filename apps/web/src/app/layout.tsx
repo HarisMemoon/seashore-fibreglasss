@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { Montserrat, Inter } from 'next/font/google';
+import { HOME_META } from '@seashore/content';
 import './globals.css';
 import { Navbar } from '@seashore/ui';
 import { Footer } from '@seashore/ui';
+import { getSiteUrl } from '@/lib/site';
 
 const montserrat = Montserrat({
   variable: '--font-montserrat',
@@ -17,9 +19,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Seashore Fiberglass | Boat Repair & Fiberglass Services | Jersey Shore',
-  description:
-    'Expert fiberglass repair and boat restoration on the Jersey Shore. Licensed, family-owned, 50+ reviews. Serving Ocean City and 13 coastal towns.',
+  metadataBase: new URL(getSiteUrl()),
+  title: HOME_META.title,
+  description: HOME_META.description,
 };
 
 export default function RootLayout({

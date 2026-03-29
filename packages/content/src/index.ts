@@ -1,128 +1,166 @@
 /**
- * All website copy from the Seashore Fiberglass brief
+ * Seashore Fiberglass LLC — website copy
+ * Source: Website Content & SEO Implementation Brief (54-page)
  */
+
 export const SITE_NAME = "Seashore Fiberglass LLC";
-export const TAGLINE = "Precision Fiberglass Repair and Coastal Restoration";
-export const HERO_HEADING = "Fiberglass Repair Built for the Jersey Shore";
+export const TAGLINE =
+  "Fiberglass Deck Experts — Ocean City NJ & South Jersey Shore";
+
+/** Home page — meta from Website Brief / root layout */
+export const HOME_META = {
+  title:
+    "Fiberglass Decks Ocean City NJ | Repair, Reglass & Installation Experts",
+  description:
+    "Family-owned fiberglass deck contractors in Ocean City NJ & South Jersey Shore. Expert repair, reglass restoration, resurfacing & recolor maintenance. 50+ 5-star reviews. Free inspections — call (609) 338-4505!",
+} as const;
+
+export const SERVICES_INDEX_META = {
+  title:
+    "Fiberglass Deck Services | Repair, Reglass & Installation — Ocean City NJ — Seashore Fiberglass",
+  description:
+    "Expert fiberglass deck repair, reglass restoration, recolor, new construction, composite decking & vinyl railing across Ocean City NJ & the South Jersey Shore. 50+ 5-star reviews — free inspections (609) 338-4505.",
+} as const;
+
+export const SERVICE_AREAS_INDEX_META = {
+  title:
+    "Service Areas | South Jersey Shore Fiberglass Deck Contractors — Seashore Fiberglass",
+  description:
+    "Fiberglass deck repair & installation in Ocean City, LBI, Brigantine, Margate, Avalon, Cape May & towns across the Jersey Shore. Local coastal expertise — free inspections (609) 338-4505.",
+} as const;
+
+export const HERO_HEADING =
+  "Fiberglass Decks Built for the Jersey Shore — Ocean City NJ & Beyond";
+
 export const HERO_SUBHEADING =
-  "From stress cracks to full gelcoat restoration, we deliver durable marine repairs trusted by homeowners and boat owners across South Jersey.";
-export const HERO_PRIMARY_CTA = "Get a Free Estimate";
-export const HERO_SECONDARY_CTA = "Call Now";
+  "Over 10 years of family-owned expertise installing, reglassing, and repairing fiberglass decks that stand up to salt air, UV exposure, high humidity, and winter freeze-thaw cycles. Waterproof. Non-slip. Built to last.";
+
+export const HERO_PRIMARY_CTA = "Get Your FREE Inspection & Quote";
+export const HERO_SECONDARY_CTA = "Call / Text (609) 338-4505";
 
 export const TRUST_BADGES = [
-  "Licensed",
-  "50+ Reviews",
-  "Family-Owned",
-  "Guaranteed",
+  "Licensed & Insured",
+  "50+ 5-Star Google Reviews",
+  "Family-Owned in Ocean City NJ",
+  "Work Guaranteed",
 ] as const;
 
 export const SHORE_SECTION_TITLE = "Built for the Jersey Shore";
 export const SHORE_SECTION_BODY =
-  "Salt air, UV, and storm wear are tough on fiberglass surfaces. Our process is tailored to coastal environments with marine-grade materials, reinforced laminates, and clean finishing techniques that hold up season after season.";
+  "The South Jersey Shore is beautiful — but it is demanding on outdoor structures. Salt spray carried by ocean and bay winds accelerates corrosion of metal components and degrades materials not designed for coastal conditions. High humidity — often 80–90% in summer — keeps building materials damp and promotes moisture-related deterioration. Intense UV radiation gradually breaks down gelcoat surfaces. And winter freeze-thaw cycles expand small cracks into significant failures over time.";
+
 export const SHORE_SPECS = [
-  "Marine-grade resin systems",
-  "UV-stable gelcoat finishing",
-  "Structural and cosmetic repairs",
-  "Fast turnaround across 13 towns",
+  '3/4″ CDX + 1/2″ ACX dual-layer plywood substrate',
+  "2-oz fiberglass mat with resin — seamless membrane",
+  'Wall flashings minimum 12″ up vertical surfaces',
+  'Post flashings minimum 6″ vertical wrap',
+  '1/4″ per foot drainage pitch',
+  "PVC/Azek drip edges — rot-proof perimeter",
 ] as const;
 
 export const SERVICES = [
   {
-    slug: "fiberglass-repair",
-    title: "Fiberglass Repair",
-    description: "Crack, gouge, and impact repair with seamless finish matching.",
-    icon: "Wrench",
+    slug: "fiberglass-deck-repair",
+    title: "Fiberglass Deck Repair",
+    description:
+      "Diagnose and permanently fix puddling, soft spots, structural rot, missing flashings, improper door transitions, and deteriorated drip edges. Every repair begins with a full structural inspection.",
   },
   {
-    slug: "gelcoat-restoration",
-    title: "Gelcoat Restoration",
-    description: "Restore gloss, color depth, and UV protection to aged surfaces.",
-    icon: "Sparkles",
+    slug: "fiberglass-deck-new-constructions",
+    title: "Fiberglass Deck New Construction",
+    description:
+      "For builders and homeowners starting fresh — fully engineered fiberglass systems with correct pitch, PVC perimeter edges, and proper flashing from the first day.",
   },
   {
-    slug: "transom-rebuilds",
-    title: "Transom Rebuilds",
-    description: "Structural reinforcement and replacement for weakened transoms.",
-    icon: "Shield",
+    slug: "fiberglass-deck-resurfacing",
+    title: "Fiberglass Deck Resurfacing (Reglass)",
+    description:
+      "A full membrane renewal. We re-secure the plywood substrate, correct drip edges and flashings, install a new 2-oz fiberglass layer, and finish with fresh textured gelcoat.",
   },
   {
-    slug: "deck-stringer-work",
-    title: "Deck & Stringer Work",
-    description: "Repair and strengthen critical internal support structures.",
-    icon: "Layers",
+    slug: "fiberglass-deck-recolor",
+    title: "Fiberglass Deck Recolor (Re-Gelcoating)",
+    description:
+      "Surface maintenance for structurally sound decks. Grind, repair minor cracks, clean with acetone, and apply new textured gelcoat. Recommended every 5 years.",
   },
   {
-    slug: "boat-detailing",
-    title: "Boat Detailing",
-    description: "Deep clean, oxidation removal, and protective finishing services.",
-    icon: "Droplets",
+    slug: "composite-decks",
+    title: "Composite Decks & Deck Steps",
+    description:
+      "Wolf decking and Azek PVC fascias — proven in high-humidity, salt-spray environments. A premium low-maintenance option for coastal homes.",
   },
   {
-    slug: "custom-fabrication",
-    title: "Custom Fabrication",
-    description: "Built-to-fit fiberglass parts, panels, and modifications.",
-    icon: "Hammer",
+    slug: "vinyl-railing",
+    title: "Vinyl Railing",
+    description:
+      "Rust-free, low-maintenance safety systems engineered for salty coastal air. New installs, repairs, and upgrades.",
   },
 ] as const;
 
 export const REVIEWS = [
   {
-    name: "Mike R.",
-    city: "Ocean City",
+    name: "Michael K.",
+    city: "Ocean City NJ",
     stars: 5,
-    quote: "They repaired our hull damage perfectly. Looks factory new.",
+    quote:
+      "Francisco and his crew replaced our rotted structural posts, re-secured the entire plywood substrate, and reglassed the deck in four days. Professional from start to finish.",
   },
   {
-    name: "Danielle S.",
-    city: "Sea Isle City",
+    name: "Resident",
+    city: "Brigantine NJ",
     stars: 5,
-    quote: "Professional, responsive, and transparent from estimate to finish.",
+    quote:
+      "We had soft spots and nail pops everywhere. Seashore fixed the root cause — not just the surface. The deck is completely solid now. Highly recommend.",
   },
   {
-    name: "Chris T.",
-    city: "Somers Point",
+    name: "Homeowner",
+    city: "Margate City NJ",
     stars: 5,
-    quote: "Great workmanship and quick turnaround before the summer season.",
+    quote:
+      "Honest quote, clean work, on time. They fixed our puddling issue by correcting the pitch properly. No more standing water.",
   },
   {
-    name: "Alyssa M.",
-    city: "Marmora",
+    name: "Client",
+    city: "Avalon NJ",
     stars: 5,
-    quote: "Our deck repair came out flawless. Highly recommend this team.",
+    quote:
+      "They did an exceptional job. Identified missing flashings we didn't even know were the problem. No more leaks.",
   },
   {
-    name: "Robert L.",
-    city: "Longport",
+    name: "Resident",
+    city: "Ventnor City NJ",
     stars: 5,
-    quote: "Fair pricing and quality results. You can tell they know fiberglass.",
+    quote:
+      "Francisco explained the whole process clearly — why the deck was failing, exactly what they would do, and why. Our deck is perfect for summer now.",
   },
   {
-    name: "Kevin P.",
-    city: "Atlantic City",
+    name: "Homeowner",
+    city: "Cape May NJ",
     stars: 5,
-    quote: "Family-owned service with real craftsmanship and honest advice.",
+    quote:
+      "Upgraded our old drip edge to PVC and sealed everything properly. Everything they do is technically correct and built to last.",
   },
 ] as const;
 
 export const SERVICE_AREAS = [
-  "Ocean City",
-  "Sea Isle City",
-  "Somers Point",
-  "Marmora",
-  "Longport",
-  "Atlantic City",
-  "Margate",
-  "Ventnor",
-  "Avalon",
-  "Stone Harbor",
-  "Wildwood",
-  "Cape May",
-  "Brigantine",
+  "Ocean City NJ",
+  "Long Beach Island",
+  "Brigantine NJ",
+  "Atlantic City NJ",
+  "Ventnor City NJ",
+  "Margate City NJ",
+  "Longport NJ",
+  "Strathmere NJ",
+  "Sea Isle City NJ",
+  "Avalon NJ",
+  "Stone Harbor NJ",
+  "Wildwood NJ",
+  "Cape May NJ",
 ] as const;
 
-export const FINAL_CTA_TITLE = "Ready to Repair, Restore, or Rebuild?";
+export const FINAL_CTA_TITLE = "Ready to Get Your Deck Shore-Ready?";
 export const FINAL_CTA_BODY =
-  "Tell us about your project and we will follow up with a fast quote.";
+  "Whether you need a repair, reglass restoration, recolor maintenance, or a brand-new fiberglass deck — we provide free inspections and honest assessments. No pressure, just clear technical answers.";
 
 export const PHONE = "(609) 338-4505";
 export const EMAIL = "info@seashorefiberglass.com";
@@ -133,3 +171,11 @@ export const ADDRESS = {
   state: "NJ",
   zip: "08226",
 };
+
+export * from "./about";
+export * from "./faq";
+export * from "./contact";
+export * from "./gallery";
+export * from "./blog";
+export * from "./services-detail";
+export * from "./service-areas-detail";

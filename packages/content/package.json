@@ -2,6 +2,9 @@
   "name": "@seashore/content",
   "version": "1.0.0",
   "private": true,
+  "dependencies": {
+    "@seashore/types": "workspace:*"
+  },
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "scripts": {

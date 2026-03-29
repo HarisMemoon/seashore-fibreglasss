@@ -1,11 +1,28 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { SERVICES } from "@seashore/content";
+import { SERVICES, SERVICES_INDEX_META } from "@seashore/content";
+import BreadcrumbJsonLd from "../BreadcrumbJsonLd";
+
+export const metadata: Metadata = {
+  title: SERVICES_INDEX_META.title,
+  description: SERVICES_INDEX_META.description,
+};
 
 export default function ServicesPage() {
   return (
     <main className="mx-auto max-w-7xl px-6 py-16">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Services", path: "/services" },
+        ]}
+      />
       <h1 className="font-heading text-4xl font-bold text-navy">Services</h1>
-      <p className="mt-4 text-slate-600">Explore our fiberglass and restoration services.</p>
+      <p className="mt-4 text-slate-600">
+        Every service we provide is rooted in the same technical foundation: a correct diagnosis, the appropriate
+        repair method, and execution that addresses the root cause. Over 10 years of coastal deck work across
+        the Jersey Shore.
+      </p>
       <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {SERVICES.map((service) => (
           <Link
