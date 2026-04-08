@@ -59,6 +59,3 @@ export const SERVICE_AREA_FORM_OPTIONS = [
 ] as const;
 
 export const BEST_TIME_OPTIONS = ["Morning", "Afternoon", "Evening", "Anytime"] as const;
-
-export const GOOGLE_MAPS_EMBED_SRC =
-  "https://www.google.com/maps?q=406+Asbury+Ave+Ocean+City+NJ+08226&output=embed";

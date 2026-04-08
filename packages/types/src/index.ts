@@ -42,13 +42,69 @@ export interface GalleryItem {
 /** Contact / lead form submission (home + contact page) */
 export interface ContactSubmission {
   name: string;
-  phone: string;
-  email?: string;
-  city?: string;
+  phone?: string;
+  email: string;
+  address: string;
+  city: string;
   bestTime?: string;
   message?: string;
   wantsFreeInspection?: boolean;
-  source: "home" | "contact";
+  source: "home" | "contact" | "chatbot";
+}
+
+export type ChatbotIntent =
+  | "faq"
+  | "service-routing"
+  | "service-area-routing"
+  | "quote-request"
+  | "contact-handoff"
+  | "general"
+  | "fallback";
+
+export type ChatbotConfidence = "high" | "medium" | "low";
+
+export interface ChatbotLink {
+  label: string;
+  href: string;
+  kind: "service" | "service-area" | "contact" | "faq" | "phone";
+}
+
+export interface ChatbotMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export interface ChatbotLeadDraft {
+  issueType?: string;
+  serviceSlug?: string;
+  city?: string;
+  urgency?: string;
+  preferredContactMethod?: "Call" | "Text" | "Email";
+  summary?: string;
+}
+
+export interface ChatbotRequest {
+  message: string;
+  history?: readonly ChatbotMessage[];
+  pagePath?: string;
+  leadDraft?: ChatbotLeadDraft;
+}
+
+export interface ChatbotLeadCapturePrompt {
+  prompt: string;
+  suggestedIssueType?: string;
+  suggestedServiceSlug?: string;
+  suggestedCity?: string;
+}
+
+export interface ChatbotResponse {
+  answer: string;
+  intent: ChatbotIntent;
+  confidence: ChatbotConfidence;
+  recommendedLinks: readonly ChatbotLink[];
+  quickReplies: readonly string[];
+  leadCapture?: ChatbotLeadCapturePrompt;
+  requiresHumanFollowup?: boolean;
 }
 
 /** Single step in a numbered process (service detail pages) */

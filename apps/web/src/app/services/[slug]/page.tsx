@@ -123,7 +123,11 @@ function DetailBody({ detail }: { detail: ServiceDetail }) {
               <p key={p.slice(0, 48)}>{p}</p>
             ))}
           </div>
-          <div className="mt-10 flex flex-wrap gap-4">
+          <div className="mt-10 flex flex-wrap gap-3">
+            <span className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-md">Family-owned since 2014</span>
+            <span className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-md">Built for South Jersey Shore conditions</span>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-4">
             <Link
               href="/contact"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange to-orange-light px-8 py-4 font-bold text-white shadow-lg shadow-orange/25 transition hover:shadow-glow-orange"
@@ -151,7 +155,7 @@ function DetailBody({ detail }: { detail: ServiceDetail }) {
               {detail.commonProblems.map((item) => (
                 <div
                   key={item.title}
-                  className="rounded-2xl border border-slate-200/80 bg-slate-50/80 p-6 shadow-sm transition hover:border-turquoise/30 hover:shadow-md"
+                  className="group rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white to-slate-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-turquoise/35 hover:shadow-xl"
                 >
                   <h3 className="font-heading text-lg font-bold text-navy">{item.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-slate-600">{item.description}</p>
@@ -193,7 +197,7 @@ function DetailBody({ detail }: { detail: ServiceDetail }) {
               {detail.repairLevels.map((item) => (
                 <div
                   key={item.title}
-                  className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm"
+                  className="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white to-slate-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-turquoise/35 hover:shadow-xl"
                 >
                   <div className="font-heading text-2xl font-extrabold text-turquoise/30">{item.title}</div>
                   <p className="mt-4 text-sm leading-relaxed text-slate-600">{item.description}</p>
@@ -215,7 +219,7 @@ function DetailBody({ detail }: { detail: ServiceDetail }) {
               {detail.constructionComponents.map((step, i) => (
                 <li
                   key={step.title}
-                  className="flex gap-4 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm md:gap-6"
+                  className="group flex gap-4 rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm transition duration-300 hover:border-turquoise/35 hover:shadow-lg md:gap-6"
                 >
                   <span className="font-heading flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-navy text-sm font-bold text-white">
                     {i + 1}
@@ -254,7 +258,7 @@ function DetailBody({ detail }: { detail: ServiceDetail }) {
               ))}
             </ul>
             {detail.distinctionNote && detail.distinctionNote.length > 0 ? (
-              <div className="mt-10 max-w-3xl rounded-2xl border border-turquoise/25 bg-turquoise/5 p-6">
+              <div className="mt-10 max-w-3xl rounded-3xl border border-turquoise/25 bg-gradient-to-br from-turquoise/10 to-white p-6 shadow-sm">
                 {detail.distinctionNote.map((p) => (
                   <p key={p.slice(0, 48)} className="text-sm leading-relaxed text-slate-700">
                     {p}
@@ -282,15 +286,22 @@ function DetailBody({ detail }: { detail: ServiceDetail }) {
                   : "Professional reglass process"}
             </h2>
             <div className="mt-12 space-y-5">
-              {detail.processSteps.map((step) => (
+              {detail.processSteps.map((step, i) => (
                 <div
                   key={step.title}
-                  className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm md:p-6"
+                  className="group rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm transition duration-300 hover:border-turquoise/35 hover:shadow-lg md:p-6"
                 >
-                  <h3 className="font-heading text-lg font-semibold text-navy">{step.title}</h3>
+                  <div className="flex items-start gap-4">
+                    <span className="font-heading flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-navy text-sm font-bold text-white shadow-sm">
+                      {i + 1}
+                    </span>
+                    <div>
+                      <h3 className="font-heading text-lg font-semibold text-navy">{step.title}</h3>
                   {step.description ? (
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.description}</p>
-                  ) : null}
+                        <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.description}</p>
+                      ) : null}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -309,7 +320,7 @@ function DetailBody({ detail }: { detail: ServiceDetail }) {
 
       {detail.maintenanceIntervals && detail.maintenanceIntervals.length > 0 ? (
         <section className="border-b border-slate-100 bg-white px-6 py-12 md:py-16">
-          <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 text-center">
+          <div className="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 px-6 py-8 text-center shadow-sm">
             <h3 className="font-heading text-lg font-bold text-navy">Maintenance intervals</h3>
             <ul className="mt-4 space-y-2 text-sm text-slate-600">
               {detail.maintenanceIntervals.map((line) => (
@@ -369,6 +380,7 @@ function DetailBody({ detail }: { detail: ServiceDetail }) {
           </div>
         </section>
       ) : null}
+      
 
       <ServiceCta />
     </>

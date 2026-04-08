@@ -60,7 +60,7 @@ function AreaCta({ townName }: { townName: string }) {
           Ready for a free inspection in {townName}?
         </h2>
         <p className="mt-4 text-lg text-white/75">
-          We will diagnose your deck honestly and give you a clear scope — no pressure.
+          We will diagnose your deck honestly and give you a clear scope - no pressure.
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           <Link
@@ -114,7 +114,7 @@ function AreaBody({ area }: { area: ServiceAreaDetail }) {
               <li className="text-white/70">{area.townName}</li>
             </ol>
           </nav>
-          <h1 className="font-heading mt-6 max-w-4xl text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold leading-[1.12] text-white">
+          <h1 className="font-heading mt-6 max-w-4xl text-[clamp(1.75rem,3.5vw,2.9rem)] font-extrabold leading-[1.1] text-white">
             {area.h1}
           </h1>
           <div className="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-white/75">
@@ -122,7 +122,15 @@ function AreaBody({ area }: { area: ServiceAreaDetail }) {
               <p key={i}>{p}</p>
             ))}
           </div>
-          <div className="mt-10 flex flex-wrap gap-4">
+          <div className="mt-10 flex flex-wrap gap-3">
+            <span className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-md">
+              6 services available
+            </span>
+            <span className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-md">
+              Local coastal challenge focus
+            </span>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-4">
             <Link
               href="/contact"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange to-orange-light px-8 py-4 font-bold text-white shadow-lg shadow-orange/25 transition hover:shadow-glow-orange"
@@ -145,11 +153,23 @@ function AreaBody({ area }: { area: ServiceAreaDetail }) {
           <h2 className="font-heading mt-4 text-3xl font-bold text-navy md:text-4xl">
             {area.localChallengeTitle}
           </h2>
-          <div className="mt-10 max-w-3xl space-y-5 text-slate-600">
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
             {area.localChallengeBody.map((p, i) => (
-              <p key={i} className="leading-relaxed">
-                {p}
-              </p>
+              <div
+                key={i}
+                className="rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white to-slate-50 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-turquoise/35 hover:shadow-lg"
+              >
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-turquoise/10 text-turquoise">
+                  <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 10-1.5 0v3.19c0 .2.08.39.22.53l1.75 1.75a.75.75 0 101.06-1.06l-1.53-1.53V6.75z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <p className="mt-4 leading-relaxed text-slate-600">{p}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -162,21 +182,37 @@ function AreaBody({ area }: { area: ServiceAreaDetail }) {
             What we offer in {area.townName}
           </h2>
           <p className="mt-4 max-w-2xl text-slate-600">
-            Full fiberglass deck and coastal railing services — click through for details on each line of work.
+            Full fiberglass deck and coastal railing services - explore each one for process, fit, and repair detail.
           </p>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICES.map((service) => (
+            {SERVICES.map((service, index) => (
               <Link
                 key={service.slug}
                 href={`/services/${service.slug}`}
-                className="group rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition hover:border-turquoise/40 hover:shadow-md"
+                className="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-turquoise/35 hover:shadow-xl"
               >
-                <h3 className="font-heading text-lg font-bold text-navy group-hover:text-turquoise">
+                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-turquoise via-turquoise-light to-orange opacity-0 transition duration-300 group-hover:opacity-100" />
+                <div className="flex items-center justify-between gap-4">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-navy/[0.05] text-navy transition duration-300 group-hover:bg-turquoise group-hover:text-white">
+                    <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                      <path d="M10 2.5a.75.75 0 01.75.75v5h5a.75.75 0 010 1.5h-5v5a.75.75 0 01-1.5 0v-5h-5a.75.75 0 010-1.5h5v-5A.75.75 0 0110 2.5z" />
+                    </svg>
+                  </span>
+                  <span className="font-heading text-4xl font-black leading-none text-slate-100">{String(index + 1).padStart(2, "0")}</span>
+                </div>
+                <h3 className="font-heading mt-6 text-lg font-bold text-navy group-hover:text-turquoise">
                   {service.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600">{service.description}</p>
-                <span className="mt-4 inline-block text-sm font-semibold text-turquoise">
-                  Learn more →
+                <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-turquoise">
+                  Learn more
+                  <svg className="h-3.5 w-3.5 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                    <path
+                      fillRule="evenodd"
+                      d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                 </span>
               </Link>
             ))}

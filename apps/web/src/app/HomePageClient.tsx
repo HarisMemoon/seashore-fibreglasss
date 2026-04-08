@@ -1,12 +1,15 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
+  BEST_TIME_OPTIONS,
+  CONTACT_FORM_MESSAGE_PLACEHOLDER,
   FINAL_CTA_BODY,
   FINAL_CTA_TITLE,
+  GALLERY_ITEMS,
   HERO_HEADING,
   HERO_PRIMARY_CTA,
   HERO_SECONDARY_CTA,
@@ -14,7 +17,8 @@ import {
   PHONE,
   REVIEWS,
   SERVICES,
-  SERVICE_AREAS,
+  SERVICE_AREA_FORM_OPTIONS,
+  SERVICE_AREA_DETAILS,
   SHORE_SECTION_BODY,
   SHORE_SECTION_TITLE,
   SHORE_SPECS,
@@ -22,6 +26,8 @@ import {
   TRUST_BADGES,
 } from "@seashore/content";
 import { postContact, type PostContactError } from "@/lib/postContact";
+import { ServiceAreasMapWidget } from "@/components/ServiceAreasMapWidget";
+import { StyledSelect } from "@/components/StyledSelect";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -150,6 +156,52 @@ function NoiseOverlay() {
   );
 }
 
+type LiveGoogleReview = {
+  name: string;
+  quote: string;
+  city: string;
+  stars: number;
+};
+
+const SERVICE_DETAIL_BULLETS: Record<string, readonly string[]> = {
+  "fiberglass-deck-repair": [
+    "Full structural inspection before any work starts",
+    "Targets root cause - flashings, pitch, substrate - not just surface",
+    "Repairs run 2-5 days; full reglass 4-7 days",
+    "PVC drip edges, 12\" wall flashings, 6\" post wraps",
+  ],
+  "fiberglass-deck-new-constructions": [
+    "Dual-layer plywood (3/4\" CDX + 1/2\" ACX) glued & screwed",
+    "1/4\" per foot drainage pitch built into framing",
+    "Continuous 2-oz fiberglass membrane - no seams",
+    "Marine-grade UV gelcoat + full flashing system before siding",
+  ],
+  "fiberglass-deck-resurfacing": [
+    "New 2-oz fiberglass membrane over existing substrate",
+    "Plywood re-secured, drip edges and flashings corrected",
+    "Resets membrane life - recolor again in ~5 years",
+    "Timeline: 4-7 days typical",
+  ],
+  "fiberglass-deck-recolor": [
+    "For structurally sound decks with faded or chalky gelcoat",
+    "Mechanical grind, crack fill, acetone clean, new gelcoat",
+    "Restores UV protection and slip resistance",
+    "Done in 1-2 days; recommended every ~5 years",
+  ],
+  "composite-decks": [
+    "Wolf 100% PVC decking - no wood fiber, zero rot",
+    "25-30 year residential warranty, salt-air rated",
+    "Paired with Azek PVC fascias and steps",
+    "Recommended for ground-level or open-air decks",
+  ],
+  "vinyl-railing": [
+    "Zero rust in salt air - no painting, no maintenance",
+    "Code-compliant heights and post spacing",
+    "Every post penetration flashed with 6\" fiberglass wrap",
+    "New installs, repairs, and full system upgrades",
+  ],
+};
+
 const serviceIcons: Record<string, React.ReactNode> = {
   repair: (
     <svg className="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
@@ -183,10 +235,253 @@ const serviceIcons: Record<string, React.ReactNode> = {
   ),
 };
 
+function ServicesSection() {
+  const iconKeys = Object.keys(serviceIcons);
+  const [activeSlug, setActiveSlug] = useState<string>(SERVICES[0].slug);
+
+  const activeIndex = SERVICES.findIndex((s) => s.slug === activeSlug);
+  const activeService = SERVICES[activeIndex];
+  const activeIconKey = iconKeys[activeIndex] ?? "repair";
+  const bullets = SERVICE_DETAIL_BULLETS[activeSlug] ?? [];
+
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#f8fafc] to-white px-6 py-28">
+      <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      {/* subtle background grid */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right,#0d2d4a 1px,transparent 1px),linear-gradient(to bottom,#0d2d4a 1px,transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
+      <div className="pointer-events-none absolute -right-32 top-0 h-[400px] w-[400px] rounded-full bg-turquoise/8 blur-[120px]" />
+
+      <div className="relative mx-auto max-w-7xl">
+        <InView className="text-center">
+          <SectionLabel>What We Do</SectionLabel>
+          <h2 className="font-heading mt-5 text-[clamp(2rem,3.8vw,3rem)] font-extrabold text-navy">
+            Our Core Services
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-[1.05rem] leading-relaxed text-slate-500">
+            Every service is engineered for South Jersey Shore conditions — salt, humidity, UV, freeze-thaw.
+          </p>
+        </InView>
+
+        {/* Tab strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mt-12 flex flex-wrap justify-center gap-3"
+        >
+          {SERVICES.map((service, i) => {
+            const iconKey = iconKeys[i] ?? "repair";
+            const isActive = service.slug === activeSlug;
+            return (
+              <button
+                key={service.slug}
+                type="button"
+                onClick={() => setActiveSlug(service.slug)}
+                className={`group relative inline-flex min-h-[2.75rem] items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/60 ${
+                  isActive
+                    ? "border-turquoise bg-navy text-white shadow-lg shadow-navy/30"
+                    : "border-slate-200 bg-white text-slate-600 hover:border-turquoise/50 hover:bg-navy/5 hover:text-navy"
+                }`}
+              >
+                <span
+                  className={`inline-flex size-5 shrink-0 items-center justify-center [&_svg]:block [&_svg]:size-5 [&_svg]:shrink-0 ${
+                    isActive ? "text-turquoise" : "text-slate-400 group-hover:text-turquoise"
+                  }`}
+                  aria-hidden
+                >
+                  {serviceIcons[iconKey]}
+                </span>
+                <span className="leading-snug">
+                  {service.title.replace(/Fiberglass Deck\s*/i, "").replace(/\s*\(.*\)/, "")}
+                </span>
+                {isActive && (
+                  <motion.span
+                    layoutId="tab-dot"
+                    className="inline-flex size-1.5 shrink-0 items-center justify-center rounded-full bg-turquoise"
+                  />
+                )}
+              </button>
+            );
+          })}
+        </motion.div>
+
+        {/* Detail panel */}
+        <div className="mt-10">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeSlug}
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+              className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-[0_8px_48px_rgba(13,45,74,0.09)]"
+            >
+              {/* top accent bar */}
+              <div className="h-1.5 w-full bg-gradient-to-r from-turquoise via-turquoise-light to-navy" />
+
+              <div className="grid gap-0 lg:grid-cols-[1fr_1.1fr]">
+                {/* Left — icon + copy */}
+                <div className="flex flex-col justify-between gap-8 p-8 sm:p-10">
+                  <div>
+                    <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-navy to-[#0d4a5c] text-white shadow-lg shadow-navy/30">
+                      <span style={{ width: 28, height: 28, display: "flex" }}>
+                        {serviceIcons[activeIconKey]}
+                      </span>
+                    </div>
+                    <h3 className="font-heading text-2xl font-extrabold leading-tight text-navy sm:text-3xl">
+                      {activeService.title}
+                    </h3>
+                    <p className="mt-4 text-[1rem] leading-[1.8] text-slate-500">
+                      {activeService.description}
+                    </p>
+                  </div>
+
+                  <Link
+                    href={`/services/${activeService.slug}`}
+                    className="group inline-flex w-fit items-center gap-2.5 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white shadow-md shadow-navy/30 transition-all duration-300 hover:bg-turquoise-dark hover:shadow-turquoise/20"
+                  >
+                    Full service details
+                    <svg
+                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </Link>
+                </div>
+
+                {/* Right — spec bullets + progress bars */}
+                <div className="flex flex-col justify-center gap-5 border-t border-slate-100 bg-gradient-to-br from-slate-50 to-[#f0f7fb] p-8 sm:p-10 lg:border-l lg:border-t-0">
+                  <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-slate-400">
+                    What&apos;s included
+                  </p>
+                  <ul className="space-y-4">
+                    {bullets.map((bullet, i) => (
+                      <motion.li
+                        key={bullet}
+                        initial={{ opacity: 0, x: 16 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.07, duration: 0.3 }}
+                        className="flex items-start gap-3"
+                      >
+                        <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-turquoise/15 text-turquoise">
+                          <svg className="h-3 w-3" viewBox="0 0 12 12" fill="currentColor" aria-hidden>
+                            <path d="M10.28 2.28a.75.75 0 00-1.06 0L4.5 7 2.78 5.28a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l5.25-5.25a.75.75 0 000-1.06z" />
+                          </svg>
+                        </span>
+                        <span className="text-[0.95rem] leading-[1.65] text-slate-700">{bullet}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+
+                  {/* service progress indicators */}
+                  <div className="mt-4 grid grid-cols-3 divide-x divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+                    {[
+                      { label: "Shore-rated", value: "100%", sub: "salt + UV" },
+                      { label: "Warranty", value: "10 yr", sub: "workmanship" },
+                      { label: "Timeline", value: "2-7d", sub: "typical" },
+                    ].map(({ label, value, sub }) => (
+                      <div key={label} className="flex flex-col items-center gap-0.5 p-4 text-center">
+                        <span className="font-heading text-lg font-extrabold text-navy">{value}</span>
+                        <span className="text-[0.7rem] font-bold uppercase tracking-wider text-turquoise">{label}</span>
+                        <span className="text-[0.68rem] text-slate-400">{sub}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* All services link */}
+        <InView className="mt-10 flex justify-center">
+          <Link
+            href="/services"
+            className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition-colors hover:text-navy"
+          >
+            Browse all services
+            <svg
+              className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden
+            >
+              <path
+                fillRule="evenodd"
+                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </Link>
+        </InView>
+      </div>
+    </section>
+  );
+}
+
 export default function HomePageClient() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [leadFormStatus, setLeadFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [leadFieldErrors, setLeadFieldErrors] = useState<Record<string, string>>({});
+  const [leadCity, setLeadCity] = useState("");
+  const [leadBestTime, setLeadBestTime] = useState("Anytime");
+  const [displayReviews, setDisplayReviews] = useState<LiveGoogleReview[]>([...REVIEWS]);
+  const [googleRating, setGoogleRating] = useState(5);
+  const [googleReviewTotal, setGoogleReviewTotal] = useState(50);
+  const leadInputClass = (hasError: boolean) =>
+    `w-full rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:ring-2 ${
+      hasError
+        ? "border border-red-400 bg-red-50/70 focus:border-red-400 focus:ring-red-200"
+        : "border border-slate-200 bg-slate-50/85 focus:border-turquoise/50 focus:bg-white focus:ring-turquoise/20"
+    }`;
+  const leadErrorClass =
+    "mt-1.5 inline-flex items-center rounded-lg border border-red-500/40 bg-red-500/15 px-2.5 py-1 text-xs font-semibold text-red-200";
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadGoogleReviews() {
+      try {
+        const res = await fetch("/api/google-reviews", { cache: "no-store" });
+        if (!res.ok) return;
+
+        const data = (await res.json()) as {
+          ok?: boolean;
+          rating?: number;
+          total?: number;
+          reviews?: LiveGoogleReview[];
+        };
+
+        if (!mounted || !data?.ok) return;
+
+        if (typeof data.rating === "number") setGoogleRating(data.rating);
+        if (typeof data.total === "number") setGoogleReviewTotal(data.total);
+        if (Array.isArray(data.reviews) && data.reviews.length > 0) setDisplayReviews(data.reviews);
+      } catch {
+        // Keep static fallback reviews when Google API is unavailable.
+      }
+    }
+
+    void loadGoogleReviews();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   async function onLeadSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -195,17 +490,22 @@ export default function HomePageClient() {
     const form = e.currentTarget;
     const fd = new FormData(form);
     try {
+      const wantsFreeInspection = fd.get("wantsFreeInspection") === "on";
       await postContact({
         name: String(fd.get("name") ?? "").trim(),
-        phone: String(fd.get("phone") ?? "").trim(),
-        email: String(fd.get("email") ?? "").trim() || undefined,
-        city: String(fd.get("city") ?? "").trim() || undefined,
+        phone: String(fd.get("phone") ?? "").trim() || undefined,
+        email: String(fd.get("email") ?? "").trim(),
+        address: String(fd.get("address") ?? "").trim(),
+        city: leadCity,
+        bestTime: leadBestTime || undefined,
         message: String(fd.get("message") ?? "").trim() || undefined,
-        wantsFreeInspection: true,
+        wantsFreeInspection,
         source: "home",
       });
       setLeadFormStatus("success");
       form.reset();
+      setLeadCity("");
+      setLeadBestTime("Anytime");
     } catch (err) {
       setLeadFormStatus("error");
       const fe = (err as PostContactError).fieldErrors;
@@ -220,7 +520,7 @@ export default function HomePageClient() {
       transition={{ duration: 1, ease: "easeOut" }}
     >
       <main className="overflow-hidden bg-white text-slate-800">
-        {/* ══════════════════════════ HERO ══════════════════════════ */}
+        {/* Section */}
         <section ref={heroRef} className="relative flex min-h-[100vh] items-center overflow-hidden">
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-navy-dark" />
@@ -254,8 +554,17 @@ export default function HomePageClient() {
             <motion.div
               animate={{ y: [-20, 20, -20], rotate: [0, 5, 0] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute right-[15%] top-[20%] h-24 w-24 rounded-2xl border border-turquoise/20 bg-turquoise/5 backdrop-blur-sm"
-            />
+              className="absolute right-[15%] top-[20%] flex h-36 w-36 items-center justify-center rounded-2xl border border-turquoise/30 bg-white/10 p-1.5 shadow-[0_0_35px_rgba(42,125,166,0.25)] backdrop-blur-md"
+            >
+              <Image
+                src="/logoo.png"
+                alt="Seashore Fiberglass"
+                width={270}
+                height={82}
+                className="h-auto w-full object-contain"
+                priority={false}
+              />
+            </motion.div>
             <motion.div
               animate={{ y: [10, -15, 10] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -289,6 +598,7 @@ export default function HomePageClient() {
                 {HERO_SUBHEADING}
               </motion.p>
 
+              {/*
               <motion.div variants={fadeUp} className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/contact"
@@ -312,6 +622,7 @@ export default function HomePageClient() {
                   {HERO_SECONDARY_CTA}
                 </a>
               </motion.div>
+              */}
 
               {/* Animated stat counters */}
               <motion.div variants={stagger} className="mt-16 flex flex-wrap gap-4">
@@ -336,44 +647,71 @@ export default function HomePageClient() {
             </motion.div>
           </motion.div>
 
-          {/* Wave with gradient */}
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1440 80" className="block w-full" xmlns="http://www.w3.org/2000/svg">
-              <path fill="#ffffff" d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,45 L1440,80 L0,80 Z" />
-            </svg>
+          {/* Animated seashore */}
+          <div className="pointer-events-none absolute bottom-0 left-0 right-0" style={{ height: 170 }}>
+            <motion.div style={{ position:'absolute', bottom:0, left:0, width:'200%' }}
+              animate={{ x:['0%','-50%'] }} transition={{ duration:18, repeat:Infinity, ease:'linear' }}>
+              <svg viewBox="0 0 2880 120" preserveAspectRatio="none" style={{ display:'block', width:'100%', height:120 }}>
+                <path fill="rgba(11,50,90,0.85)" d="M0,50 C360,8 1080,95 1440,50 C1800,8 2520,95 2880,50 L2880,120 L0,120 Z"/>
+              </svg>
+            </motion.div>
+            <motion.div style={{ position:'absolute', bottom:0, left:0, width:'200%' }}
+              animate={{ x:['0%','-50%'] }} transition={{ duration:11, repeat:Infinity, ease:'linear' }}>
+              <div className="flex" style={{ width:'200%', height:90 }}>
+                <svg viewBox="0 0 2880 120" preserveAspectRatio="none" style={{ display:'block', width:'50%', height:'100%' }}>
+                  <path fill="rgba(13,121,137,0.65)" d="M0,60 C360,28 1080,88 1440,60 C1800,28 2520,88 2880,60 L2880,120 L0,120 Z"/>
+                </svg>
+                <svg viewBox="0 0 2880 120" preserveAspectRatio="none" style={{ display:'block', width:'50%', height:'100%' }}>
+                  <path fill="rgba(13,121,137,0.65)" d="M0,60 C360,28 1080,88 1440,60 C1800,28 2520,88 2880,60 L2880,120 L0,120 Z"/>
+                </svg>
+              </div>
+            </motion.div>
+            <motion.div style={{ position:'absolute', bottom:0, left:0, width:'200%' }}
+              animate={{ x:['0%','-50%'] }} transition={{ duration:6.5, repeat:Infinity, ease:'linear' }}>
+              <div className="flex" style={{ width:'200%', height:55 }}>
+                <svg viewBox="0 0 2880 120" preserveAspectRatio="none" style={{ display:'block', width:'50%', height:'100%' }}>
+                  <path fill="rgba(200,242,250,0.55)" d="M0,72 C360,52 1080,88 1440,72 C1800,52 2520,88 2880,72 L2880,120 L0,120 Z"/>
+                </svg>
+                <svg viewBox="0 0 2880 120" preserveAspectRatio="none" style={{ display:'block', width:'50%', height:'100%' }}>
+                  <path fill="rgba(200,242,250,0.55)" d="M0,72 C360,52 1080,88 1440,72 C1800,52 2520,88 2880,72 L2880,120 L0,120 Z"/>
+                </svg>
+              </div>
+            </motion.div>
+            <div style={{ position:'absolute', bottom:0, left:0, right:0, height:28,
+              background:'linear-gradient(to top,#d2a85a,#c89a42 55%,transparent)' }}/>
           </div>
         </section>
 
-        {/* ══════════════════════════ TRUST BADGES — MARQUEE ══════════════════════════ */}
-        <section className="relative -mt-1 overflow-hidden bg-white py-10">
+        {/* trust-badges-sandy */}
+        <section className="relative -mt-1 overflow-hidden py-16" style={{ background:'linear-gradient(to bottom,#c89840 0%,#d4a850 28%,#debc72 62%,#eedba8 100%)' }}>
+          <div className="absolute inset-0 opacity-[0.16]" style={{ backgroundImage:'radial-gradient(circle,rgba(120,70,10,0.7) 1px,transparent 1px)', backgroundSize:'5px 5px' }}/>
+          <div className="absolute inset-0 opacity-[0.055]" style={{ backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 16px,rgba(100,60,10,0.6) 16px,rgba(100,60,10,0.6) 17px)' }}/>
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <motion.div animate={{ x:['-8%','108%'] }} transition={{ duration:26, repeat:Infinity, ease:'linear', delay:0 }} style={{ position:'absolute', top:'18%' }}>
+              <svg viewBox="0 0 40 20" style={{ height:15, width:30, opacity:0.48 }} fill="none"><path d="M0,10 Q10,2 20,10 Q30,2 40,10" stroke="#6b4423" strokeWidth="2.3" strokeLinecap="round"/></svg>
+            </motion.div>
+            <motion.div animate={{ x:['110%','-10%'] }} transition={{ duration:34, repeat:Infinity, ease:'linear', delay:5 }} style={{ position:'absolute', top:'52%' }}>
+              <svg viewBox="0 0 30 15" style={{ height:11, width:22, opacity:0.34 }} fill="none"><path d="M0,8 Q7,1 15,8 Q22,1 30,8" stroke="#6b4423" strokeWidth="1.9" strokeLinecap="round"/></svg>
+            </motion.div>
+            <motion.div animate={{ x:['-5%','112%'] }} transition={{ duration:42, repeat:Infinity, ease:'linear', delay:16 }} style={{ position:'absolute', top:'72%' }}>
+              <svg viewBox="0 0 24 12" style={{ height:9, width:17, opacity:0.22 }} fill="none"><path d="M0,6 Q6,0.5 12,6 Q18,0.5 24,6" stroke="#6b4423" strokeWidth="1.6" strokeLinecap="round"/></svg>
+            </motion.div>
+          </div>
           <InView>
-            <div className="mx-auto max-w-7xl px-6">
-              <motion.div
-                variants={stagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="grid grid-cols-2 gap-4 lg:grid-cols-4"
-              >
+            <div className="relative mx-auto max-w-7xl px-6">
+              <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 gap-4 lg:grid-cols-4">
                 {TRUST_BADGES.map((badge, i) => {
                   const badgeIcons = [
-                    <svg key="lic" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>,
-                    <svg key="rev" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>,
-                    <svg key="fam" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>,
-                    <svg key="gua" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" /></svg>,
+                    <svg key="lic" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>,
+                    <svg key="rev" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>,
+                    <svg key="fam" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>,
+                    <svg key="gua" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"/></svg>,
                   ];
                   return (
-                    <motion.div
-                      key={badge}
-                      variants={scaleUp}
-                      custom={i}
-                      className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-slate-100 bg-gradient-to-br from-white to-slate-50/80 px-6 py-5 shadow-card transition-all duration-400 hover:border-turquoise/30 hover:shadow-card-hover"
-                    >
-                      <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-turquoise/10 to-turquoise/5 text-turquoise transition-all duration-300 group-hover:from-turquoise group-hover:to-turquoise-dark group-hover:text-white group-hover:shadow-glow-turquoise">
-                        {badgeIcons[i]}
-                      </div>
-                      <span className="text-sm font-bold text-navy">{badge}</span>
-                      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-turquoise/5 to-transparent opacity-0 transition-all duration-700 group-hover:translate-x-full group-hover:opacity-100" />
+                    <motion.div key={badge} variants={scaleUp} custom={i} className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 backdrop-blur-sm transition-all duration-300 hover:bg-white/94 hover:shadow-xl">
+                      <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0D7989] to-[#1B3A5C] text-white shadow-sm">{badgeIcons[i]}</div>
+                      <span className="text-sm font-bold text-amber-950">{badge}</span>
+                      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-amber-100/40 to-transparent opacity-0 transition-all duration-700 group-hover:translate-x-full group-hover:opacity-100"/>
                     </motion.div>
                   );
                 })}
@@ -382,7 +720,7 @@ export default function HomePageClient() {
           </InView>
         </section>
 
-        {/* ══════════════════════════ SHORE SECTION ══════════════════════════ */}
+        {/* SHORE SECTION */}
         <section className="relative overflow-hidden bg-slate-50 px-6 py-28">
           <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
           <div
@@ -427,11 +765,11 @@ export default function HomePageClient() {
 
                     <div className="relative mt-8 space-y-5">
                       {[
-                        { label: "Substrate", value: '3/4″ CDX + 1/2″ ACX dual-layer plywood' },
-                        { label: "Wall Flashings", value: 'Minimum 12″ height' },
-                        { label: "Post Flashings", value: 'Minimum 6″ height' },
-                        { label: "Drainage Pitch", value: '1/4″ per foot minimum' },
-                        { label: "Drip Edges", value: "PVC/Azek only — never wood" },
+                        { label: "Substrate", value: '3/4" CDX + 1/2" ACX dual-layer plywood' },
+                        { label: "Wall Flashings", value: 'Minimum 12" height' },
+                        { label: "Post Flashings", value: 'Minimum 6" height' },
+                        { label: "Drainage Pitch", value: '1/4" per foot minimum' },
+                        { label: "Drip Edges", value: "PVC/Azek only - never wood" },
                       ].map((item) => (
                         <div key={item.label} className="flex items-start gap-3.5 border-b border-white/[0.06] pb-5 last:border-0 last:pb-0">
                           <span className="mt-1.5 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-gradient-to-br from-turquoise to-turquoise-light shadow-glow-turquoise" />
@@ -460,17 +798,27 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* ══════════════════════════ SERVICES ══════════════════════════ */}
-        <section className="relative bg-white px-6 py-28">
-          <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-          <div className="mx-auto max-w-7xl">
+        {/* GALLERY PREVIEW */}
+        <section className="relative overflow-hidden bg-gradient-to-b from-navy-dark via-[#0d2137] to-navy-dark px-6 py-24 md:py-28">
+          <NoiseOverlay />
+          <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-turquoise/15 blur-[100px]" />
+          <div className="pointer-events-none absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-orange/10 blur-[90px]" />
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(42,125,166,0.5) 40px,rgba(42,125,166,0.5) 41px)",
+            }}
+          />
+
+          <div className="relative mx-auto max-w-7xl">
             <InView className="text-center">
-              <SectionLabel>What We Do</SectionLabel>
-              <h2 className="font-heading mt-5 text-[clamp(2rem,3.8vw,3rem)] font-extrabold text-navy">
-                Our Core Services
+              <SectionLabel>Portfolio</SectionLabel>
+              <h2 className="font-heading mt-5 text-[clamp(2rem,3.8vw,3rem)] font-extrabold leading-tight text-white">
+                Real projects, shore-built
               </h2>
-              <p className="mx-auto mt-4 max-w-xl text-[1.05rem] leading-relaxed text-slate-500">
-                Every service is engineered specifically for South Jersey Shore conditions — salt, humidity, UV, freeze-thaw.
+              <p className="mx-auto mt-4 max-w-2xl text-[1.05rem] leading-relaxed text-white/65">
+                Before-and-after fiberglass deck work from Ocean City to Cape May. See the full gallery for every project story.
               </p>
             </InView>
 
@@ -478,39 +826,75 @@ export default function HomePageClient() {
               variants={stagger}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.08 }}
-              className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+              viewport={{ once: true, amount: 0.15 }}
+              className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
             >
-              {SERVICES.map((service, i) => {
-                const iconKey = Object.keys(serviceIcons)[i] ?? "repair";
+              {GALLERY_ITEMS.slice(0, 4).map((item, i) => {
+                const gradients = [
+                  "from-slate-800/90 via-slate-900 to-slate-950",
+                  "from-[#0d4a5c]/90 via-navy to-navy-dark",
+                  "from-turquoise/25 via-[#1e5a7a] to-navy-dark",
+                  "from-orange/20 via-[#6b3d1a]/40 to-navy-dark",
+                ];
                 return (
-                  <motion.div key={service.slug} variants={fadeUp}>
+                  <motion.div key={item.id} variants={fadeUp} custom={i}>
                     <Link
-                      href={`/services/${service.slug}`}
-                      className="gradient-border group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-8 shadow-card transition-all duration-400 hover:-translate-y-2 hover:shadow-card-hover"
+                      href="/gallery"
+                      className="group block"
                     >
-                      <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-turquoise via-turquoise-light to-navy opacity-0 transition-opacity duration-400 group-hover:opacity-100" />
-
-                      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-navy/[0.06] to-navy/[0.02] text-navy transition-all duration-400 group-hover:bg-gradient-to-br group-hover:from-turquoise group-hover:to-turquoise-dark group-hover:text-white group-hover:shadow-glow-turquoise">
-                        {serviceIcons[iconKey]}
-                      </div>
-                      <h3 className="font-heading text-xl font-bold text-navy">{service.title}</h3>
-                      <p className="mt-3 flex-1 text-[0.95rem] leading-[1.75] text-slate-500">{service.description}</p>
-                      <div className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-turquoise transition-all duration-300 group-hover:gap-3">
-                        Learn more
-                        <svg className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
-                        </svg>
+                      <div
+                        className={`relative aspect-[4/3] overflow-hidden rounded-2xl bg-gradient-to-br shadow-xl shadow-black/30 ring-1 ring-white/10 transition duration-500 group-hover:ring-turquoise/40 group-hover:shadow-turquoise/10 ${gradients[i] ?? gradients[0]}`}
+                      >
+                        <div
+                          className="absolute inset-0 opacity-40"
+                          style={{
+                            backgroundImage:
+                              "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.15), transparent 55%), radial-gradient(ellipse at 80% 80%, rgba(42,125,166,0.25), transparent 50%)",
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.06\'/%3E%3C/svg%3E')]" />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent p-4 pt-12">
+                          <span className="inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-turquoise backdrop-blur-sm">
+                            {item.category}
+                          </span>
+                          <p className="mt-2 line-clamp-2 font-heading text-sm font-bold leading-snug text-white">
+                            {item.title}
+                          </p>
+                        </div>
                       </div>
                     </Link>
                   </motion.div>
                 );
               })}
             </motion.div>
+
+            <InView className="mt-12 flex justify-center">
+              <Link
+                href="/gallery"
+                className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-6 py-3.5 text-sm font-bold text-white backdrop-blur-md transition hover:border-turquoise/50 hover:bg-white/10"
+              >
+                View full gallery
+                <svg
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </Link>
+            </InView>
           </div>
         </section>
 
-        {/* ══════════════════════════ REVIEWS ══════════════════════════ */}
+        {/* SERVICES */}
+        <ServicesSection />
+
+        {/* Section */}
         <section className="relative overflow-hidden bg-navy-dark px-6 py-28">
           <NoiseOverlay />
           <div className="animate-float-slow absolute -left-24 top-1/2 h-[360px] w-[360px] -translate-y-1/2 rounded-full bg-turquoise/8 blur-[80px]" />
@@ -532,8 +916,8 @@ export default function HomePageClient() {
                     </svg>
                   ))}
                 </div>
-                <span className="text-sm font-bold text-white">5.0</span>
-                <span className="text-xs text-white/40">· 50+ Google Reviews</span>
+                <span className="text-sm font-bold text-white">{googleRating.toFixed(1)}</span>
+                <span className="text-xs text-white/40">· {googleReviewTotal}+ Google Reviews</span>
               </div>
             </InView>
 
@@ -544,7 +928,7 @@ export default function HomePageClient() {
               viewport={{ once: true, amount: 0.08 }}
               className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
             >
-              {REVIEWS.map((review, idx) => (
+              {displayReviews.map((review, idx) => (
                 <motion.article
                   key={`${review.name}-${idx}`}
                   variants={fadeUp}
@@ -572,7 +956,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* ══════════════════════════ SERVICE AREAS ══════════════════════════ */}
+        {/* Section */}
         <section className="relative bg-white px-6 py-28">
           <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
           <div className="mx-auto max-w-7xl">
@@ -582,7 +966,7 @@ export default function HomePageClient() {
                 We Serve the Whole Shore
               </h2>
               <p className="mx-auto mt-4 max-w-lg text-[1.05rem] text-slate-500">
-                Based in Ocean City — same quality, same care in every town.
+                Based in Ocean City - same quality, same care in every town.
               </p>
             </InView>
 
@@ -595,14 +979,14 @@ export default function HomePageClient() {
                   viewport={{ once: true }}
                   className="flex flex-wrap gap-2.5"
                 >
-                  {SERVICE_AREAS.map((town, i) => (
-                    <motion.div key={town} variants={fadeUp} custom={i}>
+                  {SERVICE_AREA_DETAILS.map((area, i) => (
+                    <motion.div key={area.slug} variants={fadeUp} custom={i}>
                       <Link
-                        href={`/service-areas/${town.toLowerCase().replace(/\s+/g, "-")}`}
+                        href={`/service-areas/${area.slug}`}
                         className="group flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:border-turquoise hover:bg-turquoise hover:text-white hover:shadow-glow-turquoise"
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-slate-300 transition-colors group-hover:bg-white" />
-                        {town}
+                        {area.townName}
                       </Link>
                     </motion.div>
                   ))}
@@ -624,34 +1008,22 @@ export default function HomePageClient() {
 
               <InView delay={0.1} className="lg:col-span-3">
                 <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-card-hover">
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-6 py-5">
-                    <div>
-                      <h3 className="font-heading text-lg font-bold text-navy">Visit Our Ocean City Location</h3>
-                      <p className="mt-0.5 text-sm text-slate-500">406 Asbury Ave, Ocean City, NJ 08226</p>
-                    </div>
-                    <a
-                      href="https://maps.google.com/?q=406+Asbury+Ave+Ocean+City+NJ+08226"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="rounded-lg bg-navy px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-light"
-                    >
-                      Open in Google Maps
-                    </a>
+                  <div className="border-b border-slate-100 px-6 py-5">
+                    <h3 className="font-heading text-lg font-bold text-navy">South Jersey Shore coverage</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-slate-600">
+                      Tap a pin to open that town&apos;s page. We schedule inspections on-site across all 13 areas — this map shows where we work, not a walk-in office.
+                    </p>
                   </div>
-                  <iframe
-                    title="Seashore Fiberglass Service Area"
-                    src="https://www.google.com/maps?q=406+Asbury+Ave,+Ocean+City,+NJ+08226&output=embed"
-                    className="h-[420px] w-full"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  />
+                  <div className="overflow-hidden rounded-b-3xl">
+                    <ServiceAreasMapWidget className="rounded-none border-0 shadow-none" />
+                  </div>
                 </div>
               </InView>
             </div>
           </div>
         </section>
 
-        {/* ══════════════════════════ FINAL CTA ══════════════════════════ */}
+        {/* Section */}
         <section className="relative overflow-hidden bg-navy-dark px-6 py-28">
           <NoiseOverlay />
           <div className="animate-float-slow absolute -right-20 -top-20 h-[340px] w-[340px] rounded-full bg-turquoise/12 blur-[85px]" />
@@ -674,7 +1046,7 @@ export default function HomePageClient() {
 
                 <div className="mt-10 space-y-4">
                   {[
-                    "Free inspection — honest assessment, no pressure",
+                    "Free inspection - honest assessment, no pressure",
                     "Same-day or next-morning response",
                     "Licensed & insured, family-owned since 2014",
                   ].map((point) => (
@@ -693,28 +1065,28 @@ export default function HomePageClient() {
               <InView delay={0.15}>
                 <form
                   onSubmit={onLeadSubmit}
-                  className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.03] p-9 backdrop-blur-xl"
+                  className="relative overflow-hidden rounded-3xl border border-slate-700/80 bg-slate-900/90 p-8 shadow-2xl shadow-black/45 ring-1 ring-slate-700/60"
+                  noValidate
                 >
-                  <NoiseOverlay />
-                  <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-turquoise/10 blur-3xl" />
+                  <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-turquoise/10 blur-3xl" />
 
                   <h3 className="relative font-heading text-xl font-bold text-white">
                     Request a Free Inspection
                   </h3>
-                  <p className="relative mt-1.5 text-sm text-white/45">
-                    Limited slots this month — book yours today.
+                  <p className="relative mt-1.5 text-sm text-slate-300">
+                    Limited slots this month - book yours today.
                   </p>
 
                   <div className="relative mt-7 space-y-4">
                     {[
-                      { id: "lead-name", label: "Name", type: "text", placeholder: "Your full name", required: true },
-                      { id: "lead-phone", label: "Phone", type: "tel", placeholder: "(609) 338-4505", required: true },
-                      { id: "lead-email", label: "Email (optional)", type: "email", placeholder: "you@example.com", required: false },
+                      { id: "lead-name", label: "Full name *", type: "text", placeholder: "Your full name", required: true },
+                      { id: "lead-phone", label: "Phone", type: "tel", placeholder: "(609) 338-4505", required: false },
+                      { id: "lead-email", label: "Email *", type: "email", placeholder: "you@example.com", required: true },
                     ].map((field) => {
                       const nameKey = field.id.replace("lead-", "");
                       return (
                         <div key={field.id}>
-                          <label htmlFor={field.id} className="mb-1.5 block text-sm font-medium text-white/75">
+                          <label htmlFor={field.id} className="mb-1.5 block text-sm font-medium text-slate-200">
                             {field.label}
                           </label>
                           <input
@@ -723,58 +1095,104 @@ export default function HomePageClient() {
                             name={nameKey}
                             placeholder={field.placeholder}
                             required={field.required}
+                            autoComplete={field.type === "tel" ? "tel" : field.type === "email" ? "email" : "name"}
                             aria-invalid={leadFieldErrors[nameKey] ? true : undefined}
-                            className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3.5 text-sm text-white placeholder:text-white/30 transition-all duration-300 focus:border-turquoise/50 focus:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-turquoise/20"
+                            className={leadInputClass(Boolean(leadFieldErrors[nameKey]))}
                           />
                           {leadFieldErrors[nameKey] && (
-                            <p className="mt-1 text-sm text-red-300">{leadFieldErrors[nameKey]}</p>
+                            <p className={leadErrorClass}>{leadFieldErrors[nameKey]}</p>
                           )}
                         </div>
                       );
                     })}
                     <div>
-                      <label htmlFor="lead-city" className="mb-1.5 block text-sm font-medium text-white/75">
-                        Service area town
+                      <label htmlFor="lead-address" className="mb-1.5 block text-sm font-medium text-slate-200">
+                        Project address <span className="text-orange">*</span>
                       </label>
-                      <select
-                        id="lead-city"
-                        name="city"
-                        aria-invalid={leadFieldErrors.city ? true : undefined}
-                        className="w-full rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3.5 text-sm text-white/60 transition-all duration-300 focus:border-turquoise/50 focus:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-turquoise/20"
-                        style={{ colorScheme: "dark" }}
-                      >
-                        <option value="">Select your town</option>
-                        {SERVICE_AREAS.map((town) => (
-                          <option key={town} value={town}>{town}</option>
-                        ))}
-                      </select>
-                      {leadFieldErrors.city && (
-                        <p className="mt-1 text-sm text-red-300">{leadFieldErrors.city}</p>
+                      <input
+                        id="lead-address"
+                        name="address"
+                        type="text"
+                        required
+                        autoComplete="street-address"
+                        placeholder="Street address"
+                        aria-invalid={leadFieldErrors.address ? true : undefined}
+                        className={leadInputClass(Boolean(leadFieldErrors.address))}
+                      />
+                      {leadFieldErrors.address && (
+                        <p className={leadErrorClass}>{leadFieldErrors.address}</p>
                       )}
                     </div>
                     <div>
-                      <label htmlFor="lead-message" className="mb-1.5 block text-sm font-medium text-white/75">
-                        Project details
+                      <label htmlFor="lead-city" className="mb-1.5 block text-sm font-medium text-slate-200">
+                        City / area <span className="text-orange">*</span>
+                      </label>
+                      <StyledSelect
+                        id="lead-city"
+                        name="city"
+                        value={leadCity}
+                        options={SERVICE_AREA_FORM_OPTIONS}
+                        onChange={setLeadCity}
+                        placeholder="Select your town"
+                        required
+                        invalid={Boolean(leadFieldErrors.city)}
+                        theme="dark"
+                      />
+                      {leadFieldErrors.city && (
+                        <p className={leadErrorClass}>{leadFieldErrors.city}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label htmlFor="lead-best" className="mb-1.5 block text-sm font-medium text-slate-200">
+                        Best time to contact
+                      </label>
+                      <StyledSelect
+                        id="lead-best"
+                        name="bestTime"
+                        value={leadBestTime}
+                        options={BEST_TIME_OPTIONS}
+                        onChange={setLeadBestTime}
+                        invalid={Boolean(leadFieldErrors.bestTime)}
+                        theme="dark"
+                      />
+                      {leadFieldErrors.bestTime && (
+                        <p className={leadErrorClass}>{leadFieldErrors.bestTime}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label htmlFor="lead-message" className="mb-1.5 block text-sm font-medium text-slate-200">
+                        Message / project details
                       </label>
                       <textarea
                         id="lead-message"
                         name="message"
-                        rows={3}
-                        placeholder="Tell us about the repair or restoration needed."
+                        rows={4}
+                        placeholder={CONTACT_FORM_MESSAGE_PLACEHOLDER}
                         aria-invalid={leadFieldErrors.message ? true : undefined}
-                        className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3.5 text-sm text-white placeholder:text-white/30 transition-all duration-300 focus:border-turquoise/50 focus:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-turquoise/20"
+                        className={leadInputClass(Boolean(leadFieldErrors.message))}
                       />
                       {leadFieldErrors.message && (
-                        <p className="mt-1 text-sm text-red-300">{leadFieldErrors.message}</p>
+                        <p className={leadErrorClass}>{leadFieldErrors.message}</p>
                       )}
                     </div>
+                    <label className="group flex cursor-pointer items-start gap-3 rounded-xl border border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200 px-4 py-3 transition hover:border-turquoise/40 hover:from-white hover:to-slate-100">
+                      <input
+                        name="wantsFreeInspection"
+                        type="checkbox"
+                        defaultChecked
+                        className="mt-0.5 h-5 w-5 rounded-md border-slate-400 text-turquoise shadow-sm focus:ring-2 focus:ring-turquoise/40"
+                      />
+                      <span className="text-sm font-medium text-slate-700 transition group-hover:text-slate-900">
+                        Yes - I&apos;d like a free inspection &amp; quote
+                      </span>
+                    </label>
                     {leadFormStatus === "success" && (
-                      <p className="text-sm font-medium text-emerald-300" role="status">
-                        Thanks — we received your request and will reach out shortly.
+                      <p className="text-sm font-medium text-emerald-700" role="status">
+                        Thanks - we received your request and will reach out shortly.
                       </p>
                     )}
                     {leadFormStatus === "error" && Object.keys(leadFieldErrors).length === 0 && (
-                      <p className="text-sm font-medium text-red-300" role="alert">
+                      <p className="text-sm font-medium text-red-600" role="alert">
                         Something went wrong. Please call {PHONE} or try again.
                       </p>
                     )}
@@ -783,7 +1201,7 @@ export default function HomePageClient() {
                       disabled={leadFormStatus === "loading"}
                       className="group flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-orange to-orange-light px-6 py-4 font-bold text-white shadow-lg shadow-orange/25 transition-all duration-400 hover:shadow-glow-orange hover:shadow-2xl disabled:opacity-60"
                     >
-                      {leadFormStatus === "loading" ? "Sending…" : "Send Free Quote Request"}
+                      {leadFormStatus === "loading" ? "Sending..." : "Send Message & Get My Free Quote"}
                       <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M3.105 2.289a.75.75 0 00-.826.95l1.414 4.925A1.5 1.5 0 005.135 9.25h6.115a.75.75 0 010 1.5H5.135a1.5 1.5 0 00-1.442 1.086l-1.414 4.926a.75.75 0 00.826.95 28.896 28.896 0 0015.293-7.154.75.75 0 000-1.115A28.897 28.897 0 003.105 2.289z" />
                       </svg>

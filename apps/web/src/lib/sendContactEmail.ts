@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+﻿import nodemailer from "nodemailer";
 import type { ContactSubmission } from "@seashore/types";
 
 function escapeHtml(s: string): string {
@@ -6,23 +6,25 @@ function escapeHtml(s: string): string {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replace(/\"/g, "&quot;");
 }
 
 function formatSubmissionHtml(s: ContactSubmission): string {
   const rows: [string, string][] = [
     ["Name", s.name],
-    ["Phone", s.phone],
-    ["Email", s.email ?? "—"],
-    ["City / area", s.city ?? "—"],
-    ["Best time", s.bestTime ?? "—"],
-    ["Message", s.message ?? "—"],
+    ["Phone", s.phone ?? "-"],
+    ["Email", s.email],
+    ["Project address", s.address],
+    ["City / area", s.city],
+    ["Best time", s.bestTime ?? "-"],
+    ["Message", s.message ?? "-"],
     [
       "Free inspection",
-      s.wantsFreeInspection === true ? "Yes" : s.wantsFreeInspection === false ? "No" : "—",
+      s.wantsFreeInspection === true ? "Yes" : s.wantsFreeInspection === false ? "No" : "-",
     ],
     ["Source", s.source],
   ];
+
   return `<table style="border-collapse:collapse;font-family:system-ui,sans-serif;font-size:14px;max-width:560px;">
 ${rows
   .map(
@@ -49,7 +51,7 @@ export async function sendContactEmail(submission: ContactSubmission): Promise<v
     throw new Error("CONTACT_EMAIL_TO is missing");
   }
 
-  const subject = `[Seashore Fiberglass] Lead (${submission.source}) — ${submission.name}`;
+  const subject = `[Seashore Fiberglass] Lead (${submission.source}) - ${submission.name}`;
   const html = formatSubmissionHtml(submission);
 
   const resendKey = process.env.RESEND_API_KEY?.trim();
@@ -69,6 +71,7 @@ export async function sendContactEmail(submission: ContactSubmission): Promise<v
         html,
       }),
     });
+
     if (!res.ok) {
       const text = await res.text();
       throw new Error(`Resend error ${res.status}: ${text}`);

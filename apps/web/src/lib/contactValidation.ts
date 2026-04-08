@@ -10,22 +10,35 @@ export const contactSubmissionSchema = z
       .trim()
       .min(2, "Name must be at least 2 characters.")
       .max(120, "Name is too long."),
-    phone: z
-      .string()
-      .trim()
-      .refine((v) => {
-        const digits = v.replace(/\D/g, "");
-        return digits.length >= 10 && digits.length <= 15;
-      }, "Enter a valid phone number with at least 10 digits."),
+    phone: z.preprocess(
+      (v) => (v === undefined || v === null ? "" : String(v).trim()),
+      z
+        .union([
+          z.literal(""),
+          z.string().refine((v) => {
+            const digits = v.replace(/\D/g, "");
+            return digits.length >= 10 && digits.length <= 15;
+          }, "Enter a valid phone number with at least 10 digits."),
+        ])
+        .transform((v) => (v === "" ? undefined : v))
+    ),
     email: z.preprocess(
       (v) => (v === undefined || v === null ? "" : String(v).trim()),
       z
-        .union([z.literal(""), z.string().email("Enter a valid email address.")])
-        .transform((v) => (v === "" ? undefined : v))
+        .string()
+        .min(1, "Email is required.")
+        .email("Enter a valid email address.")
+    ),
+    address: z.preprocess(
+      (v) => (v === undefined || v === null ? "" : String(v).trim()),
+      z
+        .string()
+        .min(5, "Enter your project address.")
+        .max(240, "Address is too long.")
     ),
     city: z.preprocess(
-      (v) => (v === undefined || v === null || v === "" ? undefined : String(v).trim()),
-      cityEnum.optional()
+      (v) => (v === undefined || v === null ? "" : String(v).trim()),
+      cityEnum
     ),
     bestTime: z.preprocess(
       (v) => (v === undefined || v === null || v === "" ? undefined : String(v).trim()),
@@ -42,7 +55,7 @@ export const contactSubmissionSchema = z
       (v) => (v === true ? true : v === false ? false : undefined),
       z.boolean().optional()
     ),
-    source: z.enum(["home", "contact"]),
+    source: z.enum(["home", "contact", "chatbot"]),
   })
   .strict();
 

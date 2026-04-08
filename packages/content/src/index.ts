@@ -179,3 +179,4 @@ export * from "./gallery";
 export * from "./blog";
 export * from "./services-detail";
 export * from "./service-areas-detail";
+export * from "./service-area-map";

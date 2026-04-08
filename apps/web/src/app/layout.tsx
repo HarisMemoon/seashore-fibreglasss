@@ -1,22 +1,10 @@
 import type { Metadata } from 'next';
-import { Montserrat, Inter } from 'next/font/google';
 import { HOME_META } from '@seashore/content';
 import './globals.css';
 import { Navbar } from '@seashore/ui';
 import { Footer } from '@seashore/ui';
+import { ChatbotWidget } from '@/components/ChatbotWidget';
 import { getSiteUrl } from '@/lib/site';
-
-const montserrat = Montserrat({
-  variable: '--font-montserrat',
-  subsets: ['latin'],
-  display: 'swap',
-});
-
-const inter = Inter({
-  variable: '--font-inter',
-  subsets: ['latin'],
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -30,11 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${inter.variable}`}>
+    <html lang="en">
       <body className="font-body antialiased">
         <Navbar />
         {children}
         <Footer />
+        <ChatbotWidget />
       </body>
     </html>
   );

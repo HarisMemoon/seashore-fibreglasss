@@ -5,10 +5,10 @@ import {
   CONTACT_HOURS,
   CONTACT_META,
   EMAIL,
-  GOOGLE_MAPS_EMBED_SRC,
   HOW_WE_WORK_STEPS,
   PHONE,
 } from "@seashore/content";
+import { ServiceAreasMapWidget } from "@/components/ServiceAreasMapWidget";
 import { ContactForm } from "./ContactForm";
 import BreadcrumbJsonLd from "../BreadcrumbJsonLd";
 
@@ -28,6 +28,16 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 const phoneDigits = PHONE.replace(/\D/g, "");
 const smsHref = `sms:+1${phoneDigits}`;
+function NoiseOverlay() {
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 opacity-[0.03]"
+      style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+      }}
+    />
+  );
+}
 
 export default function ContactPage() {
   return (
@@ -38,15 +48,19 @@ export default function ContactPage() {
           { name: "Contact", path: "/contact" },
         ]}
       />
-    <main className="bg-white pt-28 text-slate-800 md:pt-32">
-      <section className="border-b border-slate-100 bg-gradient-to-br from-slate-50 to-white px-6 pb-14 pt-0 md:pb-20">
-        <div className="mx-auto max-w-7xl">
+    <main className="bg-white text-slate-800">
+      <section className="relative overflow-hidden bg-navy-dark px-6 pb-20 pt-28 md:pb-28 md:pt-32">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1B3A5C] via-[#0d3a5c] to-[#060e18]" />
+        <div className="absolute -right-24 -top-20 h-[360px] w-[360px] rounded-full bg-turquoise/15 blur-[90px]" />
+        <div className="absolute -left-16 bottom-0 h-[220px] w-[220px] rounded-full bg-orange/10 blur-[70px]" />
+        <NoiseOverlay />
+        <div className="relative mx-auto max-w-7xl">
           <SectionLabel>Get in touch</SectionLabel>
-          <h1 className="font-heading mt-4 text-[clamp(2rem,3.8vw,3rem)] font-extrabold leading-[1.1] text-navy">
+          <h1 className="font-heading mt-5 max-w-4xl text-[clamp(2rem,4vw,3.5rem)] font-extrabold leading-[1.08] text-white">
             {CONTACT_H1}
           </h1>
-          <p className="mt-5 max-w-2xl text-lg text-slate-600">
-            Phone {PHONE} — 7 days a week · {CONTACT_HOURS}
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/70">
+            Phone {PHONE} - 7 days a week · {CONTACT_HOURS}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -58,13 +72,13 @@ export default function ContactPage() {
             </a>
             <a
               href={smsHref}
-              className="inline-flex items-center justify-center rounded-xl border border-navy/15 bg-white px-6 py-3.5 font-semibold text-navy transition hover:border-turquoise/40 hover:bg-slate-50"
+              className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 py-3.5 font-semibold text-white backdrop-blur-md transition hover:border-white/30 hover:bg-white/10"
             >
               Text Us
             </a>
             <a
               href="#contact-form"
-              className="inline-flex items-center justify-center rounded-xl border border-turquoise/30 bg-turquoise/5 px-6 py-3.5 font-semibold text-turquoise transition hover:bg-turquoise/10"
+              className="inline-flex items-center justify-center rounded-xl border border-turquoise/30 bg-turquoise/10 px-6 py-3.5 font-semibold text-turquoise transition hover:bg-turquoise/15"
             >
               Schedule Free Inspection Online
             </a>
@@ -134,21 +148,15 @@ export default function ContactPage() {
 
       <section className="px-6 pb-20 pt-4">
         <div className="mx-auto max-w-7xl">
-          <h2 className="font-heading text-xl font-bold text-navy">Find us</h2>
-          <p className="mt-2 text-slate-600">
-            {ADDRESS.street}, {ADDRESS.city}, {ADDRESS.state} {ADDRESS.zip}
+          <h2 className="font-heading text-xl font-bold text-navy">Where we work</h2>
+          <p className="mt-2 max-w-3xl text-slate-600">
+            All thirteen South Jersey Shore service areas below. Tap a pin for that town&apos;s page. We meet homeowners on-site for inspections — we don&apos;t operate a walk-in storefront.
           </p>
-          <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 shadow-md">
-            <iframe
-              title="Seashore Fiberglass — Ocean City NJ map"
-              src={GOOGLE_MAPS_EMBED_SRC}
-              width="100%"
-              height="420"
-              style={{ border: 0 }}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
+          <p className="mt-3 text-sm text-slate-500">
+            Mailing: {ADDRESS.street}, {ADDRESS.city}, {ADDRESS.state} {ADDRESS.zip}
+          </p>
+          <div className="mt-6 max-w-3xl">
+            <ServiceAreasMapWidget />
           </div>
         </div>
       </section>

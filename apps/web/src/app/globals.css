@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 :root {
+  --font-heading: "Montserrat", "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
   --color-navy: #1b3a5c;
   --color-turquoise: #2a7da6;
   --color-orange: #e87c2b;
