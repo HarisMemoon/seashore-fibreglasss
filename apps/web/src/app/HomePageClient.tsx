@@ -300,8 +300,8 @@ function ServicesSection() {
           backgroundSize: "48px 48px",
         }}
       />
-      <div className="pointer-events-none absolute -right-32 top-0 h-[400px] w-[400px] rounded-full bg-turquoise/8 blur-[120px]" />
-      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full bg-orange/[0.05] blur-[100px]" />
+      <div className="pointer-events-none absolute -right-32 top-0 h-[400px] w-[400px] rounded-full bg-turquoise/8 blur-[120px] max-sm:hidden" />
+      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full bg-orange/[0.05] blur-[100px] max-sm:hidden" />
 
       <div className="relative mx-auto max-w-7xl">
         <InView className="text-center">
@@ -605,9 +605,9 @@ function ShoreFiberglassSection() {
       />
 
       {/* Ambient orbs — turquoise + orange, same as hero */}
-      <div className="pointer-events-none absolute -right-32 top-0 h-[480px] w-[480px] rounded-full bg-turquoise/[0.07] blur-[120px]" />
-      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full bg-orange/[0.05] blur-[100px]" />
-      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[200px] w-[200px] -translate-x-1/2 rounded-full bg-turquoise/[0.04] blur-[80px]" />
+      <div className="pointer-events-none absolute -right-32 top-0 h-[480px] w-[480px] rounded-full bg-turquoise/[0.07] blur-[120px] max-sm:hidden" />
+      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full bg-orange/[0.05] blur-[100px] max-sm:hidden" />
+      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[200px] w-[200px] -translate-x-1/2 rounded-full bg-turquoise/[0.04] blur-[80px] max-sm:hidden" />
 
       <div className="relative mx-auto max-w-7xl">
         {/* ── HEADER ─────────────────────────────────────── */}
@@ -699,7 +699,7 @@ function ShoreFiberglassSection() {
 
             <div
               aria-hidden
-              className="pointer-events-none absolute -right-20 top-8 h-48 w-48 rounded-full bg-turquoise/[0.06] blur-[72px]"
+              className="pointer-events-none absolute -right-20 top-8 h-48 w-48 rounded-full bg-turquoise/[0.06] blur-[72px] max-sm:hidden"
             />
 
             <div className="relative space-y-5 sm:pl-6">
@@ -925,7 +925,7 @@ function ServiceCoverageSection() {
           backgroundSize: "40px 40px",
         }}
       />
-      <div className="pointer-events-none absolute -right-24 top-16 h-[320px] w-[320px] rounded-full bg-turquoise/[0.08] blur-[90px]" />
+      <div className="pointer-events-none absolute -right-24 top-16 h-[320px] w-[320px] rounded-full bg-turquoise/[0.08] blur-[90px] max-sm:hidden" />
 
       <div className="relative mx-auto max-w-7xl">
         <div className="text-center">
@@ -1190,8 +1190,8 @@ function GalleryPreviewSection() {
     <>
       <section className="relative overflow-hidden bg-gradient-to-b from-navy-dark via-[#0d2137] to-navy-dark px-4 py-20 md:py-28 sm:px-6">
         <NoiseOverlay />
-        <div className="pointer-events-none absolute -left-24 top-1/4 h-80 w-80 rounded-full bg-turquoise/15 blur-[110px]" />
-        <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-orange/10 blur-[90px]" />
+        <div className="pointer-events-none absolute -left-24 top-1/4 h-80 w-80 rounded-full bg-turquoise/15 blur-[110px] max-sm:hidden" />
+        <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-orange/10 blur-[90px] max-sm:hidden" />
 
         <div className="relative mx-auto max-w-7xl">
           {/* Header */}
@@ -1564,8 +1564,8 @@ export default function HomePageClient() {
             <div className="absolute inset-0 bg-gradient-to-br from-[#1B3A5C] via-[#0d3a5c] to-[#060e18]" />
 
             {/* Animated gradient orbs */}
-            <div className="animate-float-slow absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-turquoise/16 blur-[90px]" />
-            <div className="animate-float-slower absolute -bottom-20 left-1/4 h-[320px] w-[320px] rounded-full bg-orange/10 blur-[75px]" />
+            <div className="animate-float-slow absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-turquoise/16 blur-[90px] max-sm:hidden" />
+            <div className="animate-float-slower absolute -bottom-20 left-1/4 h-[320px] w-[320px] rounded-full bg-orange/10 blur-[75px] max-sm:hidden" />
 
             {/* Geometric grid */}
             <div
@@ -1745,7 +1745,7 @@ export default function HomePageClient() {
                     <svg key="gua" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"/></svg>,
                   ];
                   return (
-                    <motion.div key={badge} variants={scaleUp} custom={i} className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 backdrop-blur-sm transition-all duration-300 hover:bg-white/94 hover:shadow-xl">
+                    <motion.div key={badge} variants={scaleUp} custom={i} className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 sm:backdrop-blur-sm transition-all duration-300 hover:bg-white/94 hover:shadow-xl">
                       <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0D7989] to-[#1B3A5C] text-white shadow-sm">{badgeIcons[i]}</div>
                       <span className="text-sm font-bold text-amber-950">{badge}</span>
                       <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-amber-100/40 to-transparent opacity-0 transition-all duration-700 group-hover:translate-x-full group-hover:opacity-100"/>
@@ -1768,8 +1768,8 @@ export default function HomePageClient() {
         {/* Section */}
         <section className="relative overflow-hidden bg-navy-dark px-6 py-28">
           <NoiseOverlay />
-          <div className="animate-float-slow absolute -left-24 top-1/2 h-[360px] w-[360px] -translate-y-1/2 rounded-full bg-turquoise/8 blur-[80px]" />
-          <div className="animate-float-slower absolute -right-16 bottom-0 h-[240px] w-[240px] rounded-full bg-orange/6 blur-[60px]" />
+          <div className="animate-float-slow absolute -left-24 top-1/2 h-[360px] w-[360px] -translate-y-1/2 rounded-full bg-turquoise/8 blur-[80px] max-sm:hidden" />
+          <div className="animate-float-slower absolute -right-16 bottom-0 h-[240px] w-[240px] rounded-full bg-orange/6 blur-[60px] max-sm:hidden" />
 
           <div className="relative mx-auto max-w-7xl">
             <InView className="flex flex-col items-start gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -1803,7 +1803,7 @@ export default function HomePageClient() {
                 <motion.div
                   key={`${review.name}-${idx}`}
                   variants={fadeUp}
-                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] p-7 backdrop-blur-md transition-all duration-400 hover:border-turquoise/20 hover:bg-white/[0.07]"
+                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] p-7 sm:backdrop-blur-md transition-all duration-400 hover:border-turquoise/20 hover:bg-white/[0.07]"
                 >
                   {/* Stretched link — covers whole card, sits behind interactive elements */}
                   <a
@@ -1965,8 +1965,8 @@ export default function HomePageClient() {
         {/* Section */}
         <section className="relative overflow-hidden bg-navy-dark px-6 py-28">
           <NoiseOverlay />
-          <div className="animate-float-slow absolute -right-20 -top-20 h-[340px] w-[340px] rounded-full bg-turquoise/12 blur-[85px]" />
-          <div className="animate-float-slower absolute -left-16 bottom-0 h-[220px] w-[220px] rounded-full bg-orange/8 blur-[65px]" />
+          <div className="animate-float-slow absolute -right-20 -top-20 h-[340px] w-[340px] rounded-full bg-turquoise/12 blur-[85px] max-sm:hidden" />
+          <div className="animate-float-slower absolute -left-16 bottom-0 h-[220px] w-[220px] rounded-full bg-orange/8 blur-[65px] max-sm:hidden" />
           <div
             className="absolute inset-0 opacity-[0.025]"
             style={{

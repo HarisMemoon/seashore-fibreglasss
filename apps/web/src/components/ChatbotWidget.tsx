@@ -603,11 +603,25 @@ export function ChatbotWidget() {
 
   return (
     <div
-      className="fixed bottom-2 right-4 z-[9999] flex flex-col items-end gap-3 sm:bottom-4 sm:right-6"
+      className={`fixed z-[9999] flex flex-col gap-3 ${
+        isOpen
+          ? "inset-0 items-stretch sm:inset-auto sm:bottom-4 sm:right-6 sm:items-end"
+          : "bottom-2 right-4 items-end sm:bottom-4 sm:right-6"
+      }`}
       style={{ zIndex: 2147483000 }}
     >
       {isOpen && (
-        <div className="flex h-[min(42rem,calc(100dvh-6rem))] max-h-[calc(100dvh-6rem)] w-[min(26rem,calc(100vw-1rem))] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#071321]/95 shadow-2xl shadow-black/50 backdrop-blur-2xl">
+        <div className="flex flex-1 flex-col overflow-hidden bg-[#071321] sm:flex-none sm:h-[min(42rem,calc(100dvh-6rem))] sm:max-h-[calc(100dvh-6rem)] sm:w-[min(26rem,calc(100vw-1rem))] sm:rounded-[28px] sm:border sm:border-white/10 sm:bg-[#071321]/95 sm:shadow-2xl sm:shadow-black/50 sm:backdrop-blur-2xl">
+          {/* Mobile drag handle — tap to close */}
+          <button
+            type="button"
+            onClick={() => setIsOpen(false)}
+            className="flex w-full justify-center pb-2 pt-3 sm:hidden"
+            aria-label="Close chat"
+          >
+            <span className="h-1 w-12 rounded-full bg-white/25" />
+          </button>
+
           <div className="relative overflow-hidden border-b border-white/10 px-5 pb-4 pt-5">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(42,125,166,0.3),_transparent_42%),linear-gradient(135deg,_rgba(27,58,92,0.96),_rgba(7,19,33,0.92))]" />
             <div className="absolute -right-10 top-0 h-28 w-28 rounded-full bg-orange/20 blur-3xl" />
@@ -814,7 +828,7 @@ export function ChatbotWidget() {
           hasBeenOpenedRef.current = true;
           setIsOpen((current) => !current);
         }}
-        className="group relative flex items-center gap-3 rounded-full border border-turquoise/20 bg-[#071321]/90 px-4 py-3 text-white shadow-2xl shadow-black/40 backdrop-blur-xl transition hover:border-turquoise/40"
+        className={`group relative items-center gap-3 rounded-full border border-turquoise/20 bg-[#071321]/90 px-4 py-3 text-white shadow-2xl shadow-black/40 backdrop-blur-xl transition hover:border-turquoise/40 ${isOpen ? "hidden sm:flex" : "flex"}`}
         aria-label={isOpen ? "Hide chatbot" : "Open chatbot"}
       >
         <span className="absolute inset-0 rounded-full bg-gradient-to-r from-turquoise/20 to-orange/10 opacity-0 transition group-hover:opacity-100" />
