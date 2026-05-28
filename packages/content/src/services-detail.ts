@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Service detail pages — full copy, process steps, meta.
  * Source: Website Brief / PROJECT_CONTEXT.md §5
  */
@@ -12,13 +12,13 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       "Professional fiberglass deck repair across South Jersey Shore. Fix soft spots, water puddling, missing flashings, structural rot & more. Expert diagnosis, permanent repair. 50+ 5-star reviews — call (609) 338-4505",
     h1: "Fiberglass Deck Repair — Permanent Solutions for South Jersey Shore Decks",
     intro: [
-      "Most deck problems that look like “surface issues” start at transitions — where the deck meets the house, doors, posts, and perimeter. When flashings are short or missing, pitch is wrong, or the substrate loosens, water gets underneath the fiberglass membrane and damage spreads. We diagnose the full system, not just the visible wear, so repairs last in salt air, humidity, and freeze-thaw conditions.",
+      "Most deck problems that look like \"surface issues\" start at transitions — where the deck meets the house, doors, posts, and perimeter. When flashings are short or missing, or the substrate loosens, water gets underneath the fiberglass membrane and damage spreads. We diagnose the full system, not just the visible wear, so repairs last in salt air, humidity, and freeze-thaw conditions.",
     ],
     commonProblems: [
       {
         title: "Water Puddling After Rain",
         description:
-          "Standing water means drainage is insufficient. Coastal decks need a minimum 1/4\" per foot pitch so water runs off before it finds a path through seams or transitions.",
+          "Standing water means the existing drainage slope is not performing as intended — whether from substrate settlement, improper original framing, or blocked drainage paths. When a deck was originally built with the slope going the wrong direction, we perform a full Pitch Correction repair. We diagnose the cause before recommending the correct repair.",
       },
       {
         title: "Soft Spots Underfoot",
@@ -96,9 +96,9 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
           "Rotten framing, compromised posts, and damaged substrate are rebuilt to code.",
       },
       {
-        title: "4. Pitch correction",
+        title: "4. Pitch Correction (when applicable)",
         description:
-          "Sister joists or approved methods achieve minimum 1/4\" per foot drainage slope.",
+          "When a deck was originally built with an incorrect drainage slope directing water toward the house, we perform a full pitch correction: complete plywood demolition followed by sister joist installation alongside each existing joist to establish a true, correct drainage plane at 1/4\" per foot. Sister joists are preferred over sleepers because they correct for natural joist sagging rather than following existing imperfections.",
       },
       {
         title: "5. Plywood re-securing",
@@ -157,10 +157,11 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
     slug: "fiberglass-deck-new-constructions",
     metaTitle: "Fiberglass Deck Installation Ocean City NJ | New Construction South Jersey Shore",
     metaDescription:
-      "New fiberglass deck installation across South Jersey Shore. Engineered systems with correct pitch, PVC drip edges, full flashings & marine-grade gelcoat. Built to last 20+ years — free quotes (609) 338-4505",
+      "New fiberglass deck installation across South Jersey Shore. Engineered systems with double-layer plywood, PVC drip edges, full flashings and marine-grade gelcoat. Built to last — free quotes (609) 338-4505.",
     h1: "Fiberglass Deck New Construction — Engineered Right From Day One",
     intro: [
-      "New construction is where we install every layer of the system the way the technical manual specifies — pitch built into the framing, dual-layer plywood, chamfered transitions, PVC perimeter, flashings before siding, and a continuous membrane with marine-grade gelcoat. You get a deck that is engineered for the Shore from the joists up.",
+      "Our New Construction fiberglass service is designed for newly built homes where the deck has already been framed with the correct drainage slope built into each joist, and the first layer of plywood is in place. From that point, we take full ownership of the waterproofing system — installing the second plywood layer, setting PVC drip edges, integrating wall and post flashings, applying the fiberglass membrane, and finishing with marine-grade gelcoat. Getting these details right from day one prevents the failures we are called in to fix years later.",
+      "New construction is where we install every layer of the system the way the technical manual specifies — dual-layer plywood, chamfered transitions, PVC perimeter, flashings before siding, and a continuous membrane with marine-grade gelcoat. You get a deck that is engineered for the Shore from the joists up.",
     ],
     constructionComponents: [
       {
@@ -169,9 +170,9 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
           "Pressure-treated lumber — typically 2x10 or 2x12 joists — laid out to support loads and attachment points for railing and posts.",
       },
       {
-        title: "Deck pitch",
+        title: "Drainage slope",
         description:
-          "1/4\" per foot slope established during framing so water drains toward the intended edge — not toward the house.",
+          "The correct 1/4\" per foot slope is established during framing at the joist level by the general contractor before Seashore arrives. We verify slope is correct before proceeding.",
       },
       {
         title: "Packer boards",
@@ -281,9 +282,9 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
           "Replace soft plywood, sister joists, and address rot to a sound base.",
       },
       {
-        title: "4. Pitch correction",
+        title: "4. Pitch Correction (when applicable)",
         description:
-          "Verify and restore minimum 1/4\" per foot slope for drainage.",
+          "When a deck was originally built with an incorrect drainage slope directing water toward the house, we perform a full pitch correction: complete plywood demolition followed by sister joist installation alongside each existing joist to establish a true, correct drainage plane at 1/4\" per foot. Sister joists are preferred over sleepers because they correct for natural joist sagging rather than following existing imperfections.",
       },
       {
         title: "5. Plywood re-securing",
@@ -327,17 +328,17 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       },
     ],
     timeline:
-      "Typical reglass projects: 4–7 days. After completion, plan recolor maintenance about every 5 years and full reglass about every 10 years depending on exposure and use.",
+      "Typical reglass projects: 4–7 days. After completion: recolor maintenance recommended every 3–5 years depending on each deck's exposure to sun, salt, and weather. Reglass restoration recommended when the membrane shows widespread compromise — timeline varies by exposure and use.",
     maintenanceIntervals: [
-      "Recolor maintenance: about every 5 years for UV protection and appearance.",
-      "Reglass restoration: about every 10 years when the membrane layer needs renewal.",
+      "Recolor maintenance: recommended every 3–5 years depending on each deck's exposure to sun, salt, and weather.",
+      "Reglass restoration: recommended when the membrane shows widespread compromise — timeline varies by exposure and use.",
     ],
   },
   {
     slug: "fiberglass-deck-recolor",
     metaTitle: "Fiberglass Deck Re-Gelcoating & Recolor Ocean City NJ | Maintenance Service",
     metaDescription:
-      "Professional fiberglass deck recolor and re-gelcoating service across South Jersey Shore. Restore UV protection, appearance & slip resistance. Recommended every 5 years — free quotes (609) 338-4505",
+      "Professional fiberglass deck recolor and re-gelcoating service across South Jersey Shore. Restore UV protection, appearance & slip resistance. Recommended every 3–5 years depending on coastal exposure — free quotes (609) 338-4505",
     h1: "Fiberglass Deck Recolor & Re-Gelcoating — Surface Maintenance & UV Restoration",
     intro: [
       "Recolor is a maintenance service for decks that are structurally sound and watertight at the membrane level — but the gelcoat has faded, chalked, or lost slip resistance. We mechanically prep the surface, address minor cracking, clean with acetone, and apply new textured gelcoat. It is the right option when you do not need a new fiberglass layer.",
@@ -345,7 +346,7 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
     whenRight: [
       "Faded or chalky gelcoat with intact structure underneath.",
       "Minor cosmetic wear and UV oxidation — no soft spots.",
-      "Roughly 3–5 years since the last gelcoat application, depending on exposure.",
+      "3–5 years since last gelcoat application, depending on exposure — not a fixed calendar date.",
       "No widespread membrane failure or structural movement requiring reglass.",
     ],
     processSteps: [
@@ -378,8 +379,8 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
     timeline:
       "Most recolor projects: 1–2 days. Light foot traffic may be possible the next day — we will confirm timing on your walkthrough.",
     maintenanceIntervals: [
-      "Recolor maintenance: about every 5 years.",
-      "Reglass restoration: about every 10 years when the fiberglass membrane requires renewal.",
+      "Recolor maintenance: recommended every 3–5 years depending on each deck's exposure to sun, salt, and weather.",
+      "Reglass restoration: recommended when the membrane shows widespread compromise — timeline varies by exposure and use.",
     ],
   },
   {
@@ -418,18 +419,18 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
   },
   {
     slug: "vinyl-railing",
-    metaTitle: "Vinyl Railing Installation South Jersey Shore | Ocean City NJ Railing Experts",
+    metaTitle: "Vinyl Railing — The Coastal Choice for Low-Maintenance, Code-Compliant Safety",
     metaDescription:
-      "Professional vinyl railing installation & repair across South Jersey Shore. Rust-free, code-compliant, zero-maintenance in salt air. New systems, repairs & upgrades — free quotes (609) 338-4505",
-    h1: "Vinyl Railing — Rust-Free, Code-Compliant Safety for the Shore",
+      "Professional vinyl railing installation and repair across South Jersey Shore. The top coastal choice — won't corrode, warp, or degrade in salt air. New systems, repairs and upgrades — free quotes (609) 338-4505.",
+    h1: "Vinyl Railing — The Coastal Choice for Low-Maintenance, Code-Compliant Safety",
     intro: [
-      "Vinyl railing systems stand up to salt air without rusting or staining like steel, and without the maintenance of wood. We install new systems, repair damaged sections, and upgrade older railings to meet current safety expectations — while keeping waterproofing details correct at every post.",
+      "Vinyl railing is the top choice for coastal homes dealing with salt air and high humidity. Unlike wood or metal alternatives, vinyl won't warp, corrode, or degrade in coastal conditions — delivering a clean, low-maintenance finish that lasts season after season. We install new systems, repair damaged sections, and upgrade older railings to meet current safety expectations — while keeping waterproofing details correct at every post.",
     ],
     vinylSections: [
       {
         title: "Benefits",
         body: [
-          "Zero rust and low maintenance in coastal environments.",
+          "Won't corrode, warp, or degrade in salt air and high humidity — the ideal low-maintenance choice for coastal homes.",
           "Code-compliant heights and spacing when installed to local requirements.",
           "Wind and impact resistance from quality systems designed for residential use.",
         ],

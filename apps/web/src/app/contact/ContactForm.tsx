@@ -5,6 +5,7 @@ import {
   BEST_TIME_OPTIONS,
   CONTACT_FORM_MESSAGE_PLACEHOLDER,
   SERVICE_AREA_FORM_OPTIONS,
+  SERVICE_INQUIRY_OPTIONS,
 } from "@seashore/content";
 import { postContact, type PostContactError } from "@/lib/postContact";
 import { StyledSelect } from "@/components/StyledSelect";
@@ -14,6 +15,7 @@ export function ContactForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [city, setCity] = useState("");
+  const [service, setService] = useState("");
   const [bestTime, setBestTime] = useState("Anytime");
   const inputClass = (hasError: boolean) =>
     `w-full rounded-xl px-4 py-3.5 text-sm text-slate-900 transition focus:outline-none focus:ring-2 ${
@@ -37,10 +39,11 @@ export function ContactForm() {
     try {
       await postContact({
         name: String(fd.get("name") ?? "").trim(),
-        phone: String(fd.get("phone") ?? "").trim() || undefined,
-        email: String(fd.get("email") ?? "").trim(),
+        phone: String(fd.get("phone") ?? "").trim(),
+        email: String(fd.get("email") ?? "").trim() || undefined,
         address: String(fd.get("address") ?? "").trim(),
         city,
+        service: service || undefined,
         bestTime: bestTime || undefined,
         message: String(fd.get("message") ?? "").trim() || undefined,
         wantsFreeInspection,
@@ -49,6 +52,7 @@ export function ContactForm() {
       setStatus("success");
       form.reset();
       setCity("");
+      setService("");
       setBestTime("Anytime");
     } catch (err) {
       setStatus("error");
@@ -88,12 +92,13 @@ export function ContactForm() {
         </div>
         <div>
           <label htmlFor="contact-phone" className="mb-1.5 block text-sm font-medium text-slate-700">
-            Phone number
+            Phone number <span className="text-orange">*</span>
           </label>
           <input
             id="contact-phone"
             name="phone"
             type="tel"
+            required
             autoComplete="tel"
             placeholder="(609) 338-4505"
             aria-invalid={fieldErrors.phone ? true : undefined}
@@ -105,13 +110,12 @@ export function ContactForm() {
         </div>
         <div>
           <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium text-slate-700">
-            Email address <span className="text-orange">*</span>
+            Email address
           </label>
           <input
             id="contact-email"
             name="email"
             type="email"
-            required
             autoComplete="email"
             aria-invalid={fieldErrors.email ? true : undefined}
             className={inputClass(Boolean(fieldErrors.email))}
@@ -154,6 +158,23 @@ export function ContactForm() {
           />
           {fieldErrors.city && (
             <p className={errorClass}>{fieldErrors.city}</p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="contact-service" className="mb-1.5 block text-sm font-medium text-slate-700">
+            Service you need
+          </label>
+          <StyledSelect
+            id="contact-service"
+            name="service"
+            value={service}
+            options={SERVICE_INQUIRY_OPTIONS}
+            onChange={setService}
+            placeholder="Select a service"
+            invalid={Boolean(fieldErrors.service)}
+          />
+          {fieldErrors.service && (
+            <p className={errorClass}>{fieldErrors.service}</p>
           )}
         </div>
         <div>

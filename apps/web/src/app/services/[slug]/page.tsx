@@ -124,7 +124,7 @@ function DetailBody({ detail }: { detail: ServiceDetail }) {
             ))}
           </div>
           <div className="mt-10 flex flex-wrap gap-3">
-            <span className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-md">Family-owned since 2014</span>
+            <span className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-md">Family-owned since 2020</span>
             <span className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-md">Built for South Jersey Shore conditions</span>
           </div>
           <div className="mt-6 flex flex-wrap gap-4">

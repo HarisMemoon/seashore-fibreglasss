@@ -21,11 +21,12 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     excerpt:
       "From bay humidity to boardwalk winds, Ocean City decks take a beating. Here are the failures we diagnose most often — and what actually fixes them.",
     readTimeMinutes: 9,
+    category: "Repair",
     relatedServiceSlugs: ["fiberglass-deck-repair", "fiberglass-deck-resurfacing"],
     blocks: [
       {
         type: "p",
-        text: "Ocean City NJ sits between the ocean and the bay — which means salt spray, high summer humidity, intense UV, and freeze-thaw in winter. Fiberglass decks are built to handle that environment, but only when the system is complete: correct pitch, dual-layer plywood, seamless fiberglass, and properly integrated flashings at every wall, door, and post. When any part of that chain fails, problems show up fast. After more than a decade of inspections across the South Jersey Shore, we see the same issues repeatedly. This article walks through what we find most often, why it happens, and how repairs should address the cause — not just the symptom.",
+        text: "Ocean City NJ sits between the ocean and the bay — which means salt spray, high summer humidity, intense UV, and freeze-thaw in winter. Fiberglass decks are built to handle that environment, but only when the system is complete: dual-layer plywood, seamless fiberglass, and properly integrated flashings at every wall, door, and post. When any part of that chain fails, problems show up fast. We see the same issues repeatedly across the South Jersey Shore. This article walks through what we find most often, why it happens, and how repairs should address the cause — not just the symptom.",
       },
       {
         type: "h2",
@@ -33,7 +34,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
       },
       {
         type: "p",
-        text: "Water should sheet off a fiberglass deck following a minimum slope of one-quarter inch per foot toward drains or free edges. When puddles linger after rain, something is wrong: the pitch may have been lost when joists sagged, sleepers were added incorrectly, or the substrate settled. Sometimes the membrane is intact but the framing underneath no longer supports proper drainage. Fixing puddling starts with understanding whether the issue is structural (joists, sisters, plywood) or confined to the surface layer. Masking low spots with extra gelcoat does not restore drainage — it hides it until rot develops.",
+        text: "Standing water means the existing drainage slope is not performing as intended — whether from substrate settlement, improper original framing, or blocked drainage paths. When a deck was originally built with the slope going the wrong direction, we perform a full Pitch Correction repair involving sister joist installation. We diagnose the cause before recommending the correct repair.",
       },
       {
         type: "h2",
@@ -103,6 +104,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     excerpt:
       "Coastal decks need more than curb appeal. Here is how a properly engineered fiberglass system holds up where wood rots and composites can struggle.",
     readTimeMinutes: 8,
+    category: "Materials",
     relatedServiceSlugs: ["fiberglass-deck-new-constructions", "fiberglass-deck-resurfacing"],
     blocks: [
       {
@@ -123,7 +125,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
       },
       {
         type: "p",
-        text: "Salt spray accelerates corrosion of metal fasteners and hardware. Fiberglass systems use non-corroding perimeter details (such as PVC drip edges), stainless or coated fasteners where metal is required, and a wearing surface that does not rely on steel exposed to the elements. Vinyl railing pairs well for the same reason — no rust streaks down fascia.",
+        text: "Salt spray accelerates corrosion of metal fasteners and hardware. Fiberglass systems use non-corroding perimeter details (such as PVC drip edges), stainless or coated fasteners where metal is required, and a wearing surface that does not rely on steel exposed to the elements. Vinyl railing pairs well for the same reason — it won't corrode, warp, or degrade in salt air and coastal humidity, keeping fascias and siding clean season after season.",
       },
       {
         type: "h2",
@@ -139,7 +141,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
       },
       {
         type: "p",
-        text: "Building code and best practice call for slope — commonly one-quarter inch per foot — so water does not stand. Fiberglass decks integrate slope into the framing and plywood build-up, not only the finish layer. That systematic approach reduces ponding, which is what drives many coastal callbacks on flat assemblies.",
+        text: "A properly framed fiberglass deck relies on slope built into the joist structure from day one — typically a minimum of one-quarter inch per foot. That built-in drainage is what prevents standing water and protects the membrane long-term. When original construction gets this wrong, we correct it through our Pitch Correction repair service using sister joists. Fiberglass simply performs best when the structure underneath was done right.",
       },
       {
         type: "h2",
@@ -147,7 +149,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
       },
       {
         type: "p",
-        text: "Textured gelcoat can be renewed through recolor maintenance on structurally sound decks, or through full reglass when the reinforcement layer needs replacement. Maintenance intervals are predictable: many homeowners plan recolor on a roughly five-year cycle when surfaces chalk or fade, and reglass on a longer horizon when the laminate or flashings require renewal. That is different from hidden rot surprises in wood decks where failure happens inside the joist bay.",
+        text: "Textured gelcoat can be renewed through recolor maintenance on structurally sound decks, or through full reglass when the reinforcement layer needs replacement. Maintenance intervals are predictable: recolor is recommended every 3–5 years depending on each deck's exposure to sun, salt, and weather — and reglass when the membrane shows widespread compromise. That is different from hidden rot surprises in wood decks where failure happens inside the joist bay.",
       },
       {
         type: "h2",
@@ -177,6 +179,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     excerpt:
       "A simple seasonal rhythm keeps your deck safer and catches small issues before they become structural repairs.",
     readTimeMinutes: 7,
+    category: "Maintenance",
     relatedServiceSlugs: ["fiberglass-deck-recolor", "fiberglass-deck-repair"],
     blocks: [
       {
@@ -243,7 +246,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
       },
       {
         type: "p",
-        text: "If the structure is sound and the issue is surface UV wear, recolor maintenance may be enough. If flashings failed or plywood is compromised, repair or reglass is required first. Correct diagnosis saves you from paying twice.",
+        text: "Recolor maintenance is recommended every 3–5 years depending on each deck's exposure to sun, salt, and weather. The right time to act is when you begin to see visible fading or wear in the topcoat — catching it early prevents surface crazing and prolongs the membrane's life. If the structure is sound and the issue is surface UV wear, recolor maintenance may be enough. If flashings failed or plywood is compromised, repair or reglass is required first. Correct diagnosis saves you from paying twice.",
       },
     ],
   },
@@ -257,6 +260,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     excerpt:
       "Surface refresh versus full membrane renewal: here is how we tell which service matches what your deck actually needs.",
     readTimeMinutes: 8,
+    category: "Maintenance",
     relatedServiceSlugs: ["fiberglass-deck-recolor", "fiberglass-deck-resurfacing"],
     blocks: [
       {
@@ -269,7 +273,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
       },
       {
         type: "p",
-        text: "Recolor (re-gelcoating) targets the wear layer: UV fade, chalking, minor crazing, and cosmetic imperfections on a deck that is structurally sound and still watertight at transitions. Typical prep includes grinding or abrading the existing gelcoat, repairing hairline defects, cleaning compatible surfaces (often with acetone where appropriate), and applying new textured marine-grade gelcoat. Many shore homeowners plan this on a multi-year rhythm — often discussed around a five-year horizon depending on exposure.",
+        text: "Recolor (re-gelcoating) targets the wear layer: UV fade, chalking, minor crazing, and cosmetic imperfections on a deck that is structurally sound and still watertight at transitions. Typical prep includes grinding or abrading the existing gelcoat, repairing hairline defects, cleaning compatible surfaces (often with acetone where appropriate), and applying new textured marine-grade gelcoat. Many shore homeowners plan this on a multi-year rhythm — recommended every 3–5 years depending on each deck's exposure to sun, salt, and weather — not on a fixed five-year calendar.",
       },
       {
         type: "h2",
@@ -323,6 +327,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     excerpt:
       "Most deck leaks start at a wall, door, or post — not the middle of the field. Here is how those details are supposed to work together.",
     readTimeMinutes: 9,
+    category: "Repair",
     relatedServiceSlugs: ["fiberglass-deck-repair", "fiberglass-deck-new-constructions"],
     blocks: [
       {
@@ -397,6 +402,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     excerpt:
       "Composite is not one-size-fits-all. Here is how we evaluate PVC and composite boards for salt, sun, and humidity near the shore.",
     readTimeMinutes: 7,
+    category: "Materials",
     relatedServiceSlugs: ["composite-decks", "vinyl-railing"],
     blocks: [
       {
@@ -425,7 +431,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
       },
       {
         type: "p",
-        text: "Salt spray accelerates corrosion. Use manufacturer-approved clips and fasteners rated for coastal exposure. For railings, vinyl systems avoid rust streaks common with steel in oceanfront conditions. Where posts penetrate any waterproof surface, integrate flashings — the same six-inch vertical wrap concept applies.",
+        text: "Salt spray accelerates corrosion. Use manufacturer-approved clips and fasteners rated for coastal exposure. For railings, vinyl is the top choice for coastal homes — it won't corrode, warp, or degrade in salt air the way wood or metal alternatives do, keeping fascias and siding clean season after season. Where posts penetrate any waterproof surface, integrate flashings — the same six-inch vertical wrap concept applies.",
       },
       {
         type: "h2",

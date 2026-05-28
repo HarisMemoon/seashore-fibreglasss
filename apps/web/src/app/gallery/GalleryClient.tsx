@@ -1,36 +1,80 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
 import type { GalleryItem } from "@seashore/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+
+const FILTER_OPTIONS = [
+  "All",
+  "Repair",
+  "Reglass",
+  "Recolor",
+  "New Construction",
+  "Composite",
+  "Vinyl Railing",
+] as const;
+
+type FilterOption = (typeof FILTER_OPTIONS)[number];
+
+/** Display labels and filter keys for grouped "All" view */
+const CATEGORY_GROUPS: { label: string; filter: Exclude<FilterOption, "All"> }[] = [
+  { label: "Repair & Structural Work", filter: "Repair" },
+  { label: "Reglass & Full Resurfacing", filter: "Reglass" },
+  { label: "Recolor & Re-Gelcoating", filter: "Recolor" },
+  { label: "New Construction", filter: "New Construction" },
+  { label: "Composite Decking", filter: "Composite" },
+  { label: "Vinyl Railing", filter: "Vinyl Railing" },
+];
+
+function matchesFilter(category: string, filter: FilterOption): boolean {
+  if (filter === "All") return true;
+  return category.toLowerCase().includes(filter.toLowerCase());
+}
 
 function BeforeAfterVisual({
   variant,
   label,
   imageAlt,
+  src,
 }: {
   variant: "before" | "after";
   label: string;
   imageAlt: string;
+  src?: string;
 }) {
   const isBefore = variant === "before";
   return (
     <div
-      role="img"
-      aria-label={imageAlt}
       className={`relative aspect-[4/3] w-full overflow-hidden rounded-xl shadow-inner ${
-        isBefore
-          ? "bg-gradient-to-br from-slate-700 via-slate-800 to-slate-950"
-          : "bg-gradient-to-br from-teal via-turquoise to-navy"
+        src
+          ? "bg-slate-100"
+          : isBefore
+            ? "bg-gradient-to-br from-slate-700 via-slate-800 to-slate-950"
+            : "bg-gradient-to-br from-teal via-turquoise to-navy"
       }`}
     >
-      <div
-        className={`absolute inset-0 opacity-30 ${
-          isBefore
-            ? "bg-[radial-gradient(ellipse_at_30%_20%,rgba(255,255,255,0.12),transparent_50%)]"
-            : "bg-[radial-gradient(ellipse_at_70%_30%,rgba(255,255,255,0.18),transparent_55%)]"
-        }`}
-      />
+      {src ? (
+        <Image
+          src={src}
+          alt={imageAlt}
+          fill
+          sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
+          className="object-cover"
+          loading="lazy"
+        />
+      ) : (
+        <div
+          role="img"
+          aria-label={imageAlt}
+          className={`absolute inset-0 opacity-30 ${
+            isBefore
+              ? "bg-[radial-gradient(ellipse_at_30%_20%,rgba(255,255,255,0.12),transparent_50%)]"
+              : "bg-[radial-gradient(ellipse_at_70%_30%,rgba(255,255,255,0.18),transparent_55%)]"
+          }`}
+        />
+      )}
       <div className="absolute bottom-3 left-3 rounded-full bg-black/35 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
         {label}
       </div>
@@ -53,29 +97,72 @@ function GalleryCard({
     >
       <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-card transition group-hover:border-turquoise/25 group-hover:shadow-card-hover">
         <div className="grid grid-cols-2 gap-1 p-1">
-          <BeforeAfterVisual variant="before" label="Before" imageAlt={item.beforeImageAlt} />
-          <BeforeAfterVisual variant="after" label="After" imageAlt={item.afterImageAlt} />
+          <BeforeAfterVisual variant="before" label="Before" imageAlt={item.beforeImageAlt} src={item.beforeImage} />
+          <BeforeAfterVisual variant="after" label="After" imageAlt={item.afterImageAlt} src={item.afterImage} />
         </div>
         <div className="px-4 pb-4 pt-3">
-          <span className="inline-block rounded-full bg-turquoise/10 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-turquoise-dark">
-            {item.category}
-          </span>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="inline-block rounded-full bg-turquoise/10 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-turquoise-dark">
+              {item.category}
+            </span>
+            {item.location && (
+              <span className="inline-block rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold text-slate-500">
+                {item.location}
+              </span>
+            )}
+          </div>
           <h2 className="font-heading mt-2 text-lg font-bold leading-snug text-navy group-hover:text-turquoise-dark">
             {item.title}
           </h2>
           <p className="mt-2 line-clamp-2 text-sm text-slate-600">
             <span className="font-medium text-slate-800">Before:</span> {item.beforeDescription}
           </p>
+          <p className="mt-1 text-xs font-semibold text-turquoise">Tap to see full before &amp; after →</p>
         </div>
       </div>
     </button>
   );
 }
 
+function InlineCta() {
+  return (
+    <div className="col-span-full rounded-2xl border border-turquoise/20 bg-gradient-to-br from-slate-50 to-white p-8 text-center">
+      <p className="font-heading text-xl font-bold text-navy">
+        Serving homeowners from Ocean City to Cape May — free inspections, no pressure.
+      </p>
+      <div className="mt-5">
+        <Link
+          href="/contact"
+          className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange to-orange-light px-8 py-4 font-bold text-white shadow-lg shadow-orange/25 transition hover:shadow-glow-orange"
+        >
+          Get My Free Inspection
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function CategoryDivider({ label, count }: { label: string; count: number }) {
+  return (
+    <div className="col-span-full mt-4 mb-1 flex items-center gap-4">
+      <div className="flex items-baseline gap-3">
+        <h2 className="font-heading text-xl font-extrabold text-navy">{label}</h2>
+        <span className="rounded-full bg-turquoise/10 px-2.5 py-0.5 text-xs font-bold text-turquoise-dark">
+          {count} {count === 1 ? "project" : "projects"}
+        </span>
+      </div>
+      <div className="h-px flex-1 bg-slate-200" />
+    </div>
+  );
+}
+
 export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [activeFilter, setActiveFilter] = useState<FilterOption>("All");
   const closeRef = useRef<HTMLButtonElement>(null);
   const titleId = useId();
+
+  const filteredItems = items.filter((item) => matchesFilter(item.category, activeFilter));
 
   const close = useCallback(() => setOpenIndex(null), []);
   const openAt = useCallback((i: number) => setOpenIndex(i), []);
@@ -89,10 +176,10 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
 
   const goNext = useCallback(() => {
     setOpenIndex((i) => {
-      if (i === null || i >= items.length - 1) return i;
+      if (i === null || i >= filteredItems.length - 1) return i;
       return i + 1;
     });
-  }, [items.length]);
+  }, [filteredItems.length]);
 
   useEffect(() => {
     if (openIndex === null) return;
@@ -115,22 +202,84 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
     }
   }, [openIndex]);
 
-  const active = openIndex !== null ? items[openIndex] : null;
+  const active = openIndex !== null ? filteredItems[openIndex] : null;
+
+  // Build the grid: grouped by type with category dividers when showing All,
+  // single flat list when a specific filter is active.
+  // CTA appears once — at the very end only.
+  const gridNodes: React.ReactNode[] = [];
+
+  if (activeFilter === "All") {
+    CATEGORY_GROUPS.forEach(({ label, filter }) => {
+      const groupItems = filteredItems.filter((item) =>
+        matchesFilter(item.category, filter)
+      );
+      if (groupItems.length === 0) return;
+      gridNodes.push(
+        <CategoryDivider key={`divider-${filter}`} label={label} count={groupItems.length} />
+      );
+      groupItems.forEach((item) => {
+        const idx = filteredItems.indexOf(item);
+        gridNodes.push(
+          <GalleryCard key={item.id} item={item} onOpen={() => openAt(idx)} />
+        );
+      });
+    });
+  } else {
+    filteredItems.forEach((item, i) => {
+      gridNodes.push(
+        <GalleryCard key={item.id} item={item} onOpen={() => openAt(i)} />
+      );
+    });
+  }
+
+  // Single CTA at the very end
+  if (filteredItems.length > 0) {
+    gridNodes.push(<InlineCta key="cta-end" />);
+  }
 
   return (
     <>
+      {/* Filter bar */}
+      <div className="mb-10 flex flex-wrap gap-2">
+        {FILTER_OPTIONS.map((filter) => (
+          <button
+            key={filter}
+            type="button"
+            onClick={() => {
+              setActiveFilter(filter);
+              setOpenIndex(null);
+            }}
+            className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+              activeFilter === filter
+                ? "border-turquoise bg-turquoise text-white shadow-sm"
+                : "border-slate-200 bg-white text-slate-700 hover:border-turquoise/40 hover:text-turquoise"
+            }`}
+          >
+            {filter}
+          </button>
+        ))}
+        {filteredItems.length < items.length && (
+          <span className="ml-2 self-center text-xs text-slate-500">
+            {filteredItems.length} project{filteredItems.length !== 1 ? "s" : ""} shown
+          </span>
+        )}
+      </div>
+
+      {filteredItems.length === 0 && (
+        <p className="py-12 text-center text-slate-500">No projects match this filter.</p>
+      )}
+
       {/* Desktop + tablet: grid */}
       <div className="hidden gap-8 md:grid md:grid-cols-2 lg:grid-cols-3">
-        {items.map((item, i) => (
-          <GalleryCard key={item.id} item={item} onOpen={() => openAt(i)} />
-        ))}
+        {gridNodes}
       </div>
 
       {/* Mobile: horizontal snap carousel */}
       <div className="md:hidden">
         <p className="mb-4 text-center text-sm text-slate-500">Swipe sideways to browse projects</p>
         <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4">
-          {items.map((item, i) => (
+          {filteredItems.map((item, i) => (
             <div key={item.id} className="w-[min(92vw,420px)] shrink-0 snap-center">
               <GalleryCard item={item} onOpen={() => openAt(i)} />
             </div>
@@ -165,9 +314,19 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
             >
               <div className="flex items-start justify-between gap-4 border-b border-slate-100 px-5 py-4 md:px-6">
                 <div className="min-w-0">
-                  <span className="text-[11px] font-bold uppercase tracking-wide text-turquoise">
-                    {active.category} · {openIndex + 1} / {items.length}
-                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wide text-turquoise">
+                      {active.category}
+                    </span>
+                    {active.location && (
+                      <span className="text-[11px] font-bold uppercase tracking-wide text-slate-400">
+                        · {active.location}
+                      </span>
+                    )}
+                    <span className="text-[11px] font-bold uppercase tracking-wide text-slate-400">
+                      · {openIndex + 1} / {filteredItems.length}
+                    </span>
+                  </div>
                   <h2 id={titleId} className="font-heading mt-1 text-xl font-bold text-navy md:text-2xl">
                     {active.title}
                   </h2>
@@ -188,17 +347,25 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
               <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 md:px-6">
                 <div className="grid gap-6 md:grid-cols-2">
                   <figure className="m-0">
-                    <BeforeAfterVisual variant="before" label="Before" imageAlt={active.beforeImageAlt} />
+                    <BeforeAfterVisual variant="before" label="Before" imageAlt={active.beforeImageAlt} src={active.beforeImage} />
                     <figcaption className="mt-3 text-sm leading-relaxed text-slate-600">
-                      <span className="font-semibold text-navy">Before — </span>
-                      {active.beforeDescription}
+                      {active.beforeDescription.split("\n\n").map((para, i) => (
+                        <p key={i} className={i > 0 ? "mt-2" : ""}>
+                          {i === 0 && <span className="font-semibold text-navy">Before — </span>}
+                          {para}
+                        </p>
+                      ))}
                     </figcaption>
                   </figure>
                   <figure className="m-0">
-                    <BeforeAfterVisual variant="after" label="After" imageAlt={active.afterImageAlt} />
+                    <BeforeAfterVisual variant="after" label="After" imageAlt={active.afterImageAlt} src={active.afterImage} />
                     <figcaption className="mt-3 text-sm leading-relaxed text-slate-600">
-                      <span className="font-semibold text-navy">After — </span>
-                      {active.afterDescription}
+                      {active.afterDescription.split("\n\n").map((para, i) => (
+                        <p key={i} className={i > 0 ? "mt-2" : ""}>
+                          {i === 0 && <span className="font-semibold text-navy">After — </span>}
+                          {para}
+                        </p>
+                      ))}
                     </figcaption>
                   </figure>
                 </div>
@@ -219,7 +386,7 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
                 <button
                   type="button"
                   onClick={goNext}
-                  disabled={openIndex >= items.length - 1}
+                  disabled={openIndex >= filteredItems.length - 1}
                   className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-navy transition enabled:hover:border-turquoise/40 enabled:hover:bg-turquoise/5 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   Next

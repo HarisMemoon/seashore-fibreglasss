@@ -8,7 +8,7 @@ export const CONTACT_META = {
 
 export const CONTACT_H1 = "Contact Us — Let's Protect Your Deck the Right Way";
 
-export const CONTACT_HOURS = "Monday–Saturday 7am–6pm, Sunday by appointment";
+export const CONTACT_HOURS = "Monday–Saturday 8:00 AM – 5:00 PM · Sunday by appointment";
 
 export const HOW_WE_WORK_STEPS = [
   {
@@ -21,7 +21,7 @@ export const HOW_WE_WORK_STEPS = [
   },
   {
     title: "Free Inspection",
-    description: "We walk the deck, check transitions, pitch, flashings, and structure.",
+    description: "We walk the deck, check transitions, drainage, flashings, and overall structure — and give you an honest assessment of what we find.",
   },
   {
     title: "Honest Quote",
@@ -59,3 +59,16 @@ export const SERVICE_AREA_FORM_OPTIONS = [
 ] as const;
 
 export const BEST_TIME_OPTIONS = ["Morning", "Afternoon", "Evening", "Anytime"] as const;
+
+/** Service inquiry options — used in contact dropdowns */
+export const SERVICE_INQUIRY_OPTIONS = [
+  "Fiberglass Deck Repair",
+  "Fiberglass Deck Resurfacing (Reglass)",
+  "Fiberglass Deck New Construction",
+  "Fiberglass Deck Recolor (Re-Gelcoating)",
+  "Composite Decking",
+  "Vinyl Railing",
+  "Not sure / Multiple services",
+] as const;
+
+export const CONTACT_HEADER_COPY = "Phone (609) 338-4505 · Monday–Saturday 8:00 AM – 5:00 PM · Sunday by appointment";

@@ -7,26 +7,36 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   BEST_TIME_OPTIONS,
   CONTACT_FORM_MESSAGE_PLACEHOLDER,
+  SERVICE_INQUIRY_OPTIONS,
   FINAL_CTA_BODY,
   FINAL_CTA_TITLE,
   GALLERY_ITEMS,
+  getHomeCoverageGridCaption,
   HERO_HEADING,
   HERO_PRIMARY_CTA,
   HERO_SECONDARY_CTA,
   HERO_SUBHEADING,
+  HOME_COVERAGE_STATS_LABELS,
+  HOME_COVERAGE_SUBHEAD,
+  GBP_URL,
   PHONE,
   REVIEWS,
+  REVIEWS_FOOTER_TEXT,
   SERVICES,
   SERVICE_AREA_FORM_OPTIONS,
   SERVICE_AREA_DETAILS,
-  SHORE_SECTION_BODY,
-  SHORE_SECTION_TITLE,
+  SHORE_HOME_BUILT_DIFFERENT_SUB,
+  SHORE_HOME_BUILT_DIFFERENT_TITLE,
+  SHORE_HOME_HEADLINE_ACCENT,
+  SHORE_HOME_HEADLINE_PREFIX,
+  SHORE_HOME_INTRO,
+  SHORE_HOME_STRESSORS,
+  SHORE_HOME_WHY_PARAGRAPHS,
   SHORE_SPECS,
   SITE_NAME,
   TRUST_BADGES,
 } from "@seashore/content";
 import { postContact, type PostContactError } from "@/lib/postContact";
-import { ServiceAreasMapWidget } from "@/components/ServiceAreasMapWidget";
 import { StyledSelect } from "@/components/StyledSelect";
 
 const fadeUp = {
@@ -36,6 +46,10 @@ const fadeUp = {
 const stagger = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.1 } },
+};
+const staggerQuick = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.065, delayChildren: 0.05 } },
 };
 const scaleUp = {
   hidden: { opacity: 0, scale: 0.9 },
@@ -161,6 +175,9 @@ type LiveGoogleReview = {
   quote: string;
   city: string;
   stars: number;
+  reviewDate?: string;
+  photoCount?: number;
+  images?: readonly string[];
 };
 
 const SERVICE_DETAIL_BULLETS: Record<string, readonly string[]> = {
@@ -179,14 +196,14 @@ const SERVICE_DETAIL_BULLETS: Record<string, readonly string[]> = {
   "fiberglass-deck-resurfacing": [
     "New 2-oz fiberglass membrane over existing substrate",
     "Plywood re-secured, drip edges and flashings corrected",
-    "Resets membrane life - recolor again in ~5 years",
+    "Resets membrane life — recolor again in 3–5 years depending on coastal exposure",
     "Timeline: 4-7 days typical",
   ],
   "fiberglass-deck-recolor": [
     "For structurally sound decks with faded or chalky gelcoat",
     "Mechanical grind, crack fill, acetone clean, new gelcoat",
     "Restores UV protection and slip resistance",
-    "Done in 1-2 days; recommended every ~5 years",
+    "Done in 1-2 days; recommended every 3–5 years depending on coastal exposure",
   ],
   "composite-decks": [
     "Wolf 100% PVC decking - no wood fiber, zero rot",
@@ -195,11 +212,39 @@ const SERVICE_DETAIL_BULLETS: Record<string, readonly string[]> = {
     "Recommended for ground-level or open-air decks",
   ],
   "vinyl-railing": [
-    "Zero rust in salt air - no painting, no maintenance",
+    "Won't corrode, warp, or degrade in salt air and high humidity",
     "Code-compliant heights and post spacing",
     "Every post penetration flashed with 6\" fiberglass wrap",
     "New installs, repairs, and full system upgrades",
   ],
+};
+
+/** Hero-style photo per service (Unsplash — illustrative; replace with job photos when available). */
+const SERVICE_PANEL_IMAGES: Record<string, { src: string; alt: string }> = {
+  "fiberglass-deck-repair": {
+    src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=82",
+    alt: "Elevated coastal deck attached to a home — fiberglass deck inspection and structural repair context",
+  },
+  "fiberglass-deck-new-constructions": {
+    src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=82",
+    alt: "Residential deck framing under construction — new fiberglass-ready substrate and pitch layout",
+  },
+  "fiberglass-deck-resurfacing": {
+    src: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1600&q=82",
+    alt: "Waterfront deck overlooking water — resurfacing and membrane renewal on shore properties",
+  },
+  "fiberglass-deck-recolor": {
+    src: "https://images.unsplash.com/photo-1589939705384-d518bdbd0d6e?auto=format&fit=crop&w=1600&q=82",
+    alt: "Exterior repaint and refinishing tools — UV gelcoat recolor and textured finish maintenance",
+  },
+  "composite-decks": {
+    src: "https://images.unsplash.com/photo-1600210492493-efb169c65c35?auto=format&fit=crop&w=1600&q=82",
+    alt: "Low-maintenance composite deck boards — PVC and capped composite for coastal climates",
+  },
+  "vinyl-railing": {
+    src: "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?auto=format&fit=crop&w=1600&q=82",
+    alt: "Modern deck with white railing — vinyl railing installs and flashing at posts",
+  },
 };
 
 const serviceIcons: Record<string, React.ReactNode> = {
@@ -243,6 +288,7 @@ function ServicesSection() {
   const activeService = SERVICES[activeIndex];
   const activeIconKey = iconKeys[activeIndex] ?? "repair";
   const bullets = SERVICE_DETAIL_BULLETS[activeSlug] ?? [];
+  const panelImage = SERVICE_PANEL_IMAGES[activeSlug] ?? SERVICE_PANEL_IMAGES[SERVICES[0].slug]!;
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-[#f8fafc] to-white px-6 py-28">
@@ -269,13 +315,13 @@ function ServicesSection() {
           </p>
         </InView>
 
-        {/* Tab strip */}
+        {/* Tab strip — offset grid vs specs section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="mt-12 flex flex-wrap justify-center gap-3"
+          className="mt-14 flex flex-wrap justify-center gap-3 sm:gap-3.5"
         >
           {SERVICES.map((service, i) => {
             const iconKey = iconKeys[i] ?? "repair";
@@ -313,8 +359,8 @@ function ServicesSection() {
           })}
         </motion.div>
 
-        {/* Detail panel */}
-        <div className="mt-10">
+        {/* Detail panel — image-leading layout (distinct from specs section) */}
+        <div className="mt-12">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeSlug}
@@ -322,85 +368,95 @@ function ServicesSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-              className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-[0_8px_48px_rgba(13,45,74,0.09)]"
+              className="relative overflow-hidden rounded-[1.875rem] border border-slate-200/80 bg-white shadow-[0_22px_64px_-18px_rgba(13,45,74,0.14)]"
             >
-              {/* top accent bar */}
-              <div className="h-1.5 w-full bg-gradient-to-r from-turquoise via-turquoise-light to-navy" />
+              <div className="h-[5px] w-full bg-gradient-to-r from-orange/90 via-turquoise to-navy" />
 
-              <div className="grid gap-0 lg:grid-cols-[1fr_1.1fr]">
-                {/* Left — icon + copy */}
-                <div className="flex flex-col justify-between gap-8 p-8 sm:p-10">
-                  <div>
-                    <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-navy to-[#0d4a5c] text-white shadow-lg shadow-navy/30">
-                      <span style={{ width: 28, height: 28, display: "flex" }}>
-                        {serviceIcons[activeIconKey]}
-                      </span>
+              <div className="grid gap-0 lg:grid-cols-[minmax(0,1.28fr)_minmax(0,1fr)]">
+                {/* Leading column — contextual photo */}
+                <div className="relative isolate min-h-[240px] border-b border-slate-100 sm:min-h-[280px] lg:min-h-[min(28rem,calc(100vh-14rem))] lg:border-b-0 lg:border-r lg:border-slate-100">
+                  <Image
+                    src={panelImage.src}
+                    alt={panelImage.alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 46vw"
+                    priority={activeIndex === 0}
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/45 via-navy/10 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-navy/5 lg:to-navy/25"
+                    aria-hidden
+                  />
+                  <div className="absolute bottom-5 left-5 lg:bottom-8 lg:left-8">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-white/95 text-navy shadow-lg shadow-black/20 ring-1 ring-white/60 backdrop-blur-sm">
+                      <span className="flex [&_svg]:h-7 [&_svg]:w-7">{serviceIcons[activeIconKey]}</span>
                     </div>
-                    <h3 className="font-heading text-2xl font-extrabold leading-tight text-navy sm:text-3xl">
-                      {activeService.title}
-                    </h3>
-                    <p className="mt-4 text-[1rem] leading-[1.8] text-slate-500">
-                      {activeService.description}
-                    </p>
                   </div>
-
-                  <Link
-                    href={`/services/${activeService.slug}`}
-                    className="group inline-flex w-fit items-center gap-2.5 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white shadow-md shadow-navy/30 transition-all duration-300 hover:bg-turquoise-dark hover:shadow-turquoise/20"
-                  >
-                    Full service details
-                    <svg
-                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </Link>
                 </div>
 
-                {/* Right — spec bullets + progress bars */}
-                <div className="flex flex-col justify-center gap-5 border-t border-slate-100 bg-gradient-to-br from-slate-50 to-[#f0f7fb] p-8 sm:p-10 lg:border-l lg:border-t-0">
-                  <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-slate-400">
-                    What&apos;s included
-                  </p>
-                  <ul className="space-y-4">
-                    {bullets.map((bullet, i) => (
-                      <motion.li
-                        key={bullet}
-                        initial={{ opacity: 0, x: 16 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.07, duration: 0.3 }}
-                        className="flex items-start gap-3"
+                {/* Copy + checklist */}
+                <div className="flex flex-col gap-8 p-8 sm:p-10 lg:justify-between">
+                  <div className="space-y-5">
+                    <h3 className="font-heading text-2xl font-extrabold leading-tight text-navy sm:text-[1.85rem] sm:leading-tight">
+                      {activeService.title}
+                    </h3>
+                    <p className="text-[1rem] leading-[1.8] text-slate-500">{activeService.description}</p>
+                    <Link
+                      href={`/services/${activeService.slug}`}
+                      className="group inline-flex w-fit items-center gap-2.5 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white shadow-md shadow-navy/30 transition-all duration-300 hover:bg-turquoise-dark hover:shadow-turquoise/20"
+                    >
+                      Full service details
+                      <svg
+                        className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden
                       >
-                        <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-turquoise/15 text-turquoise">
-                          <svg className="h-3 w-3" viewBox="0 0 12 12" fill="currentColor" aria-hidden>
-                            <path d="M10.28 2.28a.75.75 0 00-1.06 0L4.5 7 2.78 5.28a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l5.25-5.25a.75.75 0 000-1.06z" />
-                          </svg>
-                        </span>
-                        <span className="text-[0.95rem] leading-[1.65] text-slate-700">{bullet}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
+                        <path
+                          fillRule="evenodd"
+                          d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </Link>
+                  </div>
 
-                  {/* service progress indicators */}
-                  <div className="mt-4 grid grid-cols-3 divide-x divide-slate-200 rounded-2xl border border-slate-200 bg-white">
-                    {[
-                      { label: "Shore-rated", value: "100%", sub: "salt + UV" },
-                      { label: "Warranty", value: "10 yr", sub: "workmanship" },
-                      { label: "Timeline", value: "2-7d", sub: "typical" },
-                    ].map(({ label, value, sub }) => (
-                      <div key={label} className="flex flex-col items-center gap-0.5 p-4 text-center">
-                        <span className="font-heading text-lg font-extrabold text-navy">{value}</span>
-                        <span className="text-[0.7rem] font-bold uppercase tracking-wider text-turquoise">{label}</span>
-                        <span className="text-[0.68rem] text-slate-400">{sub}</span>
-                      </div>
-                    ))}
+                  <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-br from-slate-50/95 to-[#eef6fa] p-6 sm:p-7">
+                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-slate-400">What&apos;s included</p>
+                    <ul className="mt-4 space-y-3.5">
+                      {bullets.map((bullet, i) => (
+                        <motion.li
+                          key={bullet}
+                          initial={{ opacity: 0, x: 12 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.06, duration: 0.28 }}
+                          className="flex items-start gap-3"
+                        >
+                          <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-white text-turquoise shadow-sm ring-1 ring-turquoise/20">
+                            <svg className="h-3 w-3" viewBox="0 0 12 12" fill="currentColor" aria-hidden>
+                              <path d="M10.28 2.28a.75.75 0 00-1.06 0L4.5 7 2.78 5.28a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l5.25-5.25a.75.75 0 000-1.06z" />
+                            </svg>
+                          </span>
+                          <span className="text-[0.95rem] leading-[1.65] text-slate-700">{bullet}</span>
+                        </motion.li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-6 grid grid-cols-3 divide-x divide-slate-200/90 rounded-xl border border-slate-200/80 bg-white/90">
+                      {[
+                        { label: "Shore-rated", value: "100%", sub: "salt + UV" },
+                        { label: "Warranty", value: "10 yr", sub: "workmanship" },
+                        { label: "Timeline", value: "2-7d", sub: "typical" },
+                      ].map(({ label, value, sub }) => (
+                        <div key={label} className="flex flex-col items-center gap-0.5 px-2 py-4 text-center sm:p-4">
+                          <span className="font-heading text-base font-extrabold text-navy sm:text-lg">{value}</span>
+                          <span className="text-[0.65rem] font-bold uppercase tracking-wider text-turquoise sm:text-[0.7rem]">
+                            {label}
+                          </span>
+                          <span className="text-[0.62rem] text-slate-400 sm:text-[0.68rem]">{sub}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -434,15 +490,1009 @@ function ServicesSection() {
   );
 }
 
+const SHORE_STANDARD_LABELS = [
+  "Substrate",
+  "Membrane",
+  "Wall flashings",
+  "Post flashings",
+  "Drainage pitch",
+  "Drip edges",
+] as const;
+
+const shoreStressorIconEls = [
+  (
+    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3 14c2.25-3.25 5.25-3.25 7.5 0s5.25 3.25 7.5 0 5.25-3.25 7.5 0M3 18.25c2.25-3.25 5.25-3.25 7.5 0s5.25 3.25 7.5 0 5.25-3.25 7.5 0"
+      />
+    </svg>
+  ),
+  (
+    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 3.75c-1.25 3-4.5 5.9-4.5 9.65a4.5 4.5 0 109 0c0-3.75-3.25-6.65-4.5-9.65z"
+      />
+    </svg>
+  ),
+  (
+    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" d="M12 3v2.25M12 18.75V21M4.219 4.219l1.591 1.591M18.19 18.191l1.591 1.591M3 12h2.25M18.75 12H21M4.219 19.781l1.591-1.591M18.19 5.809l1.591-1.591" />
+      <circle cx="12" cy="12" r="3.75" />
+    </svg>
+  ),
+  (
+    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 3v4.5m0 9V21m-6-7.5h4.5M13.5 10.5H18M9 10.125L7.875 12 9 13.875M15 10.125 16.125 12 15 13.875M12 12h.008v.008H12z"
+      />
+    </svg>
+  ),
+] as const;
+
+type ShoreStandardsFilterKey = "all" | "base" | "flashing" | "drain_perim";
+
+const SHORE_STANDARD_FILTERS: readonly {
+  key: ShoreStandardsFilterKey;
+  label: string;
+  description: string;
+  indices: readonly number[];
+}[] = [
+  {
+    key: "all",
+    label: "Full system",
+    description:
+      "The complete shoreline assembly — how substrate, fiberglass, flashing, drainage, and perimeter detailing stack together on every job.",
+    indices: [0, 1, 2, 3, 4, 5],
+  },
+  {
+    key: "base",
+    label: "Base & fiberglass",
+    description:
+      "Rigid dual-layer plywood and a resin‑saturated fiberglass skin create a seamless structural deck before gelcoat ever goes down.",
+    indices: [0, 1],
+  },
+  {
+    key: "flashing",
+    label: "Wall & posts",
+    description:
+      "Where decking meets siding and posts — shore wind‑driven rain looks for shortcuts first; minimum heights keep water routed out, not inward.",
+    indices: [2, 3],
+  },
+  {
+    key: "drain_perim",
+    label: "Pitch & perimeter",
+    description:
+      "Positive drainage limits ponding while PVC/Azek drip edges survive salt splash without rotting like wood fascia.",
+    indices: [4, 5],
+  },
+];
+
+/** Order matches SHORE_STANDARD_FILTERS — sizing matches Core Services tabs */
+const shoreStandardTabIcons: React.ReactNode[] = [
+  (
+    <svg className="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5l9 5.25 9-5.25zM3 15.75l9 5.25 9-5.25M3 11.625l9 5.25 9-5.25" />
+    </svg>
+  ),
+  (
+    <svg className="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
+      <path strokeLinecap="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+    </svg>
+  ),
+  (
+    <svg className="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M2.25 21h19.5M4.5 3h15M5.25 3v18m4.5-18v9m4.5-9v18M3.75 9h16.5M3.75 15h16.5"
+      />
+    </svg>
+  ),
+  (
+    <svg className="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3 16.5l6-6 4 4 7-7.5M3 16.5V21h4.5M21 7.5L16.5 3M16.5 3H12v4.5"
+      />
+    </svg>
+  ),
+];
+
+const SHORE_WORK_COMMITMENTS: readonly { text: string; sub: string }[] = [
+  { text: "Work guaranteed", sub: "Done right, or we make it right" },
+  { text: "10-year warranty", sub: "Workmanship on our installs" },
+  { text: "Licensed & insured", sub: "NJ contractor — ask for docs" },
+];
+
+function ShoreFiberglassSection() {
+  const [standardFilter, setStandardFilter] = useState<ShoreStandardsFilterKey>("all");
+  const activeFilter = SHORE_STANDARD_FILTERS.find((f) => f.key === standardFilter) ?? SHORE_STANDARD_FILTERS[0];
+  const activeStandardTabIndex = Math.max(
+    0,
+    SHORE_STANDARD_FILTERS.findIndex((t) => t.key === standardFilter)
+  );
+  const activeStandardIcon = shoreStandardTabIcons[activeStandardTabIndex] ?? shoreStandardTabIcons[0];
+
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#fdf8f0] via-[#f8fafc] to-white px-6 py-28">
+      {/* Top transition from sandy amber strip */}
+      <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/60 to-transparent" />
+
+      {/* Grid background — same as hero */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right,#0d2d4a 1px,transparent 1px),linear-gradient(to bottom,#0d2d4a 1px,transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
+
+      {/* Ambient orbs — turquoise + orange, same as hero */}
+      <div className="pointer-events-none absolute -right-32 top-0 h-[480px] w-[480px] rounded-full bg-turquoise/[0.07] blur-[120px]" />
+      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full bg-orange/[0.05] blur-[100px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[200px] w-[200px] -translate-x-1/2 rounded-full bg-turquoise/[0.04] blur-[80px]" />
+
+      <div className="relative mx-auto max-w-7xl">
+        {/* ── HEADER ─────────────────────────────────────── */}
+        <motion.div
+          className="mx-auto max-w-3xl text-center"
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <motion.div variants={fadeUp}>
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-turquoise/25 bg-white/90 px-5 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-turquoise shadow-sm backdrop-blur-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-turquoise opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-turquoise" />
+              </span>
+              Why fiberglass
+            </span>
+          </motion.div>
+
+          <motion.h2
+            variants={fadeUp}
+            className="font-heading mt-6 text-[clamp(2rem,3.8vw,3rem)] font-extrabold leading-[1.08] tracking-tight text-navy"
+          >
+            {SHORE_HOME_HEADLINE_PREFIX}{" "}
+            <span className="italic text-turquoise">{SHORE_HOME_HEADLINE_ACCENT}</span>
+          </motion.h2>
+
+          <motion.p variants={fadeUp} className="mt-5 text-[1.05rem] leading-relaxed text-slate-500">
+            {SHORE_HOME_INTRO}
+          </motion.p>
+        </motion.div>
+
+        {/* ── SHORE CHALLENGES (left) + NARRATIVE (right) ── */}
+        <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-14">
+          <motion.div
+            variants={staggerQuick}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.12 }}
+            className="flex flex-col gap-4"
+          >
+            {SHORE_HOME_STRESSORS.map((item, i) => (
+              <motion.div
+                key={item.title}
+                variants={fadeUp}
+                whileHover={{ y: -5, transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] } }}
+                className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_14px_48px_-22px_rgba(13,45,74,0.18)] ring-1 ring-white transition-all duration-300 hover:border-turquoise/30 hover:shadow-[0_20px_56px_-20px_rgba(13,121,137,0.22)]"
+              >
+                <div
+                  className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-turquoise via-turquoise-light to-navy/40 transition-transform duration-500 group-hover:scale-x-100"
+                  aria-hidden
+                />
+
+                <div
+                  className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-turquoise/[0.07] opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+                  aria-hidden
+                />
+
+                <div className="flex gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-turquoise/12 to-navy/[0.04] text-turquoise ring-1 ring-turquoise/15 transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-turquoise group-hover:to-[#0d4a5c] group-hover:text-white group-hover:shadow-md group-hover:shadow-turquoise/25 group-hover:ring-transparent">
+                    {shoreStressorIconEls[i]}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-heading text-lg font-bold text-navy">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-500">{item.body}</p>
+                  </div>
+                </div>
+
+                <span className="pointer-events-none absolute bottom-3 right-4 font-heading text-[2rem] font-extrabold leading-none text-slate-100 select-none transition-colors duration-300 group-hover:text-turquoise/10 sm:bottom-4 sm:right-5 sm:text-[2.5rem]">
+                  {i + 1}
+                </span>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            variants={staggerQuick}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.12 }}
+            className="relative overflow-hidden rounded-3xl border border-slate-200/75 bg-white/85 px-8 py-10 shadow-[0_18px_60px_-28px_rgba(13,45,74,0.16)] backdrop-blur-sm sm:px-11 sm:py-12 lg:sticky lg:top-28"
+          >
+            <motion.div
+              variants={fadeUp}
+              aria-hidden
+              className="absolute left-0 top-0 hidden h-full w-1 bg-gradient-to-b from-turquoise via-turquoise-light to-navy/20 sm:block"
+            />
+
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-20 top-8 h-48 w-48 rounded-full bg-turquoise/[0.06] blur-[72px]"
+            />
+
+            <div className="relative space-y-5 sm:pl-6">
+              {SHORE_HOME_WHY_PARAGRAPHS.map((paragraph, i) => (
+                <motion.p
+                  key={paragraph.slice(0, 52)}
+                  variants={fadeUp}
+                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                  className={`text-[1.05rem] leading-[1.9] text-slate-600 ${i > 0 ? "border-t border-slate-100 pt-5" : ""}`}
+                >
+                  {paragraph}
+                </motion.p>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* ── BUILT DIFFERENT — Core Services pattern ── */}
+        <div className="mt-24">
+          <InView className="text-center">
+            <SectionLabel>Our standard</SectionLabel>
+            <h2 className="font-heading mt-5 text-[clamp(2rem,3.8vw,3rem)] font-extrabold text-navy">
+              {SHORE_HOME_BUILT_DIFFERENT_TITLE}
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-[1.05rem] leading-relaxed text-slate-500">
+              {SHORE_HOME_BUILT_DIFFERENT_SUB}
+            </p>
+          </InView>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="mt-12 flex flex-wrap justify-center gap-3"
+            role="tablist"
+            aria-label="Deck assembly layers"
+          >
+            {SHORE_STANDARD_FILTERS.map((tab, i) => {
+              const isActive = tab.key === standardFilter;
+              return (
+                <button
+                  key={tab.key}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setStandardFilter(tab.key)}
+                  className={`group relative inline-flex min-h-[2.75rem] items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/60 ${
+                    isActive
+                      ? "border-turquoise bg-navy text-white shadow-lg shadow-navy/30"
+                      : "border-slate-200 bg-white text-slate-600 hover:border-turquoise/50 hover:bg-navy/5 hover:text-navy"
+                  }`}
+                >
+                  <span
+                    className={`inline-flex size-5 shrink-0 items-center justify-center [&_svg]:block [&_svg]:size-5 [&_svg]:shrink-0 ${
+                      isActive ? "text-turquoise" : "text-slate-400 group-hover:text-turquoise"
+                    }`}
+                    aria-hidden
+                  >
+                    {shoreStandardTabIcons[i]}
+                  </span>
+                  <span className="leading-snug">{tab.label}</span>
+                  {isActive ? (
+                    <motion.span
+                      layoutId="shore-standard-tab-dot"
+                      className="inline-flex size-1.5 shrink-0 items-center justify-center rounded-full bg-turquoise"
+                    />
+                  ) : null}
+                </button>
+              );
+            })}
+          </motion.div>
+
+          <div className="mt-10">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={standardFilter}
+                initial={{ opacity: 0, y: 22 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -14 }}
+                transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-[0_8px_48px_rgba(13,45,74,0.09)]"
+                role="tabpanel"
+              >
+                <div className="h-1.5 w-full bg-gradient-to-r from-turquoise via-turquoise-light to-navy" />
+
+                <div className="grid gap-0 lg:grid-cols-[1fr_1.1fr]">
+                  <div className="flex flex-col justify-between gap-8 p-8 sm:p-10">
+                    <div>
+                      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-navy to-[#0d4a5c] text-white shadow-lg shadow-navy/30">
+                        <span style={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          {activeStandardIcon}
+                        </span>
+                      </div>
+                      <h3 className="font-heading text-2xl font-extrabold leading-tight text-navy sm:text-3xl">
+                        {activeFilter.label}
+                      </h3>
+                      <p className="mt-4 text-[1rem] leading-[1.8] text-slate-500">{activeFilter.description}</p>
+                    </div>
+
+                    <Link
+                      href={`/services/${SERVICES[0].slug}`}
+                      className="group inline-flex w-fit items-center gap-2.5 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white shadow-md shadow-navy/30 transition-all duration-300 hover:bg-turquoise-dark hover:shadow-turquoise/20"
+                    >
+                      Full service details
+                      <svg
+                        className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </Link>
+                  </div>
+
+                  <div className="flex flex-col justify-center gap-5 border-t border-slate-100 bg-gradient-to-br from-slate-50 to-[#f0f7fb] p-8 sm:p-10 lg:border-l lg:border-t-0">
+                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-slate-400">What&apos;s included</p>
+                    <ul className="space-y-4">
+                      {activeFilter.indices.map((specIndex, i) => {
+                        const spec = SHORE_SPECS[specIndex];
+                        const label = SHORE_STANDARD_LABELS[specIndex] ?? "Standard";
+                        return (
+                          <motion.li
+                            key={spec}
+                            initial={{ opacity: 0, x: 16 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.07, duration: 0.3 }}
+                            className="flex items-start gap-3"
+                          >
+                            <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-turquoise/15 text-turquoise">
+                              <svg className="h-3 w-3" viewBox="0 0 12 12" fill="currentColor" aria-hidden>
+                                <path d="M10.28 2.28a.75.75 0 00-1.06 0L4.5 7 2.78 5.28a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l5.25-5.25a.75.75 0 000-1.06z" />
+                              </svg>
+                            </span>
+                            <span className="min-w-0">
+                              <span className="block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-turquoise">
+                                {label}
+                              </span>
+                              <span className="text-[0.95rem] leading-[1.65] text-slate-700">{spec}</span>
+                            </span>
+                          </motion.li>
+                        );
+                      })}
+                    </ul>
+
+                    <div className="mt-4 grid grid-cols-3 divide-x divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+                      {[
+                        { label: "Shore-rated", value: "100%", sub: "salt + UV" },
+                        { label: "Warranty", value: "10 yr", sub: "workmanship" },
+                        { label: "Timeline", value: "2-7d", sub: "typical" },
+                      ].map(({ label, value, sub }) => (
+                        <div key={label} className="flex flex-col items-center gap-0.5 p-4 text-center">
+                          <span className="font-heading text-lg font-extrabold text-navy">{value}</span>
+                          <span className="text-[0.7rem] font-bold uppercase tracking-wider text-turquoise">{label}</span>
+                          <span className="text-[0.68rem] text-slate-400">{sub}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <InView className="mt-10 text-center">
+            <div className="flex justify-center">
+              <SectionLabel>How we work</SectionLabel>
+            </div>
+            <p className="mx-auto mt-4 max-w-2xl text-[1.05rem] leading-relaxed text-slate-500">
+              Shore-rated assemblies, documented standards, and workmanship you can stand on.
+            </p>
+            <div className="mx-auto mt-6 grid max-w-3xl grid-cols-3 divide-x divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+              {SHORE_WORK_COMMITMENTS.map(({ text, sub }) => (
+                <div key={text} className="flex flex-col items-center gap-1 p-4 text-center sm:p-5">
+                  <span className="font-heading text-sm font-extrabold leading-tight text-navy sm:text-base">{text}</span>
+                  <span className="text-[0.68rem] leading-snug text-slate-400">{sub}</span>
+                </div>
+              ))}
+            </div>
+          </InView>
+
+          <InView className="mt-10 flex justify-center">
+            <Link
+              href="/services"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition-colors hover:text-navy"
+            >
+              Browse all services
+              <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                <path
+                  fillRule="evenodd"
+                  d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </Link>
+          </InView>
+        </div>
+      </div>
+    </section>
+  );
+}
+function ServiceCoverageSection() {
+  const areaCount = SERVICE_AREA_DETAILS.length;
+  const [selectedSlug, setSelectedSlug] = useState(SERVICE_AREA_DETAILS[0]?.slug ?? "");
+  const selected = SERVICE_AREA_DETAILS.find((a) => a.slug === selectedSlug) ?? SERVICE_AREA_DETAILS[0];
+  const telHref = `tel:${PHONE.replace(/\D/g, "")}`;
+
+  if (!selected) return null;
+
+  return (
+    <section className="relative overflow-hidden bg-white px-6 py-28">
+      <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right,#94a3b8 1px,transparent 1px),linear-gradient(to bottom,#94a3b8 1px,transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      />
+      <div className="pointer-events-none absolute -right-24 top-16 h-[320px] w-[320px] rounded-full bg-turquoise/[0.08] blur-[90px]" />
+
+      <div className="relative mx-auto max-w-7xl">
+        <div className="text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-turquoise/35 bg-turquoise/10 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-turquoise-dark">
+            <span className="h-1.5 w-1.5 rounded-full bg-turquoise" aria-hidden />
+            Coverage
+          </span>
+          <h2 className="font-heading mt-6 text-[clamp(2rem,3.8vw,3.25rem)] font-extrabold leading-[1.12] text-navy">
+            We Serve the <span className="italic text-turquoise">Whole Shore</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-[1.05rem] leading-relaxed text-slate-600">{HOME_COVERAGE_SUBHEAD}</p>
+        </div>
+
+        <p className="mt-14 text-center text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
+          {getHomeCoverageGridCaption(areaCount)}
+        </p>
+
+        <div
+          className="mt-5 grid grid-cols-2 gap-3 sm:gap-3.5 md:grid-cols-3 lg:grid-cols-4"
+          role="listbox"
+          aria-label="Service areas"
+        >
+          {SERVICE_AREA_DETAILS.map((area) => {
+            const isActive = area.slug === selectedSlug;
+            return (
+              <button
+                key={area.slug}
+                type="button"
+                role="option"
+                aria-selected={isActive}
+                onClick={() => setSelectedSlug(area.slug)}
+                className={`relative flex flex-col rounded-2xl border px-4 py-3.5 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/55 sm:px-4 sm:py-4 ${
+                  isActive
+                    ? "border-navy bg-navy text-white shadow-lg shadow-navy/25"
+                    : "border-slate-200 bg-white text-navy shadow-sm hover:border-turquoise/45 hover:shadow-md"
+                }`}
+              >
+                {isActive && (
+                  <span
+                    className="absolute right-3 top-3 h-2 w-2 rounded-full bg-turquoise shadow-[0_0_0_3px_rgba(42,125,166,0.28)]"
+                    aria-hidden
+                  />
+                )}
+                <span className={`font-heading text-[0.95rem] font-bold leading-snug sm:text-base ${isActive ? "pr-6" : ""}`}>
+                  {area.townName}
+                </span>
+                <span
+                  className={`mt-1.5 text-[10px] font-semibold uppercase leading-tight tracking-[0.12em] ${
+                    isActive ? "text-white/70" : "text-slate-500"
+                  }`}
+                >
+                  {area.homepageCoverage.gridTagline}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-10">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={selected.slug}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+              className="overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-[0_20px_70px_-28px_rgba(13,45,74,0.18)]"
+            >
+              <div className="relative overflow-hidden bg-gradient-to-br from-navy via-[#152c45] to-navy-dark px-8 pb-10 pt-9 sm:px-10 sm:pb-11 sm:pt-10">
+                <div className="pointer-events-none absolute -right-8 top-1/2 h-[200px] w-[200px] -translate-y-1/2 rounded-full bg-white/[0.04] blur-2xl" aria-hidden />
+                <p className="text-[11px] font-bold uppercase tracking-[0.26em] text-turquoise-light/90">— Service area</p>
+                <h3 className="font-heading mt-3 text-3xl font-bold text-white sm:text-4xl">{selected.townName}</h3>
+                <p className="relative mt-3 max-w-2xl text-[1.02rem] leading-relaxed text-white/85">{selected.homepageCoverage.cardLead}</p>
+              </div>
+
+              <div className="border-t border-slate-100 bg-white px-8 py-9 sm:px-10 sm:py-10">
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-turquoise">Common services in this area</p>
+                <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {selected.homepageCoverage.commonServices.map((line) => (
+                    <li key={line.slice(0, 40)} className="flex gap-3 text-[0.95rem] leading-snug text-slate-700">
+                      <span className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md bg-turquoise/10 text-turquoise" aria-hidden>
+                        <svg className="h-3 w-3" viewBox="0 0 12 12" fill="currentColor">
+                          <path d="M9.78 3.22a.75.75 0 010 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-2-2A.75.75 0 114.83 6.41l1.69 1.69 3.22-3.22a.75.75 0 011.04 0z" />
+                        </svg>
+                      </span>
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  <Link
+                    href={`/service-areas/${selected.slug}`}
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-navy to-[#1e4a70] px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-navy/30 transition hover:from-turquoise-dark hover:to-turquoise sm:flex-none sm:min-w-[12rem]"
+                  >
+                    <span className="inline-flex h-5 w-5 items-center justify-center rounded bg-white/15" aria-hidden>
+                      <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </span>
+                    View area page
+                  </Link>
+                  <a
+                    href={telHref}
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-7 py-3.5 text-sm font-bold text-navy shadow-sm transition hover:border-turquoise/50 hover:bg-slate-50 sm:flex-none sm:min-w-[12rem]"
+                  >
+                    <svg className="h-4 w-4 text-turquoise" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                      <path
+                        fillRule="evenodd"
+                        d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    Call us
+                  </a>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 divide-x divide-slate-200 border-t border-slate-200 bg-slate-50/95">
+                <div className="py-7 text-center">
+                  <p className="font-heading text-2xl font-extrabold text-navy sm:text-3xl">{areaCount}</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">{HOME_COVERAGE_STATS_LABELS.towns}</p>
+                </div>
+                <div className="py-7 text-center">
+                  <p className="font-heading text-2xl font-extrabold text-navy sm:text-3xl">10+</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">{HOME_COVERAGE_STATS_LABELS.years}</p>
+                </div>
+                <div className="py-7 text-center">
+                  <p className="font-heading text-2xl font-extrabold leading-tight text-navy sm:text-3xl">
+                    1&nbsp;<span className="text-lg font-bold sm:text-xl">day</span>
+                  </p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">{HOME_COVERAGE_STATS_LABELS.response}</p>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── *
+ *  GALLERY PREVIEW SECTION                                                    *
+ * ─────────────────────────────────────────────────────────────────────────── */
+function ReviewPhotoSlideshow({ images, name }: { images: readonly string[]; name: string }) {
+  const [slide, setSlide] = useState(0);
+  const total = images.length;
+  const prev = () => setSlide((s) => (s - 1 + total) % total);
+  const next = () => setSlide((s) => (s + 1) % total);
+
+  const src = images[slide];
+  if (!src) return null;
+
+  return (
+    <div className="select-none">
+      {/* Main slide */}
+      <div className="relative overflow-hidden rounded-xl bg-slate-900 aspect-[4/3]">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={slide}
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -24 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={src}
+              alt={`${name} review photo ${slide + 1} of ${total}`}
+              fill
+              sizes="(max-width: 768px) 90vw, 640px"
+              className="object-cover"
+              priority={slide === 0}
+            />
+          </motion.div>
+        </AnimatePresence>
+        {/* Prev / Next */}
+        <button
+          type="button"
+          onClick={prev}
+          aria-label="Previous photo"
+          className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition hover:bg-black/70"
+        >
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          onClick={next}
+          aria-label="Next photo"
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition hover:bg-black/70"
+        >
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+        {/* Counter */}
+        <span className="absolute bottom-2 right-3 rounded-full bg-black/50 px-2.5 py-0.5 text-[11px] font-semibold text-white backdrop-blur-sm">
+          {slide + 1} / {total}
+        </span>
+      </div>
+      {/* Thumbnail strip */}
+      <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+        {images.map((thumb, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => setSlide(i)}
+            className={`relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
+              i === slide
+                ? "ring-2 ring-turquoise ring-offset-1 ring-offset-[#0d1f30]"
+                : "opacity-50 hover:opacity-80"
+            }`}
+          >
+            <Image
+              src={thumb}
+              alt={`Thumbnail ${i + 1}`}
+              fill
+              sizes="56px"
+              className="object-cover"
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const PREVIEW_COUNT = 6;
+
+function GalleryPreviewSection() {
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const active = activeIdx !== null ? GALLERY_ITEMS[activeIdx] : null;
+
+  const close = () => setActiveIdx(null);
+  const prev = () =>
+    setActiveIdx((i) => (i === null ? 0 : (i - 1 + PREVIEW_COUNT) % PREVIEW_COUNT));
+  const next = () =>
+    setActiveIdx((i) => (i === null ? 0 : (i + 1) % PREVIEW_COUNT));
+
+  // close on Escape
+  useEffect(() => {
+    if (activeIdx === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [activeIdx]);
+
+  // lock scroll when modal open
+  useEffect(() => {
+    document.body.style.overflow = activeIdx !== null ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [activeIdx]);
+
+  return (
+    <>
+      <section className="relative overflow-hidden bg-gradient-to-b from-navy-dark via-[#0d2137] to-navy-dark px-4 py-20 md:py-28 sm:px-6">
+        <NoiseOverlay />
+        <div className="pointer-events-none absolute -left-24 top-1/4 h-80 w-80 rounded-full bg-turquoise/15 blur-[110px]" />
+        <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-orange/10 blur-[90px]" />
+
+        <div className="relative mx-auto max-w-7xl">
+          {/* Header */}
+          <InView className="text-center">
+            <SectionLabel>Portfolio</SectionLabel>
+            <h2 className="font-heading mt-5 text-[clamp(2rem,3.8vw,3rem)] font-extrabold leading-tight text-white">
+              Real projects, shore-built
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-[1.05rem] leading-relaxed text-white/65">
+              Before-and-after fiberglass deck work from Ocean City to Cape May. Tap any project to see the full story.
+            </p>
+          </InView>
+
+          {/* Cards grid */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {GALLERY_ITEMS.slice(0, PREVIEW_COUNT).map((item, i) => (
+              <motion.div key={item.id} variants={fadeUp} custom={i}>
+                <button
+                  type="button"
+                  onClick={() => setActiveIdx(i)}
+                  className="group w-full text-left"
+                >
+                  <div className="overflow-hidden rounded-2xl bg-slate-900 ring-1 ring-white/10 shadow-xl shadow-black/40 transition duration-300 group-hover:ring-turquoise/40 group-hover:shadow-turquoise/10">
+                    {/* Before / After image pair */}
+                    <div className="grid grid-cols-2 gap-0.5">
+                      {/* Before */}
+                      <div className="relative aspect-[4/3] overflow-hidden bg-slate-800">
+                        {item.beforeImage ? (
+                          <Image
+                            src={item.beforeImage}
+                            alt={item.beforeImageAlt}
+                            fill
+                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 17vw"
+                            className="object-cover transition duration-500 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-900" />
+                        )}
+                        <span className="absolute bottom-2 left-2 rounded-full bg-black/50 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white/90 backdrop-blur-sm">
+                          Before
+                        </span>
+                      </div>
+                      {/* After */}
+                      <div className="relative aspect-[4/3] overflow-hidden bg-slate-800">
+                        {item.afterImage ? (
+                          <Image
+                            src={item.afterImage}
+                            alt={item.afterImageAlt}
+                            fill
+                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 17vw"
+                            className="object-cover transition duration-500 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 bg-gradient-to-br from-teal/60 to-navy-dark" />
+                        )}
+                        <span className="absolute bottom-2 right-2 rounded-full bg-turquoise/70 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+                          After
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Card footer */}
+                    <div className="px-4 pb-4 pt-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="inline-block rounded-full bg-turquoise/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-turquoise">
+                          {item.category}
+                        </span>
+                        <span className="text-[11px] text-white/40">{item.location}</span>
+                      </div>
+                      <p className="mt-2 font-heading text-sm font-bold leading-snug text-white/90 line-clamp-1">
+                        {item.title}
+                      </p>
+                      <p className="mt-2 text-xs font-semibold text-turquoise/70 group-hover:text-turquoise transition-colors">
+                        Tap for full story →
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* View full gallery CTA */}
+          <InView className="mt-12 flex justify-center">
+            <Link
+              href="/gallery"
+              className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-7 py-3.5 text-sm font-bold text-white backdrop-blur-md transition hover:border-turquoise/50 hover:bg-white/10"
+            >
+              View full gallery — all 10 projects
+              <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+              </svg>
+            </Link>
+          </InView>
+        </div>
+      </section>
+
+      {/* ── PROJECT MODAL ── */}
+      <AnimatePresence>
+        {active && activeIdx !== null && (
+          <motion.div
+            key="gallery-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+            onClick={close}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative flex w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-[#0d1f30] shadow-2xl ring-1 ring-white/10 max-h-[90vh]"
+            >
+              {/* Modal header */}
+              <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-white/10 md:px-6">
+                <div className="min-w-0">
+                  <span className="inline-block rounded-full bg-turquoise/15 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-turquoise">
+                    {active.category}
+                  </span>
+                  <h3 className="mt-1.5 font-heading text-base font-bold leading-snug text-white md:text-lg line-clamp-2">
+                    {active.title}
+                  </h3>
+                  <p className="mt-0.5 text-xs text-white/50">{active.location}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={close}
+                  aria-label="Close"
+                  className="flex-shrink-0 rounded-full p-2 text-white/50 transition hover:bg-white/10 hover:text-white"
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Modal body */}
+              <div className="flex-1 overflow-y-auto px-5 py-5 md:px-6">
+                <div className="grid gap-4 md:grid-cols-2">
+                  {/* Before */}
+                  <figure className="m-0">
+                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-slate-800">
+                      {active.beforeImage ? (
+                        <Image
+                          src={active.beforeImage}
+                          alt={active.beforeImageAlt}
+                          fill
+                          sizes="(max-width: 768px) 90vw, 44vw"
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-900" />
+                      )}
+                      <span className="absolute bottom-3 left-3 rounded-full bg-black/50 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+                        Before
+                      </span>
+                    </div>
+                    <figcaption className="mt-3 text-sm leading-relaxed text-white/65">
+                      {active.beforeDescription.split("\n\n").map((para, i) => (
+                        <p key={i} className={i > 0 ? "mt-2" : ""}>
+                          {i === 0 && <span className="font-semibold text-white/90">Before — </span>}
+                          {para}
+                        </p>
+                      ))}
+                    </figcaption>
+                  </figure>
+
+                  {/* After */}
+                  <figure className="m-0">
+                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-slate-800">
+                      {active.afterImage ? (
+                        <Image
+                          src={active.afterImage}
+                          alt={active.afterImageAlt}
+                          fill
+                          sizes="(max-width: 768px) 90vw, 44vw"
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-teal/60 to-navy-dark" />
+                      )}
+                      <span className="absolute bottom-3 right-3 rounded-full bg-turquoise/70 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+                        After
+                      </span>
+                    </div>
+                    <figcaption className="mt-3 text-sm leading-relaxed text-white/65">
+                      {active.afterDescription.split("\n\n").map((para, i) => (
+                        <p key={i} className={i > 0 ? "mt-2" : ""}>
+                          {i === 0 && <span className="font-semibold text-white/90">After — </span>}
+                          {para}
+                        </p>
+                      ))}
+                    </figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              {/* Modal footer — nav + gallery link */}
+              <div className="flex items-center justify-between gap-3 border-t border-white/10 px-5 py-4 md:px-6">
+                {/* Prev / Next */}
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={prev}
+                    className="flex items-center gap-1.5 rounded-full border border-white/15 px-3.5 py-2 text-xs font-semibold text-white/70 transition hover:border-white/30 hover:text-white"
+                  >
+                    <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Prev
+                  </button>
+                  <span className="text-xs text-white/30">
+                    {activeIdx + 1} / {PREVIEW_COUNT}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={next}
+                    className="flex items-center gap-1.5 rounded-full border border-white/15 px-3.5 py-2 text-xs font-semibold text-white/70 transition hover:border-white/30 hover:text-white"
+                  >
+                    Next
+                    <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* View full gallery */}
+                <Link
+                  href="/gallery"
+                  onClick={close}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-turquoise px-4 py-2 text-xs font-bold text-navy-dark transition hover:bg-turquoise-dark"
+                >
+                  See all 10 projects
+                  <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
 export default function HomePageClient() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [leadFormStatus, setLeadFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [leadFieldErrors, setLeadFieldErrors] = useState<Record<string, string>>({});
   const [leadCity, setLeadCity] = useState("");
+  const [leadService, setLeadService] = useState("");
   const [leadBestTime, setLeadBestTime] = useState("Anytime");
   const [displayReviews, setDisplayReviews] = useState<LiveGoogleReview[]>([...REVIEWS]);
   const [googleRating, setGoogleRating] = useState(5);
   const [googleReviewTotal, setGoogleReviewTotal] = useState(50);
+  const [activeReviewIdx, setActiveReviewIdx] = useState<number | null>(null);
+  const activeReview = activeReviewIdx !== null ? displayReviews[activeReviewIdx] : null;
   const leadInputClass = (hasError: boolean) =>
     `w-full rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:ring-2 ${
       hasError
@@ -483,6 +1533,22 @@ export default function HomePageClient() {
     };
   }, []);
 
+  useEffect(() => {
+    if (activeReviewIdx === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveReviewIdx(null);
+      if (e.key === "ArrowLeft") setActiveReviewIdx((i) => i === null ? 0 : (i - 1 + displayReviews.length) % displayReviews.length);
+      if (e.key === "ArrowRight") setActiveReviewIdx((i) => i === null ? 0 : (i + 1) % displayReviews.length);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [activeReviewIdx, displayReviews.length]);
+
+  useEffect(() => {
+    document.body.style.overflow = activeReviewIdx !== null ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [activeReviewIdx]);
+
   async function onLeadSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLeadFormStatus("loading");
@@ -493,10 +1559,11 @@ export default function HomePageClient() {
       const wantsFreeInspection = fd.get("wantsFreeInspection") === "on";
       await postContact({
         name: String(fd.get("name") ?? "").trim(),
-        phone: String(fd.get("phone") ?? "").trim() || undefined,
-        email: String(fd.get("email") ?? "").trim(),
+        phone: String(fd.get("phone") ?? "").trim(),
+        email: String(fd.get("email") ?? "").trim() || undefined,
         address: String(fd.get("address") ?? "").trim(),
         city: leadCity,
+        service: leadService || undefined,
         bestTime: leadBestTime || undefined,
         message: String(fd.get("message") ?? "").trim() || undefined,
         wantsFreeInspection,
@@ -505,6 +1572,7 @@ export default function HomePageClient() {
       setLeadFormStatus("success");
       form.reset();
       setLeadCity("");
+      setLeadService("");
       setLeadBestTime("Anytime");
     } catch (err) {
       setLeadFormStatus("error");
@@ -720,176 +1788,10 @@ export default function HomePageClient() {
           </InView>
         </section>
 
-        {/* SHORE SECTION */}
-        <section className="relative overflow-hidden bg-slate-50 px-6 py-28">
-          <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-          <div
-            className="absolute right-0 top-0 h-full w-1/2 opacity-[0.02]"
-            style={{ background: "linear-gradient(135deg, transparent 30%, #1B3A5C 30%)" }}
-          />
-          <div className="mx-auto max-w-7xl">
-            <div className="grid items-center gap-16 lg:grid-cols-2">
-              <InView>
-                <SectionLabel>Why Fiberglass</SectionLabel>
-                <h2 className="font-heading mt-5 text-[clamp(2rem,3.8vw,3rem)] font-extrabold leading-[1.1] text-navy">
-                  {SHORE_SECTION_TITLE}
-                </h2>
-                <p className="mt-6 text-[1.05rem] leading-[1.9] text-slate-600">{SHORE_SECTION_BODY}</p>
-                <div className="mt-10 grid gap-3 sm:grid-cols-2">
-                  {SHORE_SPECS.map((spec) => (
-                    <div
-                      key={spec}
-                      className="group flex items-start gap-3 rounded-xl border border-slate-200/70 bg-white px-5 py-4 shadow-sm transition-all duration-300 hover:border-turquoise/30 hover:shadow-md"
-                    >
-                      <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-turquoise/10 text-turquoise transition-colors duration-300 group-hover:bg-turquoise group-hover:text-white">
-                        <svg className="h-3.5 w-3.5" viewBox="0 0 12 12" fill="currentColor">
-                          <path d="M3.72 8.72L1.28 6.28a.75.75 0 010-1.06.75.75 0 011.06 0L4 6.88l5.66-5.66a.75.75 0 111.06 1.06L4.78 8.72a.75.75 0 01-1.06 0z" />
-                        </svg>
-                      </span>
-                      <span className="text-sm font-semibold text-slate-700">{spec}</span>
-                    </div>
-                  ))}
-                </div>
-              </InView>
-
-              <InView delay={0.2}>
-                <div className="relative">
-                  <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-turquoise/20 via-transparent to-orange/20 opacity-50 blur-2xl" />
-                  <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy via-[#1e4a70] to-navy-dark p-9 shadow-hero">
-                    <NoiseOverlay />
-                    <div className="animate-float-slow absolute -right-20 -top-20 h-56 w-56 rounded-full bg-turquoise/15 blur-3xl" />
-                    <div className="animate-float-slower absolute -bottom-14 left-1/3 h-40 w-40 rounded-full bg-orange/12 blur-2xl" />
-
-                    <p className="relative text-[11px] font-bold uppercase tracking-[0.22em] text-turquoise/80">Our Standard</p>
-                    <h3 className="relative mt-3 font-heading text-2xl font-bold text-white">Built Different</h3>
-
-                    <div className="relative mt-8 space-y-5">
-                      {[
-                        { label: "Substrate", value: '3/4" CDX + 1/2" ACX dual-layer plywood' },
-                        { label: "Wall Flashings", value: 'Minimum 12" height' },
-                        { label: "Post Flashings", value: 'Minimum 6" height' },
-                        { label: "Drainage Pitch", value: '1/4" per foot minimum' },
-                        { label: "Drip Edges", value: "PVC/Azek only - never wood" },
-                      ].map((item) => (
-                        <div key={item.label} className="flex items-start gap-3.5 border-b border-white/[0.06] pb-5 last:border-0 last:pb-0">
-                          <span className="mt-1.5 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-gradient-to-br from-turquoise to-turquoise-light shadow-glow-turquoise" />
-                          <div>
-                            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/35">{item.label}</p>
-                            <p className="mt-0.5 text-sm font-semibold text-white/90">{item.value}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <motion.div
-                    animate={{ y: [-4, 4, -4] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute -bottom-5 -left-5 flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-orange to-orange-light px-6 py-3.5 shadow-glow-orange"
-                  >
-                    <svg className="h-5 w-5 fill-white" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-sm font-bold text-white">Work Guaranteed</span>
-                  </motion.div>
-                </div>
-              </InView>
-            </div>
-          </div>
-        </section>
+        <ShoreFiberglassSection />
 
         {/* GALLERY PREVIEW */}
-        <section className="relative overflow-hidden bg-gradient-to-b from-navy-dark via-[#0d2137] to-navy-dark px-6 py-24 md:py-28">
-          <NoiseOverlay />
-          <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-turquoise/15 blur-[100px]" />
-          <div className="pointer-events-none absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-orange/10 blur-[90px]" />
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(42,125,166,0.5) 40px,rgba(42,125,166,0.5) 41px)",
-            }}
-          />
-
-          <div className="relative mx-auto max-w-7xl">
-            <InView className="text-center">
-              <SectionLabel>Portfolio</SectionLabel>
-              <h2 className="font-heading mt-5 text-[clamp(2rem,3.8vw,3rem)] font-extrabold leading-tight text-white">
-                Real projects, shore-built
-              </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-[1.05rem] leading-relaxed text-white/65">
-                Before-and-after fiberglass deck work from Ocean City to Cape May. See the full gallery for every project story.
-              </p>
-            </InView>
-
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.15 }}
-              className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
-            >
-              {GALLERY_ITEMS.slice(0, 4).map((item, i) => {
-                const gradients = [
-                  "from-slate-800/90 via-slate-900 to-slate-950",
-                  "from-[#0d4a5c]/90 via-navy to-navy-dark",
-                  "from-turquoise/25 via-[#1e5a7a] to-navy-dark",
-                  "from-orange/20 via-[#6b3d1a]/40 to-navy-dark",
-                ];
-                return (
-                  <motion.div key={item.id} variants={fadeUp} custom={i}>
-                    <Link
-                      href="/gallery"
-                      className="group block"
-                    >
-                      <div
-                        className={`relative aspect-[4/3] overflow-hidden rounded-2xl bg-gradient-to-br shadow-xl shadow-black/30 ring-1 ring-white/10 transition duration-500 group-hover:ring-turquoise/40 group-hover:shadow-turquoise/10 ${gradients[i] ?? gradients[0]}`}
-                      >
-                        <div
-                          className="absolute inset-0 opacity-40"
-                          style={{
-                            backgroundImage:
-                              "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.15), transparent 55%), radial-gradient(ellipse at 80% 80%, rgba(42,125,166,0.25), transparent 50%)",
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.06\'/%3E%3C/svg%3E')]" />
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent p-4 pt-12">
-                          <span className="inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-turquoise backdrop-blur-sm">
-                            {item.category}
-                          </span>
-                          <p className="mt-2 line-clamp-2 font-heading text-sm font-bold leading-snug text-white">
-                            {item.title}
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-
-            <InView className="mt-12 flex justify-center">
-              <Link
-                href="/gallery"
-                className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-6 py-3.5 text-sm font-bold text-white backdrop-blur-md transition hover:border-turquoise/50 hover:bg-white/10"
-              >
-                View full gallery
-                <svg
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Link>
-            </InView>
-          </div>
-        </section>
+        <GalleryPreviewSection />
 
         {/* SERVICES */}
         <ServicesSection />
@@ -929,99 +1831,167 @@ export default function HomePageClient() {
               className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
             >
               {displayReviews.map((review, idx) => (
-                <motion.article
+                <motion.div
                   key={`${review.name}-${idx}`}
                   variants={fadeUp}
-                  className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] p-7 backdrop-blur-md transition-all duration-400 hover:border-turquoise/20 hover:bg-white/[0.07]"
+                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] p-7 backdrop-blur-md transition-all duration-400 hover:border-turquoise/20 hover:bg-white/[0.07]"
                 >
+                  {/* Stretched link — covers whole card, sits behind interactive elements */}
+                  <a
+                    href={GBP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute inset-0 z-0"
+                    aria-label={`Read ${review.name}'s full review on Google`}
+                  />
                   <div className="absolute -right-2 -top-4 font-heading text-[5rem] font-black leading-none text-white/[0.03] select-none">
                     &ldquo;
                   </div>
-                  <Stars count={review.stars} />
-                  <p className="relative mt-5 text-[0.95rem] leading-[1.8] text-white/70">
-                    &ldquo;{review.quote}&rdquo;
-                  </p>
-                  <div className="mt-6 flex items-center gap-3.5 border-t border-white/[0.06] pt-5">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-turquoise/25 to-turquoise/10 text-sm font-bold text-turquoise">
-                      {review.name.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-white">{review.name}</p>
-                      <p className="text-xs text-white/40">{review.city}</p>
-                    </div>
+                  {/* Quote area — grows to fill row height */}
+                  <div className="relative z-10 flex-1">
+                    <Stars count={review.stars} />
+                    <p className="relative mt-5 line-clamp-4 text-[0.95rem] leading-[1.8] text-white/70">
+                      &ldquo;{review.quote}&rdquo;
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setActiveReviewIdx(idx)}
+                      className="mt-2.5 text-[0.8rem] font-semibold text-turquoise/70 transition hover:text-turquoise"
+                    >
+                      Show more →
+                    </button>
                   </div>
-                </motion.article>
+                  {/* Reviewer footer — always at bottom */}
+                  <div className="relative z-10 mt-6 flex items-center gap-3 border-t border-white/[0.06] pt-5">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-turquoise/25 to-turquoise/10 text-sm font-bold text-turquoise">
+                      {review.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-bold text-white">{review.name}</p>
+                      <p className="text-xs text-white/40">{review.city}{review.reviewDate ? ` · ${review.reviewDate}` : ""}</p>
+                    </div>
+                    {review.photoCount != null && review.photoCount > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setActiveReviewIdx(idx)}
+                        className="flex-shrink-0 flex items-center gap-1.5 rounded-full bg-white/[0.06] px-3 py-1.5 text-[11px] font-semibold text-white/60 transition hover:bg-white/[0.12] hover:text-white"
+                      >
+                        <svg className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                          <path fillRule="evenodd" d="M1 8a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 018.07 3h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0016.07 6H17a2 2 0 012 2v7a2 2 0 01-2 2H3a2 2 0 01-2-2V8zm13.5 3a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM10 14a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                        </svg>
+                        {review.photoCount} {review.photoCount === 1 ? "photo" : "photos"}
+                      </button>
+                    )}
+                  </div>
+                </motion.div>
               ))}
             </motion.div>
-          </div>
-        </section>
-
-        {/* Section */}
-        <section className="relative bg-white px-6 py-28">
-          <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-          <div className="mx-auto max-w-7xl">
-            <InView className="text-center">
-              <SectionLabel>Coverage</SectionLabel>
-              <h2 className="font-heading mt-5 text-[clamp(2rem,3.8vw,3rem)] font-extrabold text-navy">
-                We Serve the Whole Shore
-              </h2>
-              <p className="mx-auto mt-4 max-w-lg text-[1.05rem] text-slate-500">
-                Based in Ocean City - same quality, same care in every town.
-              </p>
-            </InView>
-
-            <div className="mt-14 grid items-start gap-12 lg:grid-cols-5">
-              <InView className="lg:col-span-2">
-                <motion.div
-                  variants={stagger}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  className="flex flex-wrap gap-2.5"
-                >
-                  {SERVICE_AREA_DETAILS.map((area, i) => (
-                    <motion.div key={area.slug} variants={fadeUp} custom={i}>
-                      <Link
-                        href={`/service-areas/${area.slug}`}
-                        className="group flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:border-turquoise hover:bg-turquoise hover:text-white hover:shadow-glow-turquoise"
-                      >
-                        <span className="h-1.5 w-1.5 rounded-full bg-slate-300 transition-colors group-hover:bg-white" />
-                        {area.townName}
-                      </Link>
-                    </motion.div>
-                  ))}
-                </motion.div>
-
-                <InView delay={0.2} className="mt-10 overflow-hidden rounded-2xl border border-orange/20 bg-gradient-to-br from-orange/5 to-orange/[0.02] p-6">
-                  <p className="font-semibold text-slate-700">Not sure if we cover your area?</p>
-                  <a
-                    href={`tel:${PHONE.replace(/\D/g, "")}`}
-                    className="mt-4 flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-orange to-orange-light px-6 py-3.5 font-bold text-white shadow-lg shadow-orange/20 transition-all duration-300 hover:shadow-glow-orange"
-                  >
-                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                      <path fillRule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clipRule="evenodd" />
-                    </svg>
-                    Call {PHONE}
-                  </a>
-                </InView>
-              </InView>
-
-              <InView delay={0.1} className="lg:col-span-3">
-                <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-card-hover">
-                  <div className="border-b border-slate-100 px-6 py-5">
-                    <h3 className="font-heading text-lg font-bold text-navy">South Jersey Shore coverage</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                      Tap a pin to open that town&apos;s page. We schedule inspections on-site across all 13 areas — this map shows where we work, not a walk-in office.
-                    </p>
-                  </div>
-                  <div className="overflow-hidden rounded-b-3xl">
-                    <ServiceAreasMapWidget className="rounded-none border-0 shadow-none" />
-                  </div>
-                </div>
-              </InView>
+            <div className="mt-8 text-center">
+              <a
+                href={GBP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white"
+              >
+                {REVIEWS_FOOTER_TEXT}
+              </a>
             </div>
           </div>
         </section>
+
+        {/* REVIEW MODAL — full text + photos */}
+        <AnimatePresence>
+          {activeReview && activeReviewIdx !== null && (
+            <motion.div
+              key="review-modal"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+              onClick={() => setActiveReviewIdx(null)}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 16 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 16 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative flex w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-[#0d1f30] shadow-2xl ring-1 ring-white/10 max-h-[90vh]"
+              >
+                {/* Header */}
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4 md:px-6">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-turquoise/25 to-turquoise/10 text-sm font-bold text-turquoise">
+                      {activeReview.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-bold text-white">{activeReview.name}</p>
+                      <div className="flex items-center gap-1.5">
+                        <Stars count={activeReview.stars} />
+                        <span className="text-[11px] text-white/40">{activeReview.city}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveReviewIdx(null)}
+                    aria-label="Close"
+                    className="flex-shrink-0 rounded-full p-2 text-white/50 transition hover:bg-white/10 hover:text-white"
+                  >
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                {/* Full review text + photo slideshow */}
+                <div className="flex-1 overflow-y-auto px-5 py-5 md:px-6 space-y-5">
+                  <p className="text-[0.95rem] leading-[1.9] text-white/80">
+                    &ldquo;{activeReview.quote}&rdquo;
+                  </p>
+                  {activeReview.images && activeReview.images.length > 0 && (
+                    <ReviewPhotoSlideshow images={activeReview.images} name={activeReview.name} />
+                  )}
+                </div>
+                {/* Footer */}
+                <div className="flex items-center justify-between gap-3 border-t border-white/10 px-5 py-4 md:px-6">
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setActiveReviewIdx((i) => i === null ? 0 : (i - 1 + displayReviews.length) % displayReviews.length)}
+                      className="rounded-full border border-white/15 p-2 text-white/60 transition hover:border-white/30 hover:text-white"
+                      aria-label="Previous review"
+                    >
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveReviewIdx((i) => i === null ? 0 : (i + 1) % displayReviews.length)}
+                      className="rounded-full border border-white/15 p-2 text-white/60 transition hover:border-white/30 hover:text-white"
+                      aria-label="Next review"
+                    >
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                  <a
+                    href={GBP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-semibold text-turquoise transition hover:text-white"
+                  >
+                    See all reviews on Google →
+                  </a>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <ServiceCoverageSection />
 
         {/* Section */}
         <section className="relative overflow-hidden bg-navy-dark px-6 py-28">
@@ -1048,7 +2018,7 @@ export default function HomePageClient() {
                   {[
                     "Free inspection - honest assessment, no pressure",
                     "Same-day or next-morning response",
-                    "Licensed & insured, family-owned since 2014",
+                    "Licensed & insured, family-owned since 2020",
                   ].map((point) => (
                     <div key={point} className="flex items-center gap-3.5 text-[0.95rem] text-white/65">
                       <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-turquoise/15">
@@ -1074,7 +2044,7 @@ export default function HomePageClient() {
                     Request a Free Inspection
                   </h3>
                   <p className="relative mt-1.5 text-sm text-slate-300">
-                    Limited slots this month - book yours today.
+                    Free inspections available — we typically respond same day or next morning.
                   </p>
 
                   <div className="relative mt-7 space-y-4">
@@ -1140,6 +2110,24 @@ export default function HomePageClient() {
                       />
                       {leadFieldErrors.city && (
                         <p className={leadErrorClass}>{leadFieldErrors.city}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label htmlFor="lead-service" className="mb-1.5 block text-sm font-medium text-slate-200">
+                        Service you need
+                      </label>
+                      <StyledSelect
+                        id="lead-service"
+                        name="service"
+                        value={leadService}
+                        options={SERVICE_INQUIRY_OPTIONS}
+                        onChange={setLeadService}
+                        placeholder="Select a service"
+                        invalid={Boolean(leadFieldErrors.service)}
+                        theme="dark"
+                      />
+                      {leadFieldErrors.service && (
+                        <p className={leadErrorClass}>{leadFieldErrors.service}</p>
                       )}
                     </div>
                     <div>

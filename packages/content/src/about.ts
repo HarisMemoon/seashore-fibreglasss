@@ -1,22 +1,26 @@
-/** About page — source: Website Brief / PROJECT_CONTEXT.md */
+﻿/** About page — source: Website Brief / PROJECT_CONTEXT.md */
 
 export const ABOUT_META = {
   title: "About Seashore Fiberglass | Family-Owned Deck Experts – Ocean City NJ",
   description:
-    "Learn about Seashore Fiberglass — family-owned in Ocean City NJ since 2014. 10+ years of fiberglass deck repair, reglass restoration & coastal deck expertise across the South Jersey Shore. 50+ 5-star reviews.",
+    "Learn about Seashore Fiberglass — founded in 2020, built on 10+ years of fiberglass deck expertise across the South Jersey Shore. 50+ 5-star reviews.",
 } as const;
 
-export const ABOUT_H1 = "About Seashore Fiberglass — Protecting Jersey Shore Homes Since 2014";
+export const ABOUT_H1 = "About Seashore Fiberglass — Founded in 2020, Built on 10+ Years of Fiberglass Experience";
 
 export const ABOUT_INTRO =
-  "We are not a large national franchise. Seashore Fiberglass is a family business started and rooted in Ocean City, New Jersey. For more than 10 years we have been the local choice for property owners who want fiberglass deck systems done correctly — not patched temporarily, but repaired and built to the engineering standards that actually prevent recurring failures in a coastal environment.";
+  "We are not a large national franchise. Seashore Fiberglass is a family business started and rooted in Ocean City, New Jersey. Founded in 2020, we brought over 10 years of hands-on fiberglass experience to the South Jersey Shore — the local choice for property owners who want fiberglass deck systems done correctly — not patched temporarily, but repaired and built to the engineering standards that actually prevent recurring failures in a coastal environment.";
 
 export const ABOUT_STORY_TITLE = "Our Story — Why We Started and Why We Stay";
 
 export const ABOUT_STORY_BODY = [
   "Francisco Ruiz founded Seashore Fiberglass after seeing the same preventable failures again and again: wall flashings that were too short or missing entirely, door thresholds without proper transition systems, railing posts installed without flashing, plywood fastened with nails only so the substrate loosens over time, and wooden drip edges that rot and let water reach the framing.",
-  "Our approach is different by design: dual-layer plywood substrates, correct drainage pitch, full-height wall and post flashings, PVC drip edges that will not rot, and fiberglass membranes installed to professional standards. We stay because homeowners on the Shore deserve contractors who treat every deck like it protects real living space underneath — because it does.",
+  "Our approach is different by design: dual-layer plywood substrates, verification of correct drainage slope, full-height wall and post flashings, PVC drip edges that will not rot, and fiberglass membranes installed to professional standards. We stay because homeowners on the Shore deserve contractors who treat every deck like it protects real living space underneath — because it does.",
 ] as const;
+
+export const ABOUT_FOUNDED_BADGE = "Family-owned since 2020";
+
+export const ABOUT_GBP_LINK_TEXT = "50+ Five-Star Google Reviews";
 
 export const ABOUT_DIFFERENTIATORS = [
   {
@@ -27,7 +31,7 @@ export const ABOUT_DIFFERENTIATORS = [
   {
     title: "Licensed & Fully Insured",
     description:
-      "Proper New Jersey licensing plus liability and workers’ compensation coverage, so your project is protected from day one.",
+      "Proper New Jersey licensing plus liability and workers' compensation coverage, so your project is protected from day one.",
   },
   {
     title: "50+ Five-Star Google Reviews",
@@ -42,7 +46,7 @@ export const ABOUT_DIFFERENTIATORS = [
   {
     title: "Technical Precision",
     description:
-      "Pitch, flashings, door transitions, and membrane work are executed to documented standards — not “good enough” shortcuts that fail in salt air and humidity.",
+      "Pitch, flashings, door transitions, and membrane work are executed to documented standards — not \"good enough\" shortcuts that fail in salt air and humidity.",
   },
   {
     title: "Clean, Respectful Job Sites",

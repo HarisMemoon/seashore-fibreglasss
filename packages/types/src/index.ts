@@ -11,6 +11,9 @@ export interface Review {
   city: string;
   stars: number;
   quote: string;
+  reviewDate?: string;
+  photoCount?: number;
+  images?: readonly string[];
 }
 
 export type FaqCategoryId = "general" | "repair" | "technical" | "working";
@@ -33,19 +36,26 @@ export interface GalleryItem {
   title: string;
   /** Short label for badges, e.g. "Reglass", "New construction" */
   category: string;
+  /** Town/city where the project was completed */
+  location: string;
   beforeDescription: string;
   afterDescription: string;
   beforeImageAlt: string;
   afterImageAlt: string;
+  /** Path to before image relative to /public, e.g. "/gallery/B1.jpeg" */
+  beforeImage?: string;
+  /** Path to after image relative to /public, e.g. "/gallery/A1.jpeg" */
+  afterImage?: string;
 }
 
 /** Contact / lead form submission (home + contact page) */
 export interface ContactSubmission {
   name: string;
-  phone?: string;
-  email: string;
+  phone: string;
+  email?: string;
   address: string;
   city: string;
+  service?: string;
   bestTime?: string;
   message?: string;
   wantsFreeInspection?: boolean;
@@ -119,6 +129,12 @@ export interface ServiceDetailItem {
   description: string;
 }
 
+/** Per-service summary block for service area landing pages */
+export interface ServiceSummary {
+  serviceName: string;
+  description: string;
+}
+
 /** Service area landing page — town-specific copy (Website Brief / PROJECT_CONTEXT.md) */
 export interface ServiceAreaDetail {
   slug: string;
@@ -129,6 +145,19 @@ export interface ServiceAreaDetail {
   intro: readonly string[];
   localChallengeTitle: string;
   localChallengeBody: readonly string[];
+  /**
+   * Home page "coverage explorer" — short chip under town name, hero line + common services panel.
+   */
+  homepageCoverage: {
+    /** Short label for grid card (shown uppercase in UI) */
+    gridTagline: string;
+    /** One-line hook under the town name in the detail card header */
+    cardLead: string;
+    /** Bullets under "Common services in this area" */
+    commonServices: readonly string[];
+  };
+  /** 6 city-specific service summaries rendered on the service area landing page */
+  serviceSummaries?: readonly ServiceSummary[];
 }
 
 /** Structured body for blog posts (Website Brief) */
@@ -151,6 +180,10 @@ export interface BlogPost {
   readTimeMinutes: number;
   /** Internal links to `/services/[slug]` */
   relatedServiceSlugs?: readonly string[];
+  /** Blog category label for filter UI */
+  category?: string;
+  /** Cover image filename (client-provided) */
+  image?: string;
   blocks: readonly BlogArticleBlock[];
 }
 

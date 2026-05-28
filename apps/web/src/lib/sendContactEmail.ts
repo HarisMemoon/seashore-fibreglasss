@@ -13,9 +13,10 @@ function formatSubmissionHtml(s: ContactSubmission): string {
   const rows: [string, string][] = [
     ["Name", s.name],
     ["Phone", s.phone ?? "-"],
-    ["Email", s.email],
+    ["Email", s.email ?? "-"],
     ["Project address", s.address],
     ["City / area", s.city],
+    ["Service needed", s.service ?? "-"],
     ["Best time", s.bestTime ?? "-"],
     ["Message", s.message ?? "-"],
     [

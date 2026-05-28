@@ -23,7 +23,12 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
       {
         question: "How long does a fiberglass deck last?",
         answer:
-          "With correct installation and maintenance, many fiberglass deck systems last decades. Surface maintenance (recolor) is typically recommended on a roughly five-year cycle for UV protection and appearance; a full reglass restoration may be closer to a ten-year interval depending on exposure and condition — we assess each deck individually.",
+          "With correct installation, a properly built fiberglass deck system can last for decades. The key to preserving that lifespan is surface maintenance: recolor (re-gelcoating) is recommended every 3–5 years depending on each deck's exposure to sun, salt, and weather. The right time to recolor is when you begin to see visible wear or fading in the topcoat — acting at that stage prevents surface crazing and deeper cracking that shortens the membrane's life. A full reglass restoration is typically needed when the membrane itself has been compromised. Seashore Fiberglass backs all installation and full reglass work with a 10-year workmanship warranty — separate from the natural maintenance cycle of the surface.",
+      },
+      {
+        question: "Can you install fiberglass on a brand new deck?",
+        answer:
+          "Yes — and this is one of the most important moments to get the waterproofing right. Our New Construction service is designed for newly built homes where the deck has already been framed with the correct drainage slope built into each joist, and the first layer of plywood is in place. From there, we take full ownership of the waterproofing system: we install the second plywood layer, set PVC drip edges, integrate wall and post flashings to proper heights, apply the fiberglass membrane, and finish with a textured gelcoat built for coastal exposure. Getting these details right from day one is what prevents the failures we are called in to fix on older decks.",
       },
       {
         question: "Do fiberglass decks need to be above living spaces to be worth the investment?",
@@ -55,6 +60,11 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
         question: "How long do repairs typically take?",
         answer:
           "Typical ranges: recolor projects often run about 1–2 days; isolated soft spot repairs commonly about 2–4 days; full reglass restorations often about 4–7 days; larger structural reconstructions may run 7–14 days depending on scope. We give a written timeline after inspection.",
+      },
+      {
+        question: "My deck has water pooling toward the house — can that be fixed?",
+        answer:
+          "Yes. When a deck was originally built with the drainage slope going the wrong direction — toward the house instead of outward — we perform a Pitch Correction repair. This involves demolishing all existing plywood and installing sister joists alongside each existing joist to create a new, true drainage plane at 1/4\" per foot sloping away from the structure. We prefer sister joists over sleepers because they correct for natural joist sagging rather than simply following existing imperfections. Once the slope is correct, we rebuild the full double-layer plywood substrate and complete the fiberglass system from scratch. This is one of the most impactful repairs we do — it permanently eliminates chronic pooling and the leaks that come with it.",
       },
     ],
   },
@@ -102,6 +112,11 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
         question: "How do we get started?",
         answer:
           "Call or text (609) 338-4505, email info@seashorefiberglass.com, or use the contact form on this site. We respond the same day or the next morning, schedule your inspection, then provide an honest quote — no pressure.",
+      },
+      {
+        question: "What warranty do you provide on your work?",
+        answer:
+          "Every fiberglass deck installation and full reglass restoration we complete is backed by a 10-year workmanship warranty. If a failure results from our work — whether in the flashings, membrane, or any detail we executed — we return and make it right at no cost. We stand behind every project with the same attention we brought to it on day one. Warranty terms for recolor maintenance are provided in writing at the time of quote.",
       },
     ],
   },

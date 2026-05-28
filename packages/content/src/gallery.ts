@@ -14,142 +14,172 @@ export const GALLERY_H1 = "Gallery — Real Fiberglass Deck Projects on the Jers
 export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "1",
-    slug: "ocean-city-bayfront-reglass-pitch",
-    title: "Ocean City NJ — Bayfront Reglass + Pitch Correction",
-    category: "Reglass",
+    slug: "wildwood-structural-restoration-reglass",
+    title: "Wildwood NJ — Structural Restoration & Full Reglass",
+    category: "Reglass + Structural Restoration",
+    location: "Wildwood, NJ",
     beforeDescription:
-      "Standing water, soft spots at post bases, missing wall flashings, rotted drip edge.",
+      "During a planned reglass, we uncovered severe structural damage. Extensive framing rot caused by water intrusion from unflashed railing posts and improperly installed fascia had compromised the deck's structural integrity.",
     afterDescription:
-      "Sister joists, new PVC drip edge, 12\" wall flashings, plywood re-secured, new membrane + gelcoat.",
+      "Full structural restoration — all damaged framing replaced, flashing details corrected, new PVC fascia and drip edges installed. Deck fully reglassed with a like-new, long-lasting fiberglass finish.",
     beforeImageAlt:
-      "Before: fiberglass deck in Ocean City NJ with standing water, soft spots at posts, missing wall flashings and rotted drip edge — Seashore Fiberglass",
+      "wildwood nj fiberglass deck structural restoration reglass before after — railing post flashing repair",
     afterImageAlt:
-      "After: reglassed fiberglass deck in Ocean City NJ with PVC drip edge, 12-inch wall flashings, re-secured plywood and new membrane and gelcoat — Seashore Fiberglass",
+      "wildwood nj fiberglass deck structural restoration reglass before after — railing post flashing repair",
+    beforeImage: "/gallery/B1.jpeg",
+    afterImage: "/gallery/A1.jpeg",
   },
   {
     id: "2",
-    slug: "brigantine-full-reglass-post-flashing",
-    title: "Brigantine NJ — Full Reglass with Post Flashing",
+    slug: "sea-isle-city-full-reglass",
+    title: "Sea Isle City NJ — Full Deck Reglass & Resurfacing",
     category: "Reglass",
+    location: "Sea Isle City, NJ",
     beforeDescription:
-      "Nail pops, soft spots near columns, structural post never flashed.",
+      "The deck surface was extremely aged, cracked, and leaking, with visible fiberglass deterioration. It was in clear need of a full reglass.",
     afterDescription:
-      "Plywood re-secured, post flashings, full reglass, new gelcoat.",
+      "We fully prepped the deck, reinforcing the structure by securing all joists. We replaced the perimeter with new PVC fascia and drip edge. After grinding, we applied bondo on all screws and seams. A new fiberglass layer was installed, allowed to cure, and then finished with a fresh gelcoat. The result: a fully sealed, watertight deck with a brand-new finish.",
     beforeImageAlt:
-      "Before: Brigantine NJ fiberglass deck with nail pops, soft spots near columns, unflashed structural post — Seashore Fiberglass",
+      "sea isle city nj fiberglass deck reglass resurfacing before — full membrane renewal",
     afterImageAlt:
-      "After: Brigantine NJ deck with post flashings, full reglass and new gelcoat — Seashore Fiberglass",
+      "sea isle city nj fiberglass deck reglass resurfacing after — full membrane renewal",
+    beforeImage: "/gallery/B2.jpeg",
+    afterImage: "/gallery/A2.jpeg",
   },
   {
     id: "3",
-    slug: "margate-recolor-maintenance",
-    title: "Margate City NJ — Recolor Maintenance",
+    slug: "avalon-recolor-regelcoating",
+    title: "Avalon NJ — Fiberglass Recolor & Re-Gelcoating",
     category: "Recolor",
+    location: "Avalon, NJ",
     beforeDescription:
-      "Chalky faded gelcoat, minor UV cracking, structure intact.",
+      "The fiberglass deck showed visible signs of color fading and surface wear caused by long-term exposure to coastal weather conditions. The existing topcoat had begun losing its appearance and protective finish, indicating the need for maintenance to preserve the fiberglass system.",
     afterDescription:
-      "Full grind, hairline crack repair, acetone clean, new textured gelcoat.",
+      "The deck was professionally prepared through a full grinding and surface preparation process before receiving a new fiberglass gelcoat finish. This maintenance process restored the deck's appearance, renewed its waterproof protective layer, and extended the overall lifespan of the fiberglass system.\n\nRecommended maintenance every 3–5 years helps prevent premature fiberglass deterioration and keeps the deck protected in coastal environments.",
     beforeImageAlt:
-      "Before: Margate City NJ fiberglass deck with chalky faded gelcoat and minor UV cracking — Seashore Fiberglass",
+      "avalon nj fiberglass deck recolor re-gelcoating before — UV fading and surface wear",
     afterImageAlt:
-      "After: Margate City NJ deck with new textured gelcoat after professional recolor maintenance — Seashore Fiberglass",
+      "avalon nj fiberglass deck recolor re-gelcoating after — restored gelcoat finish",
+    beforeImage: "/gallery/B3.jpeg",
+    afterImage: "/gallery/A3.jpeg",
   },
   {
     id: "4",
-    slug: "avalon-reglass-door-post",
-    title: "Avalon NJ — Reglass with Door Transition & Post Flashings",
-    category: "Reglass",
+    slug: "wildwood-new-construction",
+    title: "Wildwood NJ — New Construction Fiberglass Deck",
+    category: "New Construction",
+    location: "Wildwood, NJ",
     beforeDescription:
-      "Peeling gelcoat, soft spots at post bases, missing door transition.",
+      "This was a new home construction project with the initial framing in place. The upper deck was enclosed, requiring drainage solutions, while the lower deck was open.",
     afterDescription:
-      "Door transition fabricated/installed, post flashings, full reglass.",
+      "For the enclosed upper deck, we installed a fiberglass system with integrated drainage, including seamless crickets directing water into scuppers every 48–56 inches. The open deck received our standard fiberglass system: second plywood layer, fiberglass waterproofing, PVC drip edge, and a smooth final gelcoat finish. Both decks are now fully waterproof and built to last.",
     beforeImageAlt:
-      "Before: Avalon NJ fiberglass deck with peeling gelcoat, soft spots at posts, missing door transition — Seashore Fiberglass",
+      "wildwood nj new construction fiberglass deck before — framing in place",
     afterImageAlt:
-      "After: Avalon NJ deck with new door transition, post flashings and full reglass — Seashore Fiberglass",
+      "wildwood nj new construction fiberglass deck after — cricket drainage scupper system",
+    beforeImage: "/gallery/B4.jpeg",
+    afterImage: "/gallery/A4.jpeg",
   },
   {
     id: "5",
-    slug: "wildwood-high-traffic-reglass",
-    title: "Wildwood NJ — High-Traffic Reglass",
-    category: "Reglass",
+    slug: "stone-harbor-door-pan-repair",
+    title: "Stone Harbor NJ — Fiberglass Door Pan Leak Repair",
+    category: "Repair",
+    location: "Stone Harbor, NJ",
     beforeDescription:
-      "Extensive nail pops, plywood seams visible, heavy rental wear.",
+      "During the initial inspection, soft spots were discovered directly in front of the entry door — a common sign of water intrusion coming from a failed door transition. After removing the door and surrounding materials, we found severe moisture damage caused by the absence of a proper fiberglass door pan system.\n\nThe lack of correct waterproof flashing allowed water to penetrate beneath the fiberglass deck surface over time, resulting in structural deterioration and hidden rot around the doorway area.",
     afterDescription:
-      "Full screw re-securing, reglass, non-slip textured gelcoat.",
+      "The damaged areas were professionally repaired and reinforced before installing a custom fiberglass door pan and proper waterproof transition system. New fiberglass flashing details were integrated into the deck system to fully seal the doorway and prevent future water intrusion.\n\nThis project highlights the importance of properly installed fiberglass door pans on any entry door connected to a fiberglass deck system.",
     beforeImageAlt:
-      "Before: Wildwood NJ rental fiberglass deck with nail pops, visible plywood seams and heavy wear — Seashore Fiberglass",
+      "stone harbor nj fiberglass deck door pan leak repair before — soft spots and moisture damage",
     afterImageAlt:
-      "After: Wildwood NJ deck re-secured and reglassed with non-slip textured gelcoat — Seashore Fiberglass",
+      "stone harbor nj fiberglass deck door pan leak repair after — waterproof door transition",
+    beforeImage: "/gallery/B5.jpeg",
+    afterImage: "/gallery/A5.jpeg",
   },
   {
     id: "6",
-    slug: "cape-may-drip-edge-reglass",
-    title: "Cape May NJ — Historic Home Drip Edge Reconstruction + Reglass",
-    category: "Reglass",
+    slug: "margate-column-repair",
+    title: "Margate NJ — Railing Posts & Structural Column Post Waterproofing Repair",
+    category: "Repair + Structural Restoration",
+    location: "Margate, NJ",
     beforeDescription:
-      "Rotted wooden drip edge, water behind fascia, short flashings.",
+      "The structural post inside the column had no proper flashing, allowing water intrusion. Over time, this caused extensive rot — not only in the post but also in the deck framing itself. This case highlights why proper flashing is critical to prevent severe structural damage.",
     afterDescription:
-      "Packer board, new 1x6 PVC drip edge, extended flashings, full reglass.",
+      "We repaired all affected areas, including replacing the structural framing and posts. Proper fiberglass flashing was installed to ensure future waterproofing. We also added new PVC fascia and drip edge, completing a fully correct and long-lasting waterproof system.",
     beforeImageAlt:
-      "Before: Cape May NJ historic home deck with rotted wood drip edge, water behind fascia and short flashings — Seashore Fiberglass",
+      "margate nj fiberglass deck railing post column repair before — structural rot from missing flashing",
     afterImageAlt:
-      "After: Cape May NJ deck with PVC drip edge, extended flashings and full reglass — Seashore Fiberglass",
+      "margate nj fiberglass deck railing post column repair after — proper fiberglass flashing installed",
+    beforeImage: "/gallery/B6.jpeg",
+    afterImage: "/gallery/A6.jpeg",
   },
   {
     id: "7",
-    slug: "sea-isle-new-construction",
-    title: "Sea Isle City NJ — New Construction",
-    category: "New construction",
+    slug: "strathmere-rooftop-drainage",
+    title: "Strathmere NJ — Soft Spot & Rotten Plywood Repair — Rooftop Drainage Restoration & Full Reglass",
+    category: "Reglass + Drainage Restoration",
+    location: "Strathmere, NJ",
     beforeDescription:
-      "New build — engineered substrate and perimeter for a full fiberglass waterproof system.",
+      "This enclosed rooftop deck had multiple drainage failures caused by improperly flashed deck drains and poor water direction throughout the surface. The existing drainage system allowed water intrusion around the drains, resulting in rotted and moisture-damaged plywood in several areas of the deck.\n\nIn addition, the deck lacked a proper drainage slope system, causing standing water and ponding issues near the drains.",
     afterDescription:
-      "Sister joist pitch correction, dual-layer plywood, chamfer strips, PVC perimeter, flashings, 2-oz membrane, textured gelcoat.",
+      "The client requested a full transition from traditional drains to a scupper drainage system. All affected plywood and moisture-damaged areas were professionally replaced before rebuilding the drainage layout using our custom seamless cricket system designed to properly direct water toward the new scuppers.\n\nThe entire rooftop deck then received a full fiberglass reglass system, creating a fully waterproof surface designed to protect the living space below while delivering a clean, modern finish with long-term coastal durability.\n\nThe final result was a leak-free rooftop deck system built for proper drainage, long-term waterproof protection, and worry-free enjoyment.",
     beforeImageAlt:
-      "Sea Isle City NJ new fiberglass deck construction — substrate and perimeter prep for waterproof system — Seashore Fiberglass",
+      "strathmere nj rooftop deck drainage restoration before — improperly flashed drains and rotted plywood",
     afterImageAlt:
-      "Completed new fiberglass deck in Sea Isle City NJ with dual-layer plywood, PVC perimeter, flashings, 2-oz membrane and textured gelcoat — Seashore Fiberglass",
+      "strathmere nj rooftop deck drainage restoration after — cricket scupper system full reglass",
+    beforeImage: "/gallery/B7.jpeg",
+    afterImage: "/gallery/A7.jpeg",
   },
   {
     id: "8",
-    slug: "longport-waterfront-new",
-    title: "Longport NJ — New Waterfront Construction",
-    category: "New construction",
+    slug: "cape-may-pitch-correction",
+    title: "Cape May NJ — Deck Pitch Correction & Drainage Repair",
+    category: "Repair + Pitch Correction",
+    location: "Cape May, NJ",
     beforeDescription:
-      "New elevated waterfront deck — full system from substrate up.",
+      "The deck had a reversed pitch, directing water toward the door and causing leaks. Water was pooling near the house instead of draining outward.",
     afterDescription:
-      "Complete elevated deck: dual-layer plywood, full flashing system, marine-grade gelcoat.",
+      "We corrected the pitch by demolishing the existing plywood and installing sister joists along each original joist. We prefer sister joists over simple sleepers because if old joists have natural sagging, sleepers only follow those imperfections. Sister joists allow us to follow a true, straight plane, ensuring a proper pitch. We set the slope at ¼ inch per foot, ensuring correct drainage. After double-sheathing the deck with plywood, we added a fiberglass door pan at the entry, flashed up the walls, and installed a full fiberglass system. The result: a proper pitch, no pooling, and a fully waterproof, long-lasting deck.",
     beforeImageAlt:
-      "Longport NJ waterfront new fiberglass deck construction in progress — Seashore Fiberglass",
+      "cape may nj fiberglass deck pitch correction before — reversed drainage pooling toward house",
     afterImageAlt:
-      "Completed Longport NJ waterfront fiberglass deck with dual-layer plywood, full flashing and marine-grade gelcoat — Seashore Fiberglass",
+      "cape may nj fiberglass deck pitch correction after — sister joists correct slope full fiberglass system",
+    beforeImage: "/gallery/B8.jpeg",
+    afterImage: "/gallery/A8.jpeg",
   },
   {
     id: "9",
-    slug: "stone-harbor-wolf-composite-azek",
-    title: "Stone Harbor NJ — Wolf Composite + Azek Renovation",
+    slug: "long-beach-island-composite",
+    title: "Long Beach Island NJ — Composite Deck & Stair Installation",
     category: "Composite",
+    location: "Long Beach Island, NJ",
     beforeDescription:
-      "Aging wood deck due for replacement in a coastal environment.",
+      "The existing decks and stair systems were outdated and structurally worn, showing significant deterioration throughout the framing and exterior finishes. The project required a complete renovation to improve both structural integrity and overall appearance.",
     afterDescription:
-      "Old wood deck replaced with Wolf PVC composite + Azek fascias/steps.",
+      "We performed a full deck and stair remodeling project, including reinforcement and replacement of the structural framing where needed to meet current local building codes. The new system was finished with modern composite decking materials, upgraded stair systems, and new railing installations, delivering a clean, durable, and low-maintenance coastal finish with a completely renewed appearance.",
     beforeImageAlt:
-      "Before: Stone Harbor NJ aging wood deck before composite and PVC fascia renovation — Seashore Fiberglass",
+      "long beach island nj composite deck stair installation before — outdated worn decking",
     afterImageAlt:
-      "After: Stone Harbor NJ deck with Wolf composite decking and Azek fascias and steps — Seashore Fiberglass",
+      "long beach island nj composite deck stair installation after — modern composite decking LBI",
+    beforeImage: "/gallery/B9.jpeg",
+    afterImage: "/gallery/A9.jpeg",
   },
   {
     id: "10",
-    slug: "ventnor-vinyl-railing-post-flashing",
-    title: "Ventnor City NJ — Vinyl Railing Upgrade with Post Flashing",
-    category: "Vinyl railing",
+    slug: "ocean-city-vinyl-railing",
+    title: "Ocean City NJ — Vinyl Railing Installation & Upgrade",
+    category: "Vinyl Railing",
+    location: "Ocean City, NJ",
     beforeDescription:
-      "Prior railing and post penetrations needed code-compliant waterproof integration.",
+      "The existing wood railing system was heavily weathered and outdated from years of coastal exposure. The overall appearance no longer matched the newly renovated deck systems and required a full upgrade to improve both durability and aesthetics.",
     afterDescription:
-      "New vinyl railing with 6\" fiberglass post flashings at each penetration. Code-compliant, rust-free.",
+      "As part of the complete deck demolition and reconstruction project, we installed a brand-new vinyl T-railing system designed to perfectly complement the fiberglass decks and composite decking finishes. The new railing system provides a clean modern appearance, low maintenance performance, and long-term durability ideal for New Jersey coastal environments.",
     beforeImageAlt:
-      "Before: Ventnor City NJ deck railing and post penetrations before vinyl upgrade and fiberglass post flashings — Seashore Fiberglass",
+      "ocean city nj vinyl railing installation before — weathered wood railing system",
     afterImageAlt:
-      "After: Ventnor City NJ vinyl railing with 6-inch fiberglass post flashings at each post — Seashore Fiberglass",
+      "ocean city nj vinyl railing installation after — vinyl T-railing coastal upgrade",
+    beforeImage: "/gallery/B10.jpeg",
+    afterImage: "/gallery/A10.jpeg",
   },
 ];

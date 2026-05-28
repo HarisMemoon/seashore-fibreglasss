@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {
   ADDRESS,
   CONTACT_H1,
+  CONTACT_HEADER_COPY,
   CONTACT_HOURS,
   CONTACT_META,
   EMAIL,
@@ -60,7 +61,7 @@ export default function ContactPage() {
             {CONTACT_H1}
           </h1>
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/70">
-            Phone {PHONE} - 7 days a week · {CONTACT_HOURS}
+            {CONTACT_HEADER_COPY}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">

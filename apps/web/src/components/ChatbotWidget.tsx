@@ -351,6 +351,7 @@ export function ChatbotWidget() {
   const pathname = usePathname();
   const scrollRef = useRef<HTMLDivElement>(null);
   const firstUserMessageRef = useRef(false);
+  const hasBeenOpenedRef = useRef(false);
   const [isOpen, setIsOpen] = useState(false);
   const [hasTrackedOpen, setHasTrackedOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -362,6 +363,25 @@ export function ChatbotWidget() {
   const [quoteForm, setQuoteForm] = useState<QuoteFormState>(INITIAL_QUOTE_FORM);
   const [leadDraft, setLeadDraft] = useState<ChatbotLeadDraft>({});
   const [messages, setMessages] = useState<UiMessage[]>([WELCOME_MESSAGE]);
+
+  // Auto-minimize after 7 seconds if user hasn't opened the chat
+  useEffect(() => {
+    if (!hasBeenOpenedRef.current) {
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+      }, 7000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  // Collapse on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isOpen) setIsOpen(false);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen || hasTrackedOpen) return;
@@ -499,8 +519,8 @@ export function ChatbotWidget() {
     try {
       await postContact({
         name: quoteForm.name.trim(),
-        phone: quoteForm.phone.trim() || undefined,
-        email: quoteForm.email.trim(),
+        phone: quoteForm.phone.trim(),
+        email: quoteForm.email.trim() || undefined,
         address: quoteForm.address.trim(),
         city: quoteForm.city,
         bestTime: quoteForm.bestTime || undefined,
@@ -593,9 +613,9 @@ export function ChatbotWidget() {
                 <div className="inline-flex items-center gap-2 rounded-full border border-turquoise/20 bg-turquoise/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-turquoise">
                   Guided Assistant
                 </div>
-                <h2 className="font-heading mt-3 text-lg font-bold text-white">{CHATBOT_NAME}</h2>
+                <h2 className="font-heading mt-3 text-lg font-bold text-white">Ask {CHATBOT_NAME}</h2>
                 <p className="mt-1 max-w-xs text-sm leading-relaxed text-white/65">
-                  Ask about services, towns, leak symptoms, or start a free quote.
+                  Ask about your deck, our services, or schedule a free inspection.
                 </p>
               </div>
               <button
@@ -787,7 +807,10 @@ export function ChatbotWidget() {
 
       <button
         type="button"
-        onClick={() => setIsOpen((current) => !current)}
+        onClick={() => {
+          hasBeenOpenedRef.current = true;
+          setIsOpen((current) => !current);
+        }}
         className="group relative flex items-center gap-3 rounded-full border border-turquoise/20 bg-[#071321]/90 px-4 py-3 text-white shadow-2xl shadow-black/40 backdrop-blur-xl transition hover:border-turquoise/40"
         aria-label={isOpen ? "Hide chatbot" : "Open chatbot"}
       >

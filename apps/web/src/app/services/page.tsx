@@ -92,7 +92,7 @@ export default function ServicesPage() {
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Services</p>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-center shadow-sm">
-                <p className="font-heading text-2xl font-extrabold text-navy">2014</p>
+                <p className="font-heading text-2xl font-extrabold text-navy">2020</p>
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Family-owned since</p>
               </div>
             </div>
@@ -134,27 +134,36 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="px-6 pb-16 md:pb-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="mt-16 rounded-2xl border border-turquoise/20 bg-gradient-to-br from-slate-50 to-white p-8 md:flex md:items-center md:justify-between md:gap-8">
-            <div>
-              <p className="font-heading text-2xl font-bold text-navy">Need a free inspection?</p>
-              <p className="mt-2 text-slate-600">We respond the same day or next morning.</p>
-            </div>
-            <div className="mt-6 flex flex-wrap gap-3 md:mt-0">
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange to-orange-light px-6 py-3.5 font-bold text-white shadow-md shadow-orange/20"
-              >
-                {HERO_PRIMARY_CTA}
-              </Link>
-              <a
-                href={`tel:${PHONE.replace(/\D/g, "")}`}
-                className="inline-flex items-center justify-center rounded-xl border border-navy/15 bg-white px-6 py-3.5 font-semibold text-navy"
-              >
-                Call {PHONE}
-              </a>
-            </div>
+      <section className="border-t border-slate-100 bg-slate-50 px-6 py-16 md:py-20">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+            Not sure which service you need? We&rsquo;ll inspect your deck for free and give you an honest recommendation — no pressure, no upselling.
+          </h2>
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-orange to-orange-light px-8 py-4 font-bold text-white shadow-lg shadow-orange/25 transition hover:shadow-glow-orange"
+            >
+              Get My Free Inspection
+            </Link>
+            <a
+              href={`tel:${PHONE.replace(/\D/g, "")}`}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-navy/15 bg-white px-8 py-4 font-semibold text-navy transition hover:border-navy/30"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              Call {PHONE}
+            </a>
+            <a
+              href={`sms:+1${PHONE.replace(/\D/g, "")}`}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-navy/15 bg-white px-8 py-4 font-semibold text-navy transition hover:border-navy/30"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+              Text us
+            </a>
           </div>
         </div>
       </section>

@@ -1,7 +1,8 @@
 import { z } from "zod";
-import { BEST_TIME_OPTIONS, SERVICE_AREA_FORM_OPTIONS } from "@seashore/content";
+import { BEST_TIME_OPTIONS, SERVICE_AREA_FORM_OPTIONS, SERVICE_INQUIRY_OPTIONS } from "@seashore/content";
 const cityEnum = z.enum([...SERVICE_AREA_FORM_OPTIONS] as [string, ...string[]]);
 const bestTimeEnum = z.enum([...BEST_TIME_OPTIONS] as [string, ...string[]]);
+const serviceEnum = z.enum([...SERVICE_INQUIRY_OPTIONS] as [string, ...string[]]);
 
 export const contactSubmissionSchema = z
   .object({
@@ -13,21 +14,20 @@ export const contactSubmissionSchema = z
     phone: z.preprocess(
       (v) => (v === undefined || v === null ? "" : String(v).trim()),
       z
-        .union([
-          z.literal(""),
-          z.string().refine((v) => {
-            const digits = v.replace(/\D/g, "");
-            return digits.length >= 10 && digits.length <= 15;
-          }, "Enter a valid phone number with at least 10 digits."),
-        ])
-        .transform((v) => (v === "" ? undefined : v))
+        .string()
+        .refine((v) => {
+          const digits = v.replace(/\D/g, "");
+          return digits.length >= 10 && digits.length <= 15;
+        }, "Enter a valid phone number with at least 10 digits.")
     ),
     email: z.preprocess(
       (v) => (v === undefined || v === null ? "" : String(v).trim()),
       z
-        .string()
-        .min(1, "Email is required.")
-        .email("Enter a valid email address.")
+        .union([
+          z.literal(""),
+          z.string().email("Enter a valid email address."),
+        ])
+        .transform((v) => (v === "" ? undefined : v))
     ),
     address: z.preprocess(
       (v) => (v === undefined || v === null ? "" : String(v).trim()),
@@ -39,6 +39,10 @@ export const contactSubmissionSchema = z
     city: z.preprocess(
       (v) => (v === undefined || v === null ? "" : String(v).trim()),
       cityEnum
+    ),
+    service: z.preprocess(
+      (v) => (v === undefined || v === null || v === "" ? undefined : String(v).trim()),
+      serviceEnum.optional()
     ),
     bestTime: z.preprocess(
       (v) => (v === undefined || v === null || v === "" ? undefined : String(v).trim()),
