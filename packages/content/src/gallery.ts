@@ -15,13 +15,13 @@ export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "1",
     slug: "wildwood-structural-restoration-reglass",
-    title: "Wildwood NJ — Structural Restoration & Full Reglass",
+    title: "Ocean City NJ — Structural Restoration & Full Reglass",
     category: "Reglass + Structural Restoration",
-    location: "Wildwood, NJ",
+    location: "Ocean City, NJ",
     beforeDescription:
-      "During a planned reglass, we uncovered severe structural damage. Extensive framing rot caused by water intrusion from unflashed railing posts and improperly installed fascia had compromised the deck's structural integrity.",
+      "During a planned reglass, we uncovered severe structural damage. The deck framing had extensive rot due to water intrusion from poorly flashed railing posts and improperly installed fascia, compromising the deck's structural integrity.",
     afterDescription:
-      "Full structural restoration — all damaged framing replaced, flashing details corrected, new PVC fascia and drip edges installed. Deck fully reglassed with a like-new, long-lasting fiberglass finish.",
+      "We performed a full structural restoration: replacing all damaged framing, correcting flashing details, installing new PVC fascia and drip edges. Finally, the deck was fully reglassed, delivering a like-new, long-lasting fiberglass finish.",
     beforeImageAlt:
       "wildwood nj fiberglass deck structural restoration reglass before after — railing post flashing repair",
     afterImageAlt:
@@ -104,7 +104,7 @@ export const GALLERY_ITEMS: readonly GalleryItem[] = [
     category: "Repair + Structural Restoration",
     location: "Margate, NJ",
     beforeDescription:
-      "The structural post inside the column had no proper flashing, allowing water intrusion. Over time, this caused extensive rot — not only in the post but also in the deck framing itself. This case highlights why proper flashing is critical to prevent severe structural damage.",
+      "The structural post inside the column had no proper flashing, allowing water intrusion. Over time, this caused extensive rot—not only in the post but also in the deck framing itself. This case highlights why proper flashing is critical to prevent severe structural damage.",
     afterDescription:
       "We repaired all affected areas, including replacing the structural framing and posts. Proper fiberglass flashing was installed to ensure future waterproofing. We also added new PVC fascia and drip edge, completing a fully correct and long-lasting waterproof system.",
     beforeImageAlt:
