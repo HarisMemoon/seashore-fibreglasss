@@ -116,6 +116,23 @@ html {
   background-clip: text;
 }
 
+/* ── Mobile performance: remove GPU-intensive effects on iOS Safari ──────────
+   backdrop-filter and large blur() are the #1 cause of jank on mobile Safari.
+   Hiding decorative blur orbs eliminates unnecessary compositing layers.
+   These rules cover every page without per-component changes. */
+@media (max-width: 639px) {
+  [class*="backdrop-blur"],
+  .glass {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Arbitrary blur-[Xpx] classes are only ever used on decorative orbs */
+  [class*="blur-["] {
+    display: none !important;
+  }
+}
+
 /* Animated underline */
 .hover-underline {
   position: relative;

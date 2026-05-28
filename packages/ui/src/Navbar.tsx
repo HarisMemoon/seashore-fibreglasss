@@ -113,7 +113,7 @@ export function Navbar() {
                 className="flex items-center justify-center rounded-xl bg-gradient-to-r from-[#E87C2B] to-[#f0963e] py-3 text-sm font-bold text-white shadow-[0_0_18px_rgba(232,124,43,0.25)] transition hover:opacity-90"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Get Your Free Inspection &amp; Quote
+                Contact Us
               </Link>
             </div>
           </div>
