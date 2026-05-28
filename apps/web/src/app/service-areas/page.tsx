@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HERO_PRIMARY_CTA, PHONE, SERVICE_AREA_DETAILS, SERVICE_AREAS_INDEX_META } from "@seashore/content";
 import BreadcrumbJsonLd from "../BreadcrumbJsonLd";
+import { ServiceAreasMapWidget } from "@/components/ServiceAreasMapWidget";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -75,6 +76,13 @@ export default function ServiceAreasIndexPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Coverage map ── */}
+      <section className="border-b border-slate-100 bg-white px-6 py-12 md:py-16">
+        <div className="mx-auto max-w-7xl">
+          <ServiceAreasMapWidget className="h-[min(26rem,60vh)]" />
         </div>
       </section>
 

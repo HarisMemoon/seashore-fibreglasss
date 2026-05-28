@@ -201,7 +201,7 @@ export const REVIEWS = [
     photoCount: 0,
     images: [] as readonly string[],
     quote:
-      "I couldn't be happier with the work by Francisco and his team. Our new decks and railings look beautiful! Francisco and his crew are good workers. The job was finished in a little over a week, boy did the crew work hard. We waited several months to get started but it was worth the wait. Francesco went above and beyond. I would 100% recommend Seashore Fiberglass if you need decks or railings.",
+      "I couldn't be happier with the work by Francisco and his team. Our new decks and railings look beautiful! Francisco and his crew are good workers. The job was finished in a little over a week, boy did the crew work hard. We waited several months to get started but it was worth the wait. Francisco went above and beyond. I would 100% recommend Seashore Fiberglass if you need decks or railings.",
   },
   {
     name: "JLex",

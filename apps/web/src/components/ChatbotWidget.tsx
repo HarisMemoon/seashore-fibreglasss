@@ -352,7 +352,7 @@ export function ChatbotWidget() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const firstUserMessageRef = useRef(false);
   const hasBeenOpenedRef = useRef(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [hasTrackedOpen, setHasTrackedOpen] = useState(false);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -374,10 +374,13 @@ export function ChatbotWidget() {
     }
   }, []);
 
-  // Collapse on scroll
+  // Collapse on scroll — but not when a chat input is focused (mobile keyboard causes scroll)
   useEffect(() => {
     const handleScroll = () => {
-      if (isOpen) setIsOpen(false);
+      if (!isOpen) return;
+      const active = document.activeElement;
+      if (active && (active.tagName === "TEXTAREA" || active.tagName === "INPUT" || active.tagName === "SELECT")) return;
+      setIsOpen(false);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);

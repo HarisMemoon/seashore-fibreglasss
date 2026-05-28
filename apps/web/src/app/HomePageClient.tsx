@@ -288,12 +288,10 @@ function ServicesSection() {
   const activeService = SERVICES[activeIndex];
   const activeIconKey = iconKeys[activeIndex] ?? "repair";
   const bullets = SERVICE_DETAIL_BULLETS[activeSlug] ?? [];
-  const panelImage = SERVICE_PANEL_IMAGES[activeSlug] ?? SERVICE_PANEL_IMAGES[SERVICES[0].slug]!;
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-[#f8fafc] to-white px-6 py-28">
       <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-      {/* subtle background grid */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.025]"
         style={{
@@ -303,6 +301,7 @@ function ServicesSection() {
         }}
       />
       <div className="pointer-events-none absolute -right-32 top-0 h-[400px] w-[400px] rounded-full bg-turquoise/8 blur-[120px]" />
+      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full bg-orange/[0.05] blur-[100px]" />
 
       <div className="relative mx-auto max-w-7xl">
         <InView className="text-center">
@@ -315,13 +314,15 @@ function ServicesSection() {
           </p>
         </InView>
 
-        {/* Tab strip — offset grid vs specs section */}
+        {/* Tab strip */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="mt-14 flex flex-wrap justify-center gap-3 sm:gap-3.5"
+          className="mt-12 flex flex-wrap justify-center gap-3"
+          role="tablist"
+          aria-label="Our services"
         >
           {SERVICES.map((service, i) => {
             const iconKey = iconKeys[i] ?? "repair";
@@ -330,6 +331,8 @@ function ServicesSection() {
               <button
                 key={service.slug}
                 type="button"
+                role="tab"
+                aria-selected={isActive}
                 onClick={() => setActiveSlug(service.slug)}
                 className={`group relative inline-flex min-h-[2.75rem] items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/60 ${
                   isActive
@@ -350,7 +353,7 @@ function ServicesSection() {
                 </span>
                 {isActive && (
                   <motion.span
-                    layoutId="tab-dot"
+                    layoutId="services-tab-dot"
                     className="inline-flex size-1.5 shrink-0 items-center justify-center rounded-full bg-turquoise"
                   />
                 )}
@@ -359,8 +362,8 @@ function ServicesSection() {
           })}
         </motion.div>
 
-        {/* Detail panel — image-leading layout (distinct from specs section) */}
-        <div className="mt-12">
+        {/* Detail panel — matches "Built different" two-column layout */}
+        <div className="mt-10">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeSlug}
@@ -368,95 +371,70 @@ function ServicesSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-              className="relative overflow-hidden rounded-[1.875rem] border border-slate-200/80 bg-white shadow-[0_22px_64px_-18px_rgba(13,45,74,0.14)]"
+              className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-[0_8px_48px_rgba(13,45,74,0.09)]"
+              role="tabpanel"
             >
-              <div className="h-[5px] w-full bg-gradient-to-r from-orange/90 via-turquoise to-navy" />
+              <div className="h-1.5 w-full bg-gradient-to-r from-turquoise via-turquoise-light to-navy" />
 
-              <div className="grid gap-0 lg:grid-cols-[minmax(0,1.28fr)_minmax(0,1fr)]">
-                {/* Leading column — contextual photo */}
-                <div className="relative isolate min-h-[240px] border-b border-slate-100 sm:min-h-[280px] lg:min-h-[min(28rem,calc(100vh-14rem))] lg:border-b-0 lg:border-r lg:border-slate-100">
-                  <Image
-                    src={panelImage.src}
-                    alt={panelImage.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 46vw"
-                    priority={activeIndex === 0}
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/45 via-navy/10 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-navy/5 lg:to-navy/25"
-                    aria-hidden
-                  />
-                  <div className="absolute bottom-5 left-5 lg:bottom-8 lg:left-8">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-white/95 text-navy shadow-lg shadow-black/20 ring-1 ring-white/60 backdrop-blur-sm">
-                      <span className="flex [&_svg]:h-7 [&_svg]:w-7">{serviceIcons[activeIconKey]}</span>
+              <div className="grid gap-0 lg:grid-cols-[1fr_1.1fr]">
+                {/* Left — icon + title + description + CTA */}
+                <div className="flex flex-col justify-between gap-8 p-8 sm:p-10">
+                  <div>
+                    <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-navy to-[#0d4a5c] text-white shadow-lg shadow-navy/30">
+                      <span style={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        {serviceIcons[activeIconKey]}
+                      </span>
                     </div>
-                  </div>
-                </div>
-
-                {/* Copy + checklist */}
-                <div className="flex flex-col gap-8 p-8 sm:p-10 lg:justify-between">
-                  <div className="space-y-5">
-                    <h3 className="font-heading text-2xl font-extrabold leading-tight text-navy sm:text-[1.85rem] sm:leading-tight">
+                    <h3 className="font-heading text-2xl font-extrabold leading-tight text-navy sm:text-3xl">
                       {activeService.title}
                     </h3>
-                    <p className="text-[1rem] leading-[1.8] text-slate-500">{activeService.description}</p>
-                    <Link
-                      href={`/services/${activeService.slug}`}
-                      className="group inline-flex w-fit items-center gap-2.5 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white shadow-md shadow-navy/30 transition-all duration-300 hover:bg-turquoise-dark hover:shadow-turquoise/20"
-                    >
-                      Full service details
-                      <svg
-                        className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </Link>
+                    <p className="mt-4 text-[1rem] leading-[1.8] text-slate-500">{activeService.description}</p>
                   </div>
+                  <Link
+                    href={`/services/${activeService.slug}`}
+                    className="group inline-flex w-fit items-center gap-2.5 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white shadow-md shadow-navy/30 transition-all duration-300 hover:bg-turquoise-dark hover:shadow-turquoise/20"
+                  >
+                    Full service details
+                    <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                      <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+                    </svg>
+                  </Link>
+                </div>
 
-                  <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-br from-slate-50/95 to-[#eef6fa] p-6 sm:p-7">
-                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-slate-400">What&apos;s included</p>
-                    <ul className="mt-4 space-y-3.5">
-                      {bullets.map((bullet, i) => (
-                        <motion.li
-                          key={bullet}
-                          initial={{ opacity: 0, x: 12 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.06, duration: 0.28 }}
-                          className="flex items-start gap-3"
-                        >
-                          <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-white text-turquoise shadow-sm ring-1 ring-turquoise/20">
-                            <svg className="h-3 w-3" viewBox="0 0 12 12" fill="currentColor" aria-hidden>
-                              <path d="M10.28 2.28a.75.75 0 00-1.06 0L4.5 7 2.78 5.28a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l5.25-5.25a.75.75 0 000-1.06z" />
-                            </svg>
-                          </span>
-                          <span className="text-[0.95rem] leading-[1.65] text-slate-700">{bullet}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
+                {/* Right — bullets + stats */}
+                <div className="flex flex-col justify-center gap-5 border-t border-slate-100 bg-gradient-to-br from-slate-50 to-[#f0f7fb] p-8 sm:p-10 lg:border-l lg:border-t-0">
+                  <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-slate-400">What&apos;s included</p>
+                  <ul className="space-y-4">
+                    {bullets.map((bullet, i) => (
+                      <motion.li
+                        key={bullet}
+                        initial={{ opacity: 0, x: 16 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.07, duration: 0.3 }}
+                        className="flex items-start gap-3"
+                      >
+                        <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-turquoise/15 text-turquoise">
+                          <svg className="h-3 w-3" viewBox="0 0 12 12" fill="currentColor" aria-hidden>
+                            <path d="M10.28 2.28a.75.75 0 00-1.06 0L4.5 7 2.78 5.28a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l5.25-5.25a.75.75 0 000-1.06z" />
+                          </svg>
+                        </span>
+                        <span className="text-[0.95rem] leading-[1.65] text-slate-700">{bullet}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
 
-                    <div className="mt-6 grid grid-cols-3 divide-x divide-slate-200/90 rounded-xl border border-slate-200/80 bg-white/90">
-                      {[
-                        { label: "Shore-rated", value: "100%", sub: "salt + UV" },
-                        { label: "Warranty", value: "10 yr", sub: "workmanship" },
-                        { label: "Timeline", value: "2-7d", sub: "typical" },
-                      ].map(({ label, value, sub }) => (
-                        <div key={label} className="flex flex-col items-center gap-0.5 px-2 py-4 text-center sm:p-4">
-                          <span className="font-heading text-base font-extrabold text-navy sm:text-lg">{value}</span>
-                          <span className="text-[0.65rem] font-bold uppercase tracking-wider text-turquoise sm:text-[0.7rem]">
-                            {label}
-                          </span>
-                          <span className="text-[0.62rem] text-slate-400 sm:text-[0.68rem]">{sub}</span>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="mt-4 grid grid-cols-3 divide-x divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+                    {[
+                      { label: "Shore-rated", value: "100%", sub: "salt + UV" },
+                      { label: "Warranty", value: "10 yr", sub: "workmanship" },
+                      { label: "Timeline", value: "2-7d", sub: "typical" },
+                    ].map(({ label, value, sub }) => (
+                      <div key={label} className="flex flex-col items-center gap-0.5 p-4 text-center">
+                        <span className="font-heading text-lg font-extrabold text-navy">{value}</span>
+                        <span className="text-[0.7rem] font-bold uppercase tracking-wider text-turquoise">{label}</span>
+                        <span className="text-[0.68rem] text-slate-400">{sub}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -471,17 +449,8 @@ function ServicesSection() {
             className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition-colors hover:text-navy"
           >
             Browse all services
-            <svg
-              className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden
-            >
-              <path
-                fillRule="evenodd"
-                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                clipRule="evenodd"
-              />
+            <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+              <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
             </svg>
           </Link>
         </InView>
