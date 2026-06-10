@@ -156,7 +156,7 @@ function QuoteRequestCard({
   onCancel: () => void;
 }) {
   const inputClass = (hasError: boolean) =>
-    `w-full rounded-xl border px-3.5 py-3 text-sm text-white placeholder:text-white/35 transition focus:outline-none focus:ring-2 ${
+    `w-full rounded-xl border px-3.5 py-3 text-base sm:text-sm text-white placeholder:text-white/35 transition focus:outline-none focus:ring-2 ${
       hasError
         ? "border-red-400 bg-red-500/10 focus:ring-red-300/30"
         : "border-white/10 bg-white/[0.04] focus:border-turquoise/60 focus:ring-turquoise/20"
@@ -801,7 +801,7 @@ export function ChatbotWidget() {
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   placeholder="Ask about service, town, or quote..."
-                  className="max-h-28 min-h-[28px] w-full resize-none overflow-hidden bg-transparent text-sm text-white placeholder:text-white/35 focus:outline-none"
+                  className="max-h-28 min-h-[28px] w-full resize-none overflow-hidden bg-transparent text-base sm:text-sm text-white placeholder:text-white/35 focus:outline-none"
                   onKeyDown={(event) => {
                     if (event.key === "Enter" && !event.shiftKey) {
                       event.preventDefault();

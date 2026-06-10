@@ -9,15 +9,16 @@ export const GALLERY_META = {
     "Real before & after fiberglass deck repairs, reglass restoration, new construction & more in Ocean City NJ, Brigantine, Margate, Avalon & across the South Jersey Shore. 50+ 5-star reviews.",
 } as const;
 
-export const GALLERY_H1 = "Gallery — Real Fiberglass Deck Projects on the Jersey Shore";
+export const GALLERY_H1 =
+  "Gallery — Real Fiberglass Deck Projects on the Jersey Shore";
 
 export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "1",
     slug: "wildwood-structural-restoration-reglass",
-    title: "Ocean City NJ — Structural Restoration & Full Reglass",
+    title: "Wildwood, NJ — Structural Restoration & Full Reglass",
     category: "Reglass + Structural Restoration",
-    location: "Ocean City, NJ",
+    location: "Wildwood, NJ",
     beforeDescription:
       "During a planned reglass, we uncovered severe structural damage. The deck framing had extensive rot due to water intrusion from poorly flashed railing posts and improperly installed fascia, compromising the deck's structural integrity.",
     afterDescription:
@@ -32,7 +33,7 @@ export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "2",
     slug: "sea-isle-city-full-reglass",
-    title: "Sea Isle City NJ — Full Deck Reglass & Resurfacing",
+    title: "Sea Isle City, NJ — Full Deck Reglass & Resurfacing",
     category: "Reglass",
     location: "Sea Isle City, NJ",
     beforeDescription:
@@ -49,7 +50,7 @@ export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "3",
     slug: "avalon-recolor-regelcoating",
-    title: "Avalon NJ — Fiberglass Recolor & Re-Gelcoating",
+    title: "Avalon, NJ — Recolor & Re-Gelcoating Maintenance",
     category: "Recolor",
     location: "Avalon, NJ",
     beforeDescription:
@@ -66,7 +67,7 @@ export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "4",
     slug: "wildwood-new-construction",
-    title: "Wildwood NJ — New Construction Fiberglass Deck",
+    title: "Wildwood, NJ — New Construction Fiberglass Deck System",
     category: "New Construction",
     location: "Wildwood, NJ",
     beforeDescription:
@@ -83,7 +84,7 @@ export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "5",
     slug: "stone-harbor-door-pan-repair",
-    title: "Stone Harbor NJ — Fiberglass Door Pan Leak Repair",
+    title: "Stone Harbor, NJ — Fiberglass Door Pan Leak Repair",
     category: "Repair",
     location: "Stone Harbor, NJ",
     beforeDescription:
@@ -100,7 +101,8 @@ export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "6",
     slug: "margate-column-repair",
-    title: "Margate NJ — Railing Posts & Structural Column Post Waterproofing Repair",
+    title:
+      "Margate, NJ — Railing Post & Structural Column Waterproofing Repair",
     category: "Repair + Structural Restoration",
     location: "Margate, NJ",
     beforeDescription:
@@ -117,7 +119,8 @@ export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "7",
     slug: "strathmere-rooftop-drainage",
-    title: "Strathmere NJ — Soft Spot & Rotten Plywood Repair — Rooftop Drainage Restoration & Full Reglass",
+    title:
+      "Strathmere, NJ — Rooftop Deck Drainage Restoration & Full Reglass",
     category: "Reglass + Drainage Restoration",
     location: "Strathmere, NJ",
     beforeDescription:
@@ -134,7 +137,7 @@ export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "8",
     slug: "cape-may-pitch-correction",
-    title: "Cape May NJ — Deck Pitch Correction & Drainage Repair",
+    title: "Cape May, NJ — Reversed Drainage Correction & Full Fiberglass System",
     category: "Repair + Pitch Correction",
     location: "Cape May, NJ",
     beforeDescription:
@@ -151,7 +154,7 @@ export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "9",
     slug: "long-beach-island-composite",
-    title: "Long Beach Island NJ — Composite Deck & Stair Installation",
+    title: "Long Beach Island, NJ — Composite Deck & Stair Installation",
     category: "Composite",
     location: "Long Beach Island, NJ",
     beforeDescription:
@@ -168,7 +171,7 @@ export const GALLERY_ITEMS: readonly GalleryItem[] = [
   {
     id: "10",
     slug: "ocean-city-vinyl-railing",
-    title: "Ocean City NJ — Vinyl Railing Installation & Upgrade",
+    title: "Ocean City, NJ — Vinyl Railing System Installation",
     category: "Vinyl Railing",
     location: "Ocean City, NJ",
     beforeDescription:

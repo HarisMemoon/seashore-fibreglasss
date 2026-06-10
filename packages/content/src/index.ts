@@ -87,14 +87,51 @@ export const SHORE_HOME_BUILT_DIFFERENT_TITLE = "Built different — by spec";
 export const SHORE_HOME_BUILT_DIFFERENT_SUB =
   "Every layer has a minimum. Tap a system to see how the specs stack together on every job we do.";
 
-export const SHORE_SPECS = [
-  '3/4″ CDX + 1/2″ ACX dual-layer plywood substrate',
+export type ShoreSpecScope = { label: string; detail: string };
+export type ShoreSpec = string | { summary: string; scopes: ShoreSpecScope[] };
+
+export const SHORE_SPECS: readonly ShoreSpec[] = [
+  {
+    summary: "Substrate (varies by project type):",
+    scopes: [
+      {
+        label: "Standard new construction",
+        detail:
+          "The builder installs the 3/4″ subfloor before Seashore arrives. Seashore installs a 1/2″ ACX overlay over the existing subfloor.",
+      },
+      {
+        label: "Full deck rebuilds / Pitch Correction projects",
+        detail:
+          "Seashore installs a complete dual-layer system — new 3/4″ CDX subfloor + 1/2″ ACX overlay.",
+      },
+      {
+        label: "Reglass / resurfacing on existing decks",
+        detail:
+          "The existing plywood is retained and re-secured to the framing. The fiberglass membrane is installed over the existing substrate.",
+      },
+    ],
+  },
   "2-oz fiberglass mat with resin — seamless membrane",
-  'Wall flashings minimum 12″ up vertical surfaces',
-  'Post flashings minimum 6″ vertical wrap',
-  '1/4″ per foot drainage pitch',
+  "Wall flashings minimum 12″ up vertical surfaces",
+  "Post flashings minimum 6″ vertical wrap",
+  {
+    summary:
+      "Drainage slope: 1/4″ per foot, established at the joist level during framing.",
+    scopes: [
+      {
+        label: "New construction",
+        detail:
+          "Slope is built into the framing by the builder BEFORE Seashore arrives. Seashore verifies the slope is correct, then proceeds with the waterproofing system.",
+      },
+      {
+        label: "Pitch Correction (only when needed)",
+        detail:
+          "When a deck was originally built with the slope going the wrong direction (toward the house), we perform a Pitch Correction repair — complete plywood demolition, sister joists installed alongside each existing joist, and a new drainage plane built at 1/4″ per foot.",
+      },
+    ],
+  },
   "PVC/Azek drip edges — rot-proof perimeter",
-] as const;
+];
 
 export const SERVICES = [
   {
@@ -107,13 +144,13 @@ export const SERVICES = [
     slug: "fiberglass-deck-new-constructions",
     title: "Fiberglass Deck New Construction",
     description:
-      "For newly built structures where the deck has been framed with the correct drainage slope and the first layer of plywood is already in place. We install the second plywood layer and complete the full fiberglass system — PVC drip edges, wall and post flashings, fiberglass membrane, and gelcoat finish.",
+      "For newly built homes where the deck is already framed (with the correct drainage slope built into the framing by the builder) and the first plywood layer is in place. Seashore installs the 1/2″ ACX overlay and completes the full fiberglass waterproofing system: PVC drip edges, wall and post flashings, fiberglass membrane, and marine-grade gelcoat.\nFraming and the first subfloor are typically completed by the general contractor before our scope begins. (Note: Seashore IS capable of full deck framing on rebuild projects — contact us if your project needs that.)",
   },
   {
     slug: "fiberglass-deck-resurfacing",
     title: "Fiberglass Deck Resurfacing (Reglass)",
     description:
-      "A full membrane renewal. We re-secure the plywood substrate, correct drip edges and flashings, install a new 2-oz fiberglass layer, and finish with fresh textured gelcoat.",
+      "Full membrane renewal on structurally sound decks. Existing plywood is re-secured to the framing, drip edges and flashings are corrected, a new 2-oz fiberglass layer is installed, and the surface is finished with fresh textured gelcoat. Pitch correction and substrate replacement are NOT part of standard resurfacing — those are separate services only when a structural issue requires them.",
   },
   {
     slug: "fiberglass-deck-recolor",
@@ -236,7 +273,7 @@ export const FINAL_CTA_BODY =
   "Whether you need a repair, reglass restoration, recolor maintenance, or a brand-new fiberglass deck — we provide free inspections and honest assessments. No pressure, just clear technical answers.";
 
 export const PHONE = "(609) 338-4505";
-export const EMAIL = "info@seashorefiberglass.com";
+export const EMAIL = "seashorefiberglass@gmail.com";
 
 export const ADDRESS = {
   street: "406 Asbury Ave",

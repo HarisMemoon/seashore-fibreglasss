@@ -28,7 +28,7 @@
 - **Type:** Family-owned and operated
 - **Location:** 406 Asbury Ave, Ocean City, NJ 08226
 - **Phone:** (609) 338-4505
-- **Email:** info@seashorefiberglass.com
+- **Email:** seashorefiberglass@gmail.com
 - **Hours:** Monday–Saturday 7am–6pm, Sunday by appointment
 - **Credentials:** Licensed & Insured (NJ contractor license, liability + workers' comp)
 - **Reviews:** 50+ 5-Star Google Reviews
@@ -45,21 +45,21 @@
 
 ### Service Areas (Exact 13)
 
-| # | Town | URL Slug | Primary Challenge |
-|---|------|----------|-------------------|
-| 1 | Ocean City NJ (home base) | ocean-city-nj | Boardwalk winds, bay humidity, intense summer UV |
-| 2 | Long Beach Island | long-beach-island | Most intense barrier island salt spray and wind |
-| 3 | Brigantine NJ | brigantine-nj | Bayfront humidity, salt from ocean and bay sides |
-| 4 | Atlantic City NJ | atlantic-city-nj | Boardwalk-adjacent, urban shore, rental properties |
-| 5 | Ventnor City NJ | ventnor-city-nj | Residential boardwalk homes, year-round occupancy |
-| 6 | Margate City NJ | margate-city-nj | Upscale beachfront, luxury waterproofing needs |
-| 7 | Longport NJ | longport-nj | Exclusive waterfront, elevated decks, premium finishes |
-| 8 | Strathmere NJ | strathmere-nj | Rural dune character, wind-driven salt exposure |
-| 9 | Sea Isle City NJ | sea-isle-city-nj | Vacation rental homes, heavy seasonal use |
-| 10 | Avalon NJ | avalon-nj | Upscale oceanfront, elevated decks, UV intensity |
-| 11 | Stone Harbor NJ | stone-harbor-nj | Family summer homes, seasonal use patterns |
-| 12 | Wildwood NJ | wildwood-nj | High tourist traffic, boardwalk exposure, rental durability |
-| 13 | Cape May NJ | cape-may-nj | Historic Victorian homes, bay/ocean convergence, highest salt |
+| #   | Town                      | URL Slug          | Primary Challenge                                             |
+| --- | ------------------------- | ----------------- | ------------------------------------------------------------- |
+| 1   | Ocean City NJ (home base) | ocean-city-nj     | Boardwalk winds, bay humidity, intense summer UV              |
+| 2   | Long Beach Island         | long-beach-island | Most intense barrier island salt spray and wind               |
+| 3   | Brigantine NJ             | brigantine-nj     | Bayfront humidity, salt from ocean and bay sides              |
+| 4   | Atlantic City NJ          | atlantic-city-nj  | Boardwalk-adjacent, urban shore, rental properties            |
+| 5   | Ventnor City NJ           | ventnor-city-nj   | Residential boardwalk homes, year-round occupancy             |
+| 6   | Margate City NJ           | margate-city-nj   | Upscale beachfront, luxury waterproofing needs                |
+| 7   | Longport NJ               | longport-nj       | Exclusive waterfront, elevated decks, premium finishes        |
+| 8   | Strathmere NJ             | strathmere-nj     | Rural dune character, wind-driven salt exposure               |
+| 9   | Sea Isle City NJ          | sea-isle-city-nj  | Vacation rental homes, heavy seasonal use                     |
+| 10  | Avalon NJ                 | avalon-nj         | Upscale oceanfront, elevated decks, UV intensity              |
+| 11  | Stone Harbor NJ           | stone-harbor-nj   | Family summer homes, seasonal use patterns                    |
+| 12  | Wildwood NJ               | wildwood-nj       | High tourist traffic, boardwalk exposure, rental durability   |
+| 13  | Cape May NJ               | cape-may-nj       | Historic Victorian homes, bay/ocean convergence, highest salt |
 
 ---
 
@@ -67,13 +67,13 @@
 
 ### Color Palette
 
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Navy Blue | `#1B3A5C` | Primary — headers, backgrounds, footer |
-| Turquoise | `#2A7DA6` | Accent — links, hover states, section labels |
-| Orange | `#E87C2B` | CTA buttons, highlights, urgency |
-| White | `#FFFFFF` | Backgrounds, hero text |
-| Light Gray | `#F8FAFC` (slate-50) | Alternating section backgrounds |
+| Color      | Hex                  | Usage                                        |
+| ---------- | -------------------- | -------------------------------------------- |
+| Navy Blue  | `#1B3A5C`            | Primary — headers, backgrounds, footer       |
+| Turquoise  | `#2A7DA6`            | Accent — links, hover states, section labels |
+| Orange     | `#E87C2B`            | CTA buttons, highlights, urgency             |
+| White      | `#FFFFFF`            | Backgrounds, hero text                       |
+| Light Gray | `#F8FAFC` (slate-50) | Alternating section backgrounds              |
 
 ### Typography
 
@@ -169,6 +169,7 @@
 **Meta Description:** Family-owned fiberglass deck contractors in Ocean City NJ & South Jersey Shore. Expert repair, reglass restoration, resurfacing & recolor maintenance. 50+ 5-star reviews. Free inspections — call (609) 338-4505!
 
 **Hero Section:**
+
 - H1: "Fiberglass Decks Built for the Jersey Shore — Ocean City NJ & Beyond"
 - Subheadline: "Over 10 years of family-owned expertise installing, reglassing, and repairing fiberglass decks that stand up to salt air, UV exposure, high humidity, and winter freeze-thaw cycles. Waterproof. Non-slip. Built to last."
 - CTA 1: "Get Your FREE Inspection & Quote"
@@ -196,6 +197,7 @@ Embed Google Reviews widget + 6 featured reviews:
 6. "Upgraded our old drip edge to PVC and sealed everything properly. Everything they do is technically correct and built to last." — Homeowner, Cape May NJ
 
 **Final CTA + Lead Form:**
+
 - Title: "Ready to Get Your Deck Shore-Ready?"
 - Form fields: Name, Phone, Email, City/Area, Brief Message, "Send Free Quote Request" button
 
@@ -209,6 +211,7 @@ Embed Google Reviews widget + 6 featured reviews:
 **H1:** About Seashore Fiberglass — Protecting Jersey Shore Homes Since 2014
 
 **Content sections:**
+
 - Introduction: Not a large national company. Family business started in Ocean City NJ. 10+ years as local choice for fiberglass deck systems done correctly.
 - Our Story — Why We Started and Why We Stay: Francisco Ruiz founded company after recognizing consistent pattern of preventable deck failures. Details: wall flashings too short or missing, door thresholds without transition systems, railing posts without flashing, plywood with nails-only loosening, wooden drip edges rotting. Francisco's approach: dual-layer plywood, correct pitch, full flashings, PVC drip edges, etc.
 - What Makes Us Different (6 differentiators):
@@ -239,6 +242,7 @@ Embed Google Reviews widget + 6 featured reviews:
 **H1:** Fiberglass Deck Repair — Permanent Solutions for South Jersey Shore Decks
 
 **Content:**
+
 - Introduction about transition failures being root cause of most problems
 - Common Problems We Diagnose and Repair (8 items):
   1. Water Puddling After Rain — insufficient pitch (requires 1/4" per foot)
@@ -278,6 +282,7 @@ Embed Google Reviews widget + 6 featured reviews:
 **H1:** Fiberglass Deck New Construction — Engineered Right From Day One
 
 **Content — Our New Construction System (15+ components):**
+
 1. Deck Framing — pressure-treated lumber (2x10 or 2x12 joists)
 2. Deck Pitch — 1/4" per foot slope during framing stage
 3. Packer Boards — 5/4 pressure-treated (~1-3/4" wide) around perimeter on joists
@@ -305,6 +310,7 @@ Embed Google Reviews widget + 6 featured reviews:
 **H1:** Fiberglass Deck Resurfacing & Reglass Restoration — Complete Membrane Renewal
 
 **Content:**
+
 - When Reglass Is Right: widespread cracking, multiple previous patches, nail pops/seams, deteriorated drip edges, missing/improper flashings
 - Important: Reglass vs. Recolor distinction
 - Professional Reglass Process — 12 steps
@@ -320,6 +326,7 @@ Embed Google Reviews widget + 6 featured reviews:
 **H1:** Fiberglass Deck Recolor & Re-Gelcoating — Surface Maintenance & UV Restoration
 
 **Content:**
+
 - When Recolor Is Right: faded/chalking gelcoat, minor cosmetic wear, no soft spots, ~3-5 years since last application
 - Professional Recolor Process — 5 steps
 - Timeline: 1-2 days. Ready for light use next day.
@@ -335,6 +342,7 @@ Embed Google Reviews widget + 6 featured reviews:
 **H1:** Composite Decks & Deck Steps — Low-Maintenance Performance for Coastal Homes
 
 **Content:**
+
 - Why Wolf Decking: 100% PVC (no wood fibers), marine-grade salt protection, 25-30 year warranty, minimal thermal expansion
 - Paired with Azek PVC fascias and steps
 - When composite is right vs. when fiberglass is better (elevated decks over living spaces need fiberglass)
@@ -349,6 +357,7 @@ Embed Google Reviews widget + 6 featured reviews:
 **H1:** Vinyl Railing — Rust-Free, Code-Compliant Safety for the Shore
 
 **Content:**
+
 - Benefits: zero rust, no maintenance, code-compliant, wind/impact resistant
 - Technical note: railing post penetrations must have 6" fiberglass flashing
 - Conversion option: structural mount posts to 4x4 pressure-treated with blocking
@@ -358,6 +367,7 @@ Embed Google Reviews widget + 6 featured reviews:
 ### SERVICE AREA PAGES (13 pages)
 
 Each page follows same structure:
+
 - Town-specific H1
 - Unique local challenge paragraph
 - "Services Available in [Town]" — all 6 services listed
@@ -395,23 +405,27 @@ Each page follows same structure:
 **Categories and questions:**
 
 **General:**
+
 - What makes fiberglass decks better than wood or composite for coastal homes?
 - How long does a fiberglass deck last?
 - Do fiberglass decks need to be above living spaces to be worth the investment?
 
 **Repair & Maintenance:**
+
 - How do I know if my deck needs repair?
 - What is the difference between recolor maintenance and reglass restoration?
 - What is structural reconstruction, and when is it needed?
 - How long do repairs typically take? (Recolor: 1-2 days, Soft spot: 2-4 days, Reglass: 4-7 days, Structural: 7-14 days)
 
 **Technical:**
+
 - Why do leaks sometimes appear far from where the deck meets the wall?
 - Why do structural posts inside columns cause so many problems?
 - Why is deck pitch so important?
 - Can fiberglass be applied over an existing deck?
 
 **Working With Us:**
+
 - Are you licensed and insured?
 - Do you offer free inspections?
 - How do we get started?
@@ -426,14 +440,16 @@ Each page follows same structure:
 **H1:** Contact Us — Let's Protect Your Deck the Right Way
 
 **Contact Info:**
+
 - Phone: (609) 338-4505 — 7 days a week
-- Email: info@seashorefiberglass.com
+- Email: seashorefiberglass@gmail.com
 - Address: 406 Asbury Ave, Ocean City, NJ 08226
 - Hours: Monday–Saturday 7am–6pm, Sunday by appointment
 
 **Quick Action Buttons:** Call Now | Text Us | Schedule Free Inspection Online
 
 **Form Fields:**
+
 - Full Name
 - Phone Number (required)
 - Email Address
@@ -444,6 +460,7 @@ Each page follows same structure:
 - Submit: "Send Message & Get My Free Quote"
 
 **How We Work (6 steps):**
+
 1. Contact Us
 2. Fast Response (same day / next morning)
 3. Free Inspection
@@ -510,22 +527,22 @@ The Master Technical Manual (117 pages, 6 volumes) contains the engineering stan
 
 ### Key Technical Specifications
 
-| Component | Specification |
-|-----------|--------------|
-| Deck pitch | 1/4" per foot minimum slope |
-| Plywood Layer 1 | 3/4" CDX, glued to framing, fastened with 3-1/4" galvanized nails |
-| Plywood Layer 2 | 1/2" ACX, glued and screwed to Layer 1 |
-| Fiberglass mat | 2-ounce, fully saturated with resin |
-| Wall flashings | Minimum 12" up vertical surfaces |
-| Post flashings | Minimum 6" vertically around post |
-| Packer boards | 5/4 pressure-treated (~1-3/4" wide) on joists at perimeter |
-| Drip edge | 1x4 PVC (~3.5" wide), extends beyond packer board |
-| Chamfer strips | 45-degree at all wall-to-deck transitions |
-| Gelcoat | Marine-grade, UV-resistant, textured (pumice-infused) |
-| Pitch correction method | Sister joists preferred over sleepers |
-| Re-securing spacing | Screws every ~6" along each joist |
-| Surface prep | Grinding + acetone clean before every fiberglass/gelcoat application |
-| Body filler | Bondo or equivalent over screw heads and plywood seams |
+| Component               | Specification                                                        |
+| ----------------------- | -------------------------------------------------------------------- |
+| Deck pitch              | 1/4" per foot minimum slope                                          |
+| Plywood Layer 1         | 3/4" CDX, glued to framing, fastened with 3-1/4" galvanized nails    |
+| Plywood Layer 2         | 1/2" ACX, glued and screwed to Layer 1                               |
+| Fiberglass mat          | 2-ounce, fully saturated with resin                                  |
+| Wall flashings          | Minimum 12" up vertical surfaces                                     |
+| Post flashings          | Minimum 6" vertically around post                                    |
+| Packer boards           | 5/4 pressure-treated (~1-3/4" wide) on joists at perimeter           |
+| Drip edge               | 1x4 PVC (~3.5" wide), extends beyond packer board                    |
+| Chamfer strips          | 45-degree at all wall-to-deck transitions                            |
+| Gelcoat                 | Marine-grade, UV-resistant, textured (pumice-infused)                |
+| Pitch correction method | Sister joists preferred over sleepers                                |
+| Re-securing spacing     | Screws every ~6" along each joist                                    |
+| Surface prep            | Grinding + acetone clean before every fiberglass/gelcoat application |
+| Body filler             | Bondo or equivalent over screw heads and plywood seams               |
 
 ### Three Service Categories
 
@@ -590,18 +607,18 @@ The client identified 10 critical issues with Phase 1 delivery. All have been ve
 
 ### Issues FIXED in This Revision
 
-| # | Issue | Status | What Was Fixed |
-|---|-------|--------|----------------|
-| 1 | Wrong business identity ("Boat Repair") | FIXED | Corrected all content in `@seashore/content` — hero heading, subheading, tagline. Fixed meta title/description in `layout.tsx`. |
-| 2 | Logo not used | VERIFIED | `logoo.png` exists in `apps/web/public/` and is referenced in Navbar. File needs to be committed to git. |
-| 3 | All 6 services wrong (boat services) | FIXED | Replaced all 6 services with correct deck services from brief (slugs, titles, descriptions). |
-| 4 | Fabricated customer reviews | FIXED | Replaced with exact 6 reviews from brief (Michael K., Resident Brigantine, Homeowner Margate, Client Avalon, Resident Ventnor, Homeowner Cape May). |
-| 5 | Service areas incorrect (Marmora, Somers Point) | FIXED | Removed Marmora and Somers Point. Added Long Beach Island and Strathmere NJ. All 13 towns now match brief exactly. |
-| 6 | Hero counters showing "0" | FIXED | Fixed `AnimatedCounter` — lowered IntersectionObserver threshold, added fallback for already-visible elements, shows actual number instead of 0 before animation starts. |
-| 7 | No dynamic design | VERIFIED | Framer Motion animations ARE present in code (fadeUp, stagger, hover states, floating orbs). Enhanced to be more reliable. |
-| 8 | Brand colors not followed | VERIFIED | Colors correctly configured in Tailwind (`#1B3A5C`, `#2A7DA6`, `#E87C2B`). Applied across hero, CTAs, sections. |
-| 9 | Interactive map missing | PARTIAL | Google Maps iframe exists. Town chips link to service area pages. Enhanced map/interactive features are Phase 2. |
-| 10 | Trust badges & CTAs wrong text | FIXED | Corrected to exact text from brief ("Get Your FREE Inspection & Quote", "Call / Text (609) 338-4505", "Licensed & Insured", etc.). |
+| #   | Issue                                           | Status   | What Was Fixed                                                                                                                                                           |
+| --- | ----------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | Wrong business identity ("Boat Repair")         | FIXED    | Corrected all content in `@seashore/content` — hero heading, subheading, tagline. Fixed meta title/description in `layout.tsx`.                                          |
+| 2   | Logo not used                                   | VERIFIED | `logoo.png` exists in `apps/web/public/` and is referenced in Navbar. File needs to be committed to git.                                                                 |
+| 3   | All 6 services wrong (boat services)            | FIXED    | Replaced all 6 services with correct deck services from brief (slugs, titles, descriptions).                                                                             |
+| 4   | Fabricated customer reviews                     | FIXED    | Replaced with exact 6 reviews from brief (Michael K., Resident Brigantine, Homeowner Margate, Client Avalon, Resident Ventnor, Homeowner Cape May).                      |
+| 5   | Service areas incorrect (Marmora, Somers Point) | FIXED    | Removed Marmora and Somers Point. Added Long Beach Island and Strathmere NJ. All 13 towns now match brief exactly.                                                       |
+| 6   | Hero counters showing "0"                       | FIXED    | Fixed `AnimatedCounter` — lowered IntersectionObserver threshold, added fallback for already-visible elements, shows actual number instead of 0 before animation starts. |
+| 7   | No dynamic design                               | VERIFIED | Framer Motion animations ARE present in code (fadeUp, stagger, hover states, floating orbs). Enhanced to be more reliable.                                               |
+| 8   | Brand colors not followed                       | VERIFIED | Colors correctly configured in Tailwind (`#1B3A5C`, `#2A7DA6`, `#E87C2B`). Applied across hero, CTAs, sections.                                                          |
+| 9   | Interactive map missing                         | PARTIAL  | Google Maps iframe exists. Town chips link to service area pages. Enhanced map/interactive features are Phase 2.                                                         |
+| 10  | Trust badges & CTAs wrong text                  | FIXED    | Corrected to exact text from brief ("Get Your FREE Inspection & Quote", "Call / Text (609) 338-4505", "Licensed & Insured", etc.).                                       |
 
 ### Additional Fixes Made
 
@@ -633,16 +650,16 @@ The brief specifies WordPress with themes like Astra/GeneratePress as the origin
 
 ### Implemented Pages
 
-| Page | Route | Status |
-|------|-------|--------|
-| Home | `/` | Full layout with all sections, Framer Motion animations, lead form UI (not wired) |
-| About | `/about-us` | Placeholder with brief description |
-| Services Index | `/services` | Grid of 6 services from content package |
-| Service Detail (x6) | `/services/[slug]` | SSG scaffolded, placeholder content |
-| Areas Index | `/service-areas` | Town list with links |
-| Service Area Detail (x13) | `/service-areas/[slug]` | SSG scaffolded, placeholder content |
-| Blog | `/blog` | "Coming soon" placeholder |
-| Contact | `/contact` | Phone + email only (no form) |
+| Page                      | Route                   | Status                                                                            |
+| ------------------------- | ----------------------- | --------------------------------------------------------------------------------- |
+| Home                      | `/`                     | Full layout with all sections, Framer Motion animations, lead form UI (not wired) |
+| About                     | `/about-us`             | Placeholder with brief description                                                |
+| Services Index            | `/services`             | Grid of 6 services from content package                                           |
+| Service Detail (x6)       | `/services/[slug]`      | SSG scaffolded, placeholder content                                               |
+| Areas Index               | `/service-areas`        | Town list with links                                                              |
+| Service Area Detail (x13) | `/service-areas/[slug]` | SSG scaffolded, placeholder content                                               |
+| Blog                      | `/blog`                 | "Coming soon" placeholder                                                         |
+| Contact                   | `/contact`              | Phone + email only (no form)                                                      |
 
 ### Not Yet Implemented
 
@@ -730,6 +747,7 @@ These tasks build on the corrected Phase 1 foundation. They should be completed 
 **File:** `apps/web/src/app/services/[slug]/page.tsx` (rewrite)
 
 Each page needs full content from brief:
+
 - Fiberglass Deck Repair — 8 common problems, diagnostic approach, 14-step process
 - New Construction — 15+ component system
 - Resurfacing (Reglass) — when to reglass, 12-step process
@@ -745,6 +763,7 @@ Each with: meta title, meta description, H1, full content, CTAs, Service schema
 **File:** `apps/web/src/app/service-areas/[slug]/page.tsx` (rewrite)
 
 Each page needs:
+
 - Town-specific H1
 - Unique local challenge paragraph from brief
 - All 6 services listed
@@ -800,4 +819,4 @@ Each page needs:
 
 ## Footer (All Pages)
 
-**Content:** Licensed & Insured · 50+ 5-Star Google Reviews · Family-Owned & Operated in Ocean City NJ · Serving the South Jersey Shore Since 2014 · (609) 338-4505 · info@seashorefiberglass.com
+**Content:** Licensed & Insured · 50+ 5-Star Google Reviews · Family-Owned & Operated in Ocean City NJ · Serving the South Jersey Shore Since 2014 · (609) 338-4505 · seashorefiberglass@gmail.com

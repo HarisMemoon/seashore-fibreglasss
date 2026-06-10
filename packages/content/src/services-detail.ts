@@ -7,12 +7,13 @@ import type { ServiceDetail } from "@seashore/types";
 export const SERVICE_DETAILS: readonly ServiceDetail[] = [
   {
     slug: "fiberglass-deck-repair",
-    metaTitle: "Fiberglass Deck Repair Ocean City NJ | South Jersey Shore Specialists",
+    metaTitle:
+      "Fiberglass Deck Repair Ocean City NJ | South Jersey Shore Specialists",
     metaDescription:
       "Professional fiberglass deck repair across South Jersey Shore. Fix soft spots, water puddling, missing flashings, structural rot & more. Expert diagnosis, permanent repair. 50+ 5-star reviews — call (609) 338-4505",
     h1: "Fiberglass Deck Repair — Permanent Solutions for South Jersey Shore Decks",
     intro: [
-      "Most deck problems that look like \"surface issues\" start at transitions — where the deck meets the house, doors, posts, and perimeter. When flashings are short or missing, or the substrate loosens, water gets underneath the fiberglass membrane and damage spreads. We diagnose the full system, not just the visible wear, so repairs last in salt air, humidity, and freeze-thaw conditions.",
+      'Most deck problems that look like "surface issues" start at transitions — where the deck meets the house, doors, posts, and perimeter. When flashings are short or missing, or the substrate loosens, water gets underneath the fiberglass membrane and damage spreads. We diagnose the full system, not just the visible wear, so repairs last in salt air, humidity, and freeze-thaw conditions.',
     ],
     commonProblems: [
       {
@@ -28,7 +29,7 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       {
         title: "Missing or Short Wall Flashings",
         description:
-          "Wall flashings must extend a minimum of 12\" up vertical surfaces. Short or missing flashing is one of the most common sources of hidden leaks into framing and living spaces.",
+          'Wall flashings must extend a minimum of 12" up vertical surfaces. Short or missing flashing is one of the most common sources of hidden leaks into framing and living spaces.',
       },
       {
         title: "Missing or Failed Door Transition System",
@@ -38,7 +39,7 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       {
         title: "Railing Post Leaks",
         description:
-          "Posts that penetrate the deck need a minimum of 6\" vertical fiberglass flashing around each penetration. Without it, water tracks along the post and into the structure.",
+          'Posts that penetrate the deck need a minimum of 6" vertical fiberglass flashing around each penetration. Without it, water tracks along the post and into the structure.',
       },
       {
         title: "Structural Posts Inside Columns",
@@ -53,7 +54,7 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       {
         title: "Nail Pops & Plywood Seams",
         description:
-          "Nails-only fastening allows the substrate to move. Over time, screws are required on proper spacing — typically every 6\" along joists — to keep the deck stable under the membrane.",
+          'Nails-only fastening allows the substrate to move. Over time, screws are required on proper spacing — typically every 6" along joists — to keep the deck stable under the membrane.',
       },
     ],
     diagnosticApproach: [
@@ -96,14 +97,14 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
           "Rotten framing, compromised posts, and damaged substrate are rebuilt to code.",
       },
       {
-        title: "4. Pitch Correction (when applicable)",
+        title: "4. Pitch Verification (correction when applicable)",
         description:
-          "When a deck was originally built with an incorrect drainage slope directing water toward the house, we perform a full pitch correction: complete plywood demolition followed by sister joist installation alongside each existing joist to establish a true, correct drainage plane at 1/4\" per foot. Sister joists are preferred over sleepers because they correct for natural joist sagging rather than following existing imperfections.",
+          "We verify the existing drainage slope is performing correctly. If the deck was originally built with the slope going the wrong direction, that becomes a separate Pitch Correction scope (full plywood demolition + sister joists + rebuild). Standard reglass does NOT modify pitch.",
       },
       {
         title: "5. Plywood re-securing",
         description:
-          "Screws on proper spacing — typically every 6\" along joists — to eliminate movement.",
+          'Screws on proper spacing — typically every 6" along joists — to eliminate movement.',
       },
       {
         title: "6. Drip edge replacement",
@@ -113,7 +114,7 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       {
         title: "7. Flashing installation or correction",
         description:
-          "12\" wall flashings, 6\" post wraps, and door transition systems integrated with the envelope.",
+          '12" wall flashings, 6" post wraps, and door transition systems integrated with the envelope.',
       },
       {
         title: "8. Surface grinding",
@@ -122,8 +123,7 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       },
       {
         title: "9. Fill screw heads and seams",
-        description:
-          "Bondo or equivalent for a fair plane before fiberglass.",
+        description: "Bondo or equivalent for a fair plane before fiberglass.",
       },
       {
         title: "10. New fiberglass layer",
@@ -132,18 +132,15 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       },
       {
         title: "11. Post-cure grinding",
-        description:
-          "Fair the surface after resin cure.",
+        description: "Fair the surface after resin cure.",
       },
       {
         title: "12. Acetone clean",
-        description:
-          "Final surface prep before gelcoat.",
+        description: "Final surface prep before gelcoat.",
       },
       {
         title: "13. Textured gelcoat application",
-        description:
-          "UV-resistant, pumice-infused non-slip finish.",
+        description: "UV-resistant, pumice-infused non-slip finish.",
       },
       {
         title: "14. Railing reinstallation and walkthrough",
@@ -151,33 +148,36 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
           "Railings remounted; we review care, drainage, and what to expect next.",
       },
     ],
-    timeline: "Most repairs run 2–5 days depending on scope. Full reglass-level projects typically 4–7 days.",
+    timeline:
+      "Most repairs run 2–5 days depending on scope. Full reglass-level projects typically 4–7 days.",
   },
   {
     slug: "fiberglass-deck-new-constructions",
-    metaTitle: "Fiberglass Deck Installation Ocean City NJ | New Construction South Jersey Shore",
+    metaTitle:
+      "Fiberglass Deck Installation Ocean City NJ | New Construction South Jersey Shore",
     metaDescription:
-      "New fiberglass deck installation across South Jersey Shore. Engineered systems with double-layer plywood, PVC drip edges, full flashings and marine-grade gelcoat. Built to last — free quotes (609) 338-4505.",
+      "New fiberglass deck installation across South Jersey Shore. We complete the waterproofing system on builder-framed decks: 1/2″ ACX overlay, PVC drip edges, full flashings, fiberglass membrane, and marine-grade gelcoat. Free quotes (609) 338-4505.",
     h1: "Fiberglass Deck New Construction — Engineered Right From Day One",
     intro: [
+      "Important scope note: Our New Construction service applies to newly built homes where the deck is already framed (with the correct drainage slope built into the joists by the builder) and the first plywood layer is in place. From that point on, Seashore takes full ownership of the waterproofing system. Framing and the first subfloor are typically the builder's responsibility — Seashore IS capable of full framing on rebuild projects, but for standard new construction, we begin at the 1/2″ ACX overlay.",
       "Our New Construction fiberglass service is designed for newly built homes where the deck has already been framed with the correct drainage slope built into each joist, and the first layer of plywood is in place. From that point, we take full ownership of the waterproofing system — installing the second plywood layer, setting PVC drip edges, integrating wall and post flashings, applying the fiberglass membrane, and finishing with marine-grade gelcoat. Getting these details right from day one prevents the failures we are called in to fix years later.",
       "New construction is where we install every layer of the system the way the technical manual specifies — dual-layer plywood, chamfered transitions, PVC perimeter, flashings before siding, and a continuous membrane with marine-grade gelcoat. You get a deck that is engineered for the Shore from the joists up.",
     ],
     constructionComponents: [
       {
-        title: "Deck framing",
+        title: "Framing (by the builder, before Seashore arrives)",
         description:
-          "Pressure-treated lumber — typically 2x10 or 2x12 joists — laid out to support loads and attachment points for railing and posts.",
+          "Framing is completed by the general contractor using pressure-treated lumber (typically 2x10 or 2x12 joists) with attachment points for railing and posts. Seashore does not perform framing on standard new construction projects.",
       },
       {
-        title: "Drainage slope",
+        title: "Drainage slope (by the builder, verified by Seashore)",
         description:
-          "The correct 1/4\" per foot slope is established during framing at the joist level by the general contractor before Seashore arrives. We verify slope is correct before proceeding.",
+          "The 1/4″ per foot drainage slope is established by the general contractor at the joist level during framing. Seashore verifies the slope is correct before proceeding.",
       },
       {
         title: "Packer boards",
         description:
-          "5/4 pressure-treated boards (~1-3/4\" wide) on joists at the perimeter to build out the edge for metal flashing and drip edge.",
+          '5/4 pressure-treated boards (~1-3/4" wide) on joists at the perimeter to build out the edge for metal flashing and drip edge.',
       },
       {
         title: "Perimeter metal flashing",
@@ -185,14 +185,14 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
           "Installed after packer boards and before plywood, to shed water at the deck perimeter.",
       },
       {
-        title: "Plywood layer 1",
+        title: "First plywood layer (by the builder)",
         description:
-          "3/4\" CDX, glued to framing and fastened with 3-1/4\" galvanized nails per specification.",
+          "The 3/4″ CDX subfloor is installed by the general contractor, glued to framing and fastened per specification. Seashore does not install the first plywood layer on standard new construction projects.",
       },
       {
-        title: "Plywood layer 2",
+        title: "Second plywood layer (Seashore scope begins here)",
         description:
-          "1/2\" ACX glued and screwed to the first layer for a stable, monolithic substrate.",
+          "We install the 1/2″ ACX overlay, glued and screwed to the existing 3/4″ subfloor for a stable monolithic substrate. From this point forward, every layer is installed by Seashore.",
       },
       {
         title: "Chamfer strips",
@@ -202,12 +202,11 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       {
         title: "PVC drip edge",
         description:
-          "1x4 (~3.5\" wide) rot-proof perimeter edge, wider than the packer board, so water sheds clear of the fascia.",
+          '1x4 (~3.5" wide) rot-proof perimeter edge, wider than the packer board, so water sheds clear of the fascia.',
       },
       {
         title: "Surface grinding",
-        description:
-          "Mechanical prep of the plywood for fiberglass adhesion.",
+        description: "Mechanical prep of the plywood for fiberglass adhesion.",
       },
       {
         title: "Screw and seam filling",
@@ -222,12 +221,11 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       {
         title: "Wall flashings",
         description:
-          "Minimum 12\" up vertical surfaces, integrated before siding where applicable.",
+          'Minimum 12" up vertical surfaces, integrated before siding where applicable.',
       },
       {
         title: "Post flashings",
-        description:
-          "Minimum 6\" vertical wrap at every post penetration.",
+        description: 'Minimum 6" vertical wrap at every post penetration.',
       },
       {
         title: "Door transition system",
@@ -236,8 +234,7 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       },
       {
         title: "Post-cure grinding and acetone clean",
-        description:
-          "Surface prepared for the final cosmetic and UV layer.",
+        description: "Surface prepared for the final cosmetic and UV layer.",
       },
       {
         title: "Marine-grade textured gelcoat",
@@ -248,7 +245,8 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
   },
   {
     slug: "fiberglass-deck-resurfacing",
-    metaTitle: "Fiberglass Deck Resurfacing & Reglass South Jersey NJ | Membrane Renewal",
+    metaTitle:
+      "Fiberglass Deck Resurfacing & Reglass South Jersey NJ | Membrane Renewal",
     metaDescription:
       "Professional fiberglass deck resurfacing and reglass restoration across South Jersey Shore. New waterproof membrane over existing deck — fix nail pops, aging fiberglass, drip edges & flashings. Free quotes (609) 338-4505",
     h1: "Fiberglass Deck Resurfacing & Reglass Restoration — Complete Membrane Renewal",
@@ -282,9 +280,9 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
           "Replace soft plywood, sister joists, and address rot to a sound base.",
       },
       {
-        title: "4. Pitch Correction (when applicable)",
+        title: "4. Pitch Verification (correction when applicable)",
         description:
-          "When a deck was originally built with an incorrect drainage slope directing water toward the house, we perform a full pitch correction: complete plywood demolition followed by sister joist installation alongside each existing joist to establish a true, correct drainage plane at 1/4\" per foot. Sister joists are preferred over sleepers because they correct for natural joist sagging rather than following existing imperfections.",
+          "We verify the existing drainage slope is performing correctly. If the deck was originally built with the slope going the wrong direction, that becomes a separate Pitch Correction scope (full plywood demolition + sister joists + rebuild). Standard reglass does NOT modify pitch.",
       },
       {
         title: "5. Plywood re-securing",
@@ -299,17 +297,15 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       {
         title: "7. Flashings",
         description:
-          "12\" wall coverage, 6\" post wraps, and door transitions brought to standard.",
+          '12" wall coverage, 6" post wraps, and door transitions brought to standard.',
       },
       {
         title: "8. Surface grinding",
-        description:
-          "Grind for bond; prep seams and inside corners.",
+        description: "Grind for bond; prep seams and inside corners.",
       },
       {
         title: "9. Seam and fastener fill",
-        description:
-          "Bondo or equivalent over screws and seams.",
+        description: "Bondo or equivalent over screws and seams.",
       },
       {
         title: "10. New fiberglass membrane",
@@ -318,17 +314,15 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       },
       {
         title: "11. Post-cure prep",
-        description:
-          "Grind fair; acetone wipe before gelcoat.",
+        description: "Grind fair; acetone wipe before gelcoat.",
       },
       {
         title: "12. Marine gelcoat finish",
-        description:
-          "Textured UV gelcoat; cure and final QA.",
+        description: "Textured UV gelcoat; cure and final QA.",
       },
     ],
     timeline:
-      "Typical reglass projects: 4–7 days. After completion: recolor maintenance recommended every 3–5 years depending on each deck's exposure to sun, salt, and weather. Reglass restoration recommended when the membrane shows widespread compromise — timeline varies by exposure and use.",
+      "Typical reglass projects: 4–7 days. After completion, plan recolor maintenance every 3–5 years depending on each deck’s exposure to sun, salt, and weather. A full reglass restoration is needed only when the membrane shows widespread compromise — there is no fixed calendar interval.",
     maintenanceIntervals: [
       "Recolor maintenance: recommended every 3–5 years depending on each deck's exposure to sun, salt, and weather.",
       "Reglass restoration: recommended when the membrane shows widespread compromise — timeline varies by exposure and use.",
@@ -336,7 +330,8 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
   },
   {
     slug: "fiberglass-deck-recolor",
-    metaTitle: "Fiberglass Deck Re-Gelcoating & Recolor Ocean City NJ | Maintenance Service",
+    metaTitle:
+      "Fiberglass Deck Re-Gelcoating & Recolor Ocean City NJ | Maintenance Service",
     metaDescription:
       "Professional fiberglass deck recolor and re-gelcoating service across South Jersey Shore. Restore UV protection, appearance & slip resistance. Recommended every 3–5 years depending on coastal exposure — free quotes (609) 338-4505",
     h1: "Fiberglass Deck Recolor & Re-Gelcoating — Surface Maintenance & UV Restoration",
@@ -385,7 +380,8 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
   },
   {
     slug: "composite-decks",
-    metaTitle: "Composite Deck Installation South Jersey Shore | Wolf Decking Ocean City NJ",
+    metaTitle:
+      "Composite Deck Installation South Jersey Shore | Wolf Decking Ocean City NJ",
     metaDescription:
       "Professional composite deck installation using Wolf decking & Azek PVC fascias across South Jersey Shore. Salt-resistant, UV-stable, zero-rot. Low maintenance for coastal homes — free quotes (609) 338-4505",
     h1: "Composite Decks & Deck Steps — Low-Maintenance Performance for Coastal Homes",
@@ -419,7 +415,8 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
   },
   {
     slug: "vinyl-railing",
-    metaTitle: "Vinyl Railing — The Coastal Choice for Low-Maintenance, Code-Compliant Safety",
+    metaTitle:
+      "Vinyl Railing — The Coastal Choice for Low-Maintenance, Code-Compliant Safety",
     metaDescription:
       "Professional vinyl railing installation and repair across South Jersey Shore. The top coastal choice — won't corrode, warp, or degrade in salt air. New systems, repairs and upgrades — free quotes (609) 338-4505.",
     h1: "Vinyl Railing — The Coastal Choice for Low-Maintenance, Code-Compliant Safety",
@@ -438,7 +435,7 @@ export const SERVICE_DETAILS: readonly ServiceDetail[] = [
       {
         title: "Waterproofing at posts",
         body: [
-          "Every railing post penetrates the deck surface. Each penetration requires a minimum of 6\" vertical fiberglass flashing integrated with the deck membrane — not just a cap or caulk. We do not skip this detail.",
+          'Every railing post penetrates the deck surface. Each penetration requires a minimum of 6" vertical fiberglass flashing integrated with the deck membrane — not just a cap or caulk. We do not skip this detail.',
         ],
       },
       {
