@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ADDRESS,
@@ -29,13 +30,6 @@ function NoiseOverlay() {
     />
   );
 }
-
-// Coastal gradient per card — cycles through 3 palettes
-const CARD_GRADIENTS = [
-  "from-[#0d3a5c] via-[#1B3A5C] to-[#0a2a45]",
-  "from-[#0a3a50] via-[#1a4d6e] to-[#0d2137]",
-  "from-[#1a3a50] via-[#0d3a5c] to-[#091c2e]",
-];
 
 export const metadata: Metadata = {
   title: SERVICE_AREAS_INDEX_META.title,
@@ -170,23 +164,27 @@ export default function ServiceAreasIndexPage() {
                 className="group relative overflow-hidden rounded-3xl shadow-card transition-all duration-300 hover:-translate-y-2 hover:shadow-card-hover"
                 style={{ animationDelay: `${index * 60}ms` }}
               >
-                {/* Card header — coastal gradient "image" */}
-                <div
-                  className={`relative h-40 bg-gradient-to-br ${CARD_GRADIENTS[index % CARD_GRADIENTS.length]} overflow-hidden`}
-                >
+                {/* Card header — town cover photo */}
+                <div className="relative aspect-[3/2] overflow-hidden">
+                  <Image
+                    src={`/serviceAreas/${area.slug}.png`}
+                    alt={`${area.townName} fiberglass deck service area`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(min-width:1280px) 33vw, (min-width:768px) 50vw, 100vw"
+                  />
+                  {/* Dark gradient overlay for text contrast */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/15 to-transparent" />
                   {/* Animated glow blob */}
                   <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-turquoise/20 blur-[50px] transition duration-500 group-hover:bg-turquoise/35" />
                   <div className="absolute -bottom-4 -left-4 h-28 w-28 rounded-full bg-orange/10 blur-[40px]" />
                   <NoiseOverlay />
-                  {/* Tagline pill */}
-                  <div className="absolute left-5 top-5">
-                    <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">
+                  {/* Tagline pill + town name */}
+                  <div className="absolute bottom-5 left-5 right-5">
+                    <span className="inline-block rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">
                       {area.homepageCoverage?.gridTagline ?? "Shore town"}
                     </span>
-                  </div>
-                  {/* Town name large */}
-                  <div className="absolute bottom-5 left-5 right-5">
-                    <h2 className="font-heading text-xl font-extrabold leading-tight text-white transition duration-300 group-hover:text-turquoise-light">
+                    <h2 className="font-heading mt-2 text-xl font-extrabold leading-tight text-white transition duration-300 group-hover:text-turquoise-light">
                       {area.townName}
                     </h2>
                     <div className="mt-1.5 h-px w-10 bg-gradient-to-r from-turquoise to-turquoise/0 transition-all duration-300 group-hover:w-24" />
