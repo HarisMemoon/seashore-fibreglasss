@@ -1,6 +1,8 @@
-# Large media files — compress before committing (Vercel limit: 100 MB/file)
+# Large raw media files — compress before committing (Vercel limit: 100 MB/file)
+# Block raw iPhone footage (uppercase extensions from iOS)
 apps/web/public/bgVideo/*.MP4
 apps/web/public/bgVideo/*.MOV
+# Allow compressed files (hero.mp4 etc.) — do NOT add lowercase *.mp4 here
 Gallery_Projects/
 reviews_images/
 
