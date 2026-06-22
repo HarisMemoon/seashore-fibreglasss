@@ -1,3 +1,9 @@
+# Large media files — compress before committing (Vercel limit: 100 MB/file)
+apps/web/public/bgVideo/*.MP4
+apps/web/public/bgVideo/*.MOV
+Gallery_Projects/
+reviews_images/
+
 # Dependencies
 node_modules
 .pnpm-store

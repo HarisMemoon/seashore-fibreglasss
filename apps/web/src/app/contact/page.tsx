@@ -9,6 +9,7 @@ import {
   HOW_WE_WORK_STEPS,
   PHONE,
 } from "@seashore/content";
+import { SOCIAL_PLATFORMS } from "@seashore/ui";
 import { ServiceAreasMapWidget } from "@/components/ServiceAreasMapWidget";
 import { ContactForm } from "./ContactForm";
 import BreadcrumbJsonLd from "../BreadcrumbJsonLd";
@@ -141,6 +142,48 @@ export default function ContactPage() {
             </div>
             <div className="lg:col-span-3">
               <ContactForm />
+            </div>
+          </div>
+        </section>
+
+        {/* ── Social presence ── */}
+        <section className="border-t border-slate-100 bg-white px-6 py-14 md:py-20">
+          <div className="mx-auto max-w-7xl">
+            <SectionLabel>Verify our reputation</SectionLabel>
+            <h2 className="font-heading mt-4 text-2xl font-bold text-navy md:text-3xl">
+              Follow Us & See Our Work Online
+            </h2>
+            <p className="mt-3 max-w-2xl text-slate-600">
+              Check independent reviews, watch deck transformations, and connect with us across every platform — all in one place.
+            </p>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {SOCIAL_PLATFORMS.map((platform) => (
+                <a
+                  key={platform.key}
+                  href={platform.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-start gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/60 p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/40 hover:bg-white hover:shadow-lg"
+                >
+                  {/* Icon container */}
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-navy text-white transition-all duration-300 group-hover:bg-turquoise group-hover:shadow-md group-hover:shadow-turquoise/25">
+                    <span className="h-5 w-5">{platform.icon}</span>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-heading font-bold text-navy transition-colors duration-300 group-hover:text-turquoise-dark">
+                      {platform.label}
+                    </p>
+                    <p className="mt-1 text-sm leading-snug text-slate-500">{platform.description}</p>
+                    <span className="mt-2 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.14em] text-turquoise transition-all duration-300 group-hover:gap-1.5">
+                      View
+                      <svg className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                        <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+                      </svg>
+                    </span>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </section>

@@ -6,6 +6,7 @@ import {
   SITE_NAME,
   TRUST_BADGES,
 } from "@seashore/content";
+import { SocialIconBar } from "./SocialLinks";
 
 export function Footer() {
   return (
@@ -117,6 +118,10 @@ export function Footer() {
           <div>
             <h4 className="font-heading mb-4 font-semibold">Trusted Service</h4>
             <p className="text-sm opacity-90">{TRUST_BADGES.join(" · ")}</p>
+            <div className="mt-6">
+              <h4 className="font-heading mb-3 text-sm font-semibold text-white/70">Connect With Us</h4>
+              <SocialIconBar variant="light" size="md" />
+            </div>
           </div>
         </div>
         <div className="mt-8 border-t border-white/20 pt-8 text-center text-sm opacity-75">

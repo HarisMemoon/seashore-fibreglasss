@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { SocialIconBar } from './SocialLinks';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -66,6 +67,10 @@ export function Navbar() {
           </div>
 
           <div className="flex flex-shrink-0 items-center gap-2">
+            {/* Social icons — desktop only */}
+            <div className="hidden items-center border-r border-white/10 pr-2 mr-1 md:flex">
+              <SocialIconBar variant="light" size="sm" />
+            </div>
             <Link
               href="/contact"
               className="hidden items-center rounded-xl bg-gradient-to-r from-[#E87C2B] to-[#f0963e] px-4 py-2 text-[12.5px] font-bold tracking-wide text-white shadow-[0_0_18px_rgba(232,124,43,0.3)] transition hover:shadow-[0_0_24px_rgba(232,124,43,0.45)] md:inline-flex"
@@ -107,7 +112,7 @@ export function Navbar() {
                 </Link>
               ))}
             </div>
-            <div className="border-t border-[#7fd7e1]/15 p-3">
+            <div className="border-t border-[#7fd7e1]/15 p-3 space-y-2">
               <Link
                 href="/contact"
                 className="flex items-center justify-center rounded-xl bg-gradient-to-r from-[#E87C2B] to-[#f0963e] py-3 text-sm font-bold text-white shadow-[0_0_18px_rgba(232,124,43,0.25)] transition hover:opacity-90"
@@ -115,6 +120,10 @@ export function Navbar() {
               >
                 Contact Us
               </Link>
+              {/* Social icons — mobile menu */}
+              <div className="flex items-center justify-center pt-1">
+                <SocialIconBar variant="light" size="md" />
+              </div>
             </div>
           </div>
         )}

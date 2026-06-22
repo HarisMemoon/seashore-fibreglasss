@@ -1890,29 +1890,45 @@ export default function HomePageClient() {
           className="relative flex min-h-[100vh] items-center overflow-hidden"
         >
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-navy-dark" />
+            {/* Fallback gradient shown while video loads or on unsupported browsers */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#1B3A5C] via-[#0d3a5c] to-[#060e18]" />
 
-            {/* Animated gradient orbs */}
-            <div className="animate-float-slow absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-turquoise/16 blur-[90px] max-sm:hidden" />
-            <div className="animate-float-slower absolute -bottom-20 left-1/4 h-[320px] w-[320px] rounded-full bg-orange/10 blur-[75px] max-sm:hidden" />
+            {/* ── Hero video background ──────────────────────────────────────────
+                Drop a compressed MP4 (<15 MB) at /public/bgVideo/hero.mp4
+                Poster: extract one frame as /public/bgVideo/hero-poster.jpg
+            ─────────────────────────────────────────────────────────────────── */}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster="/bgVideo/hero-poster.jpg"
+              className="absolute inset-0 h-full w-full object-cover object-center"
+              style={{ transform: "scale(1)" }}
+              aria-hidden
+            >
+              <source src="/bgVideo/hero.mp4" type="video/mp4" />
+            </video>
 
-            {/* Geometric grid */}
+            {/* Solid dark base — primary layer for text legibility */}
+            <div className="absolute inset-0 bg-navy-dark/65" />
+            {/* Directional gradient — left side heavier where headline sits */}
+            <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/55 via-navy-dark/15 to-transparent" />
+            {/* Top + bottom vignette */}
+            <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/40 via-transparent to-navy-dark/80" />
+
+            {/* Depth glow orbs — softened over real footage */}
+            <div className="animate-float-slow absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-turquoise/10 blur-[90px] max-sm:hidden" />
+            <div className="animate-float-slower absolute -bottom-20 left-1/4 h-[320px] w-[320px] rounded-full bg-orange/8 blur-[75px] max-sm:hidden" />
+
+            {/* Very subtle grid texture */}
             <div
-              className="absolute inset-0 opacity-[0.03]"
+              className="absolute inset-0 opacity-[0.025]"
               style={{
                 backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
                                   linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
                 backgroundSize: "80px 80px",
-              }}
-            />
-
-            {/* Diagonal accent */}
-            <div
-              className="absolute right-0 top-0 h-full w-[40%] opacity-[0.04]"
-              style={{
-                background:
-                  "linear-gradient(135deg, transparent 35%, #2A7DA6 35%)",
               }}
             />
 

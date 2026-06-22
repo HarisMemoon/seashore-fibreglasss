@@ -175,6 +175,16 @@ export const SERVICES = [
 export const GBP_URL = "https://share.google/onLnkKrF7sB4hui1e";
 export const REVIEWS_FOOTER_TEXT = "See all our reviews on Google ★★★★★";
 
+/** Social media profile URLs — update each handle/URL with the actual profile links */
+export const SOCIAL_LINKS = {
+  facebook: "https://www.facebook.com/seashorefiberglass",
+  instagram: "https://www.instagram.com/seashorefiberglass",
+  tiktok: "https://www.tiktok.com/@seashorefiberglass",
+  youtube: "https://www.youtube.com/@seashorefiberglass",
+  gbp: GBP_URL,
+  yelp: "https://www.yelp.com/biz/seashore-fiberglass-ocean-city",
+} as const;
+
 export const REVIEWS = [
   {
     name: "Anne Marie Holloran",
