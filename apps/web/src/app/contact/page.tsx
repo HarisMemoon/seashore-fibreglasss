@@ -154,7 +154,8 @@ export default function ContactPage() {
               Follow Us & See Our Work Online
             </h2>
             <p className="mt-3 max-w-2xl text-slate-600">
-              Check independent reviews, watch deck transformations, and connect with us across every platform — all in one place.
+              Check independent reviews, watch deck transformations, and connect
+              with us across every platform — all in one place.
             </p>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -174,11 +175,22 @@ export default function ContactPage() {
                     <p className="font-heading font-bold text-navy transition-colors duration-300 group-hover:text-turquoise-dark">
                       {platform.label}
                     </p>
-                    <p className="mt-1 text-sm leading-snug text-slate-500">{platform.description}</p>
+                    <p className="mt-1 text-sm leading-snug text-slate-500">
+                      {platform.description}
+                    </p>
                     <span className="mt-2 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.14em] text-turquoise transition-all duration-300 group-hover:gap-1.5">
                       View
-                      <svg className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
-                        <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+                      <svg
+                        className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </span>
                   </div>

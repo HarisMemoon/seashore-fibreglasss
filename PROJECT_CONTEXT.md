@@ -28,7 +28,7 @@
 - **Type:** Family-owned and operated
 - **Location:** 406 Asbury Ave, Ocean City, NJ 08226
 - **Phone:** (609) 338-4505
-- **Email:** seashorefiberglass@gmail.com
+- **Email:** info@seashorefiberglass.com
 - **Hours:** Monday–Saturday 7am–6pm, Sunday by appointment
 - **Credentials:** Licensed & Insured (NJ contractor license, liability + workers' comp)
 - **Reviews:** 50+ 5-Star Google Reviews
@@ -206,9 +206,9 @@ Embed Google Reviews widget + 6 featured reviews:
 ### ABOUT US — `/about-us`
 
 **Meta Title:** About Seashore Fiberglass | Family-Owned Deck Experts – Ocean City NJ
-**Meta Description:** Learn about Seashore Fiberglass — family-owned in Ocean City NJ since 2014. 10+ years of fiberglass deck repair, reglass restoration & coastal deck expertise across the South Jersey Shore. 50+ 5-star reviews.
+**Meta Description:** Learn about Seashore Fiberglass — family-owned in Ocean City NJ since 2020. 10+ years of fiberglass deck repair, reglass restoration & coastal deck expertise across the South Jersey Shore. 50+ 5-star reviews.
 
-**H1:** About Seashore Fiberglass — Protecting Jersey Shore Homes Since 2014
+**H1:** About Seashore Fiberglass — Protecting Jersey Shore Homes Since 2020
 
 **Content sections:**
 
@@ -442,7 +442,7 @@ Each page follows same structure:
 **Contact Info:**
 
 - Phone: (609) 338-4505 — 7 days a week
-- Email: seashorefiberglass@gmail.com
+- Email: info@seashorefiberglass.com
 - Address: 406 Asbury Ave, Ocean City, NJ 08226
 - Hours: Monday–Saturday 7am–6pm, Sunday by appointment
 
@@ -819,4 +819,4 @@ Each page needs:
 
 ## Footer (All Pages)
 
-**Content:** Licensed & Insured · 50+ 5-Star Google Reviews · Family-Owned & Operated in Ocean City NJ · Serving the South Jersey Shore Since 2014 · (609) 338-4505 · seashorefiberglass@gmail.com
+**Content:** Licensed & Insured · 50+ 5-Star Google Reviews · Family-Owned & Operated in Ocean City NJ · Serving the South Jersey Shore Since 2020 · (609) 338-4505 · info@seashorefiberglass.com

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Dispatch, SetStateAction } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   BEST_TIME_OPTIONS,
   SERVICE_AREA_FORM_OPTIONS,
@@ -364,8 +364,33 @@ export function ChatbotWidget() {
   const [leadDraft, setLeadDraft] = useState<ChatbotLeadDraft>({});
   const [messages, setMessages] = useState<UiMessage[]>([WELCOME_MESSAGE]);
 
-  // Auto-minimize after 7 seconds if user hasn't opened the chat
+  // Inactivity auto-collapse: on mobile, collapse after 6.5s of no user interaction
+  const inactivityTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const resetMobileInactivityTimer = useCallback(() => {
+    if (typeof window === "undefined" || window.innerWidth >= 640) return;
+    if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
+    inactivityTimerRef.current = setTimeout(() => setIsOpen(false), 6500);
+  }, []);
+
+  // Start/clear inactivity timer based on open state (mobile only)
   useEffect(() => {
+    if (!isOpen) {
+      if (inactivityTimerRef.current) {
+        clearTimeout(inactivityTimerRef.current);
+        inactivityTimerRef.current = null;
+      }
+      return;
+    }
+    resetMobileInactivityTimer();
+    return () => {
+      if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
+    };
+  }, [isOpen, resetMobileInactivityTimer]);
+
+  // Auto-minimize after 7 seconds on desktop if user hasn't interacted yet
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 640) return;
     if (!hasBeenOpenedRef.current) {
       const timer = setTimeout(() => {
         setIsOpen(false);
@@ -374,10 +399,11 @@ export function ChatbotWidget() {
     }
   }, []);
 
-  // Collapse on scroll — but not when a chat input is focused (mobile keyboard causes scroll)
+  // Collapse on scroll (desktop only) — not on mobile where swipe = scroll
   useEffect(() => {
     const handleScroll = () => {
       if (!isOpen) return;
+      if (window.innerWidth < 640) return;
       const active = document.activeElement;
       if (active && (active.tagName === "TEXTAREA" || active.tagName === "INPUT" || active.tagName === "SELECT")) return;
       setIsOpen(false);
@@ -579,6 +605,7 @@ export function ChatbotWidget() {
   }
 
   function onQuickReplyClick(prompt: string) {
+    resetMobileInactivityTimer();
     if (prompt === "Start my free quote") {
       if (!quoteOpen) {
         trackChatbotEvent("quote_started", { pagePath: pathname, label: "quick-reply" });
@@ -612,15 +639,10 @@ export function ChatbotWidget() {
     >
       {isOpen && (
         <div className="flex flex-1 flex-col overflow-hidden bg-[#071321] sm:flex-none sm:h-[min(42rem,calc(100dvh-6rem))] sm:max-h-[calc(100dvh-6rem)] sm:w-[min(26rem,calc(100vw-1rem))] sm:rounded-[28px] sm:border sm:border-white/10 sm:bg-[#071321]/95 sm:shadow-2xl sm:shadow-black/50 sm:backdrop-blur-2xl">
-          {/* Mobile drag handle — tap to close */}
-          <button
-            type="button"
-            onClick={() => setIsOpen(false)}
-            className="flex w-full justify-center pb-2 pt-3 sm:hidden"
-            aria-label="Close chat"
-          >
+          {/* Mobile drag handle — visual only; close via the × button */}
+          <div className="flex w-full justify-center pb-2 pt-3 sm:hidden" aria-hidden>
             <span className="h-1 w-12 rounded-full bg-white/25" />
-          </button>
+          </div>
 
           <div className="relative overflow-hidden border-b border-white/10 px-5 pb-4 pt-5">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(42,125,166,0.3),_transparent_42%),linear-gradient(135deg,_rgba(27,58,92,0.96),_rgba(7,19,33,0.92))]" />
@@ -799,7 +821,7 @@ export function ChatbotWidget() {
                   id="chatbot-input"
                   rows={1}
                   value={input}
-                  onChange={(event) => setInput(event.target.value)}
+                  onChange={(event) => { setInput(event.target.value); resetMobileInactivityTimer(); }}
                   placeholder="Ask about service, town, or quote..."
                   className="max-h-28 min-h-[28px] w-full resize-none overflow-hidden bg-transparent text-base sm:text-sm text-white placeholder:text-white/35 focus:outline-none"
                   onKeyDown={(event) => {

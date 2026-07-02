@@ -283,7 +283,7 @@ export const FINAL_CTA_BODY =
   "Whether you need a repair, reglass restoration, recolor maintenance, or a brand-new fiberglass deck — we provide free inspections and honest assessments. No pressure, just clear technical answers.";
 
 export const PHONE = "(609) 338-4505";
-export const EMAIL = "seashorefiberglass@gmail.com";
+export const EMAIL = "info@seashorefiberglass.com";
 
 export const ADDRESS = {
   street: "406 Asbury Ave",

@@ -15,7 +15,7 @@ export const SERVICE_AREA_DETAILS: readonly ServiceAreaDetail[] = [
     h1: "Fiberglass Deck Experts in Ocean City NJ — Our Home Base",
     intro: [
       "Seashore Fiberglass is family-owned and headquartered in Ocean City. We live and work here, so we understand how boardwalk winds, bay-side humidity, and intense summer sun stress decks from the inlet to the south end.",
-      "Whether you need a targeted repair, full reglass restoration, recolor maintenance, a new engineered system, composite decking, or vinyl railing — we bring the same coastal standards to every project: correct pitch, full-height flashings, and membranes built for the shore.",
+      "Whether you need a targeted repair, full reglass restoration, recolor maintenance, a new engineered system, composite decking, or vinyl railing — we bring the same coastal standards to every project: verified drainage, full-height flashings, and membranes built for the shore.",
     ],
     localChallengeTitle: "What makes Ocean City decks demanding",
     localChallengeBody: [
@@ -329,7 +329,7 @@ export const SERVICE_AREA_DETAILS: readonly ServiceAreaDetail[] = [
     h1: "Fiberglass Deck Services in Margate City NJ",
     intro: [
       "Margate is known for upscale beachfront homes where outdoor living space is central to the property. Decks need to look refined while performing like true waterproof roofs over living space.",
-      "We match that expectation with meticulous repair and restoration work: reglass and recolor finishes that blend with your home, new construction with correct pitch and PVC edges, and composite or vinyl upgrades when you want a premium coastal look.",
+      "We match that expectation with meticulous repair and restoration work: reglass and recolor finishes that blend with your home, new construction with verified drainage and PVC edges, and composite or vinyl upgrades when you want a premium coastal look.",
     ],
     localChallengeTitle: "Beachfront expectations and luxury waterproofing",
     localChallengeBody: [

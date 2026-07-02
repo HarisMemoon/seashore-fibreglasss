@@ -1936,7 +1936,7 @@ export default function HomePageClient() {
           </div>
 
           {/* Floating decorative elements */}
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          {/* <div className="pointer-events-none absolute inset-0 overflow-hidden">
             <motion.div
               animate={{ y: [-20, 20, -20], rotate: [0, 5, 0] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -1956,7 +1956,7 @@ export default function HomePageClient() {
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               className="absolute right-[28%] top-[65%] h-3 w-3 rounded-full bg-turquoise/40"
             />
-          </div>
+          </div> */}
 
           <motion.div className="relative mx-auto w-full max-w-7xl px-6 py-32">
             <motion.div

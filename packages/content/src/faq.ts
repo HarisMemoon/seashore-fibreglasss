@@ -119,7 +119,7 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
       {
         question: "How do we get started?",
         answer:
-          "Call or text (609) 338-4505, email seashorefiberglass@gmail.com, or use the contact form on this site. We respond the same day or the next morning, schedule your inspection, then provide an honest quote — no pressure.",
+          "Call or text (609) 338-4505, email info@seashorefiberglass.com, or use the contact form on this site. We respond the same day or the next morning, schedule your inspection, then provide an honest quote — no pressure.",
       },
       {
         question: "What warranty do you provide on your work?",

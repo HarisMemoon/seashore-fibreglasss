@@ -100,7 +100,7 @@ const SHORE_SYSTEM_STANDARDS = [
   {
     label: "Substrate build",
     value:
-      "Dual-layer plywood: 3/4 inch CDX plus 1/2 inch ACX, glued and fastened.",
+      "Substrate varies by project type: standard new construction = builder's 3/4″ subfloor + Seashore's 1/2″ ACX overlay; full deck rebuilds = new 3/4″ CDX + 1/2″ ACX; existing decks for reglass = existing plywood re-secured.",
   },
   {
     label: "Wall flashing coverage",

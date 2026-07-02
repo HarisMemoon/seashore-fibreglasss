@@ -44,7 +44,7 @@ export const COMPANY_INFO = {
   rating: "5.0 stars · 50+ Google reviews",
   bbb: "Listed since March 2025",
   phone: "(609) 338-4505",
-  email: "seashorefiberglass@gmail.com",
+  email: "info@seashorefiberglass.com",
   address: "406 Asbury Ave, Ocean City, NJ 08226",
   website: "seashorefiberglass.com",
   hours: "Monday–Saturday 8:00 AM – 5:00 PM · Sunday by appointment",
@@ -733,7 +733,7 @@ export const QA_PAIRS: readonly QAPair[] = [
     ],
     intent: "contact",
     answer:
-      "Call or text us at (609) 338-4505, email seashorefiberglass@gmail.com, or fill out the contact form at seashorefiberglass.com/contact. We're at 406 Asbury Ave, Ocean City, NJ. Monday–Saturday 8:00 AM–5:00 PM, Sunday by appointment. We respond same day or next morning.",
+      "Call or text us at (609) 338-4505, email info@seashorefiberglass.com, or fill out the contact form at seashorefiberglass.com/contact. We're at 406 Asbury Ave, Ocean City, NJ. Monday–Saturday 8:00 AM–5:00 PM, Sunday by appointment. We respond same day or next morning.",
   },
   // Section 5.9 — Real completed project examples
   {
