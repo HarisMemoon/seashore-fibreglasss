@@ -178,7 +178,7 @@ export const REVIEWS_FOOTER_TEXT = "See all our reviews on Google ★★★★�
 /** Social media profile URLs — update each handle/URL with the actual profile links */
 export const SOCIAL_LINKS = {
   facebook: "https://www.facebook.com/seashorefiberglass",
-  instagram: "https://www.instagram.com/seashorefiberglass",
+  instagram: "https://www.instagram.com/seashore.fiberglass/",
   tiktok: "https://www.tiktok.com/@seashorefiberglass",
   youtube: "https://www.youtube.com/@seashorefiberglass",
   gbp: GBP_URL,
