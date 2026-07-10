@@ -17,7 +17,7 @@ import {
   HERO_PRIMARY_CTA,
   PHONE,
 } from "@seashore/content";
-import { SOCIAL_PLATFORMS } from "@seashore/ui";
+import { SOCIAL_PLATFORMS, BBBSeal } from "@seashore/ui";
 
 /* ─── Static data (not in content package, not approved-copy) ─── */
 const SERVICE_AREA_DETAILS = [
@@ -507,6 +507,9 @@ export default function AboutUsClient() {
               We stay focused on technical correctness, transparent
               communication, and consistent job-site professionalism.
             </p>
+            <div className="mt-5">
+              <BBBSeal />
+            </div>
           </motion.div>
 
           <motion.div

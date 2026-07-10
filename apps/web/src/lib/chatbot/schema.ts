@@ -28,6 +28,21 @@ export const chatbotRequestSchema = z
   })
   .strict();
 
+export const chatTranscriptSchema = z
+  .object({
+    pagePath: z.string().trim().max(200).optional(),
+    messages: z
+      .array(
+        z.object({
+          role: z.enum(["user", "assistant"]),
+          content: z.string().trim().min(1).max(2000),
+        })
+      )
+      .min(2)
+      .max(60),
+  })
+  .strict();
+
 export const chatbotAnalyticsSchema = z
   .object({
     event: z.enum([

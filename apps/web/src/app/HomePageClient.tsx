@@ -36,6 +36,7 @@ import {
   SITE_NAME,
   TRUST_BADGES,
 } from "@seashore/content";
+import { BBBSeal } from "@seashore/ui";
 import { postContact, type PostContactError } from "@/lib/postContact";
 import { StyledSelect } from "@/components/StyledSelect";
 
@@ -2250,7 +2251,7 @@ export default function HomePageClient() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="grid grid-cols-2 gap-4 lg:grid-cols-4"
+                className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5"
               >
                 {TRUST_BADGES.map((badge, i) => {
                   const badgeIcons = [
@@ -2324,6 +2325,13 @@ export default function HomePageClient() {
                     </motion.div>
                   );
                 })}
+                <motion.div
+                  variants={scaleUp}
+                  custom={TRUST_BADGES.length}
+                  className="group relative col-span-2 flex items-center justify-center overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 sm:order-first sm:col-span-1 sm:backdrop-blur-sm transition-all duration-300 hover:bg-white/94 hover:shadow-xl"
+                >
+                  <BBBSeal />
+                </motion.div>
               </motion.div>
             </div>
           </InView>

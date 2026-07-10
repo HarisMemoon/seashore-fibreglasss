@@ -1,7 +1,7 @@
 ﻿import nodemailer from "nodemailer";
 import type { ContactSubmission } from "@seashore/types";
 
-function escapeHtml(s: string): string {
+export function escapeHtml(s: string): string {
   return s
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -47,13 +47,17 @@ export function isEmailDeliveryConfigured(): boolean {
 }
 
 export async function sendContactEmail(submission: ContactSubmission): Promise<void> {
+  const subject = `[Seashore Fiberglass] Lead (${submission.source}) - ${submission.name}`;
+  const html = formatSubmissionHtml(submission);
+  await sendEmail(subject, html);
+}
+
+/** Shared transport: sends HTML email to CONTACT_EMAIL_TO via Resend or SMTP. */
+export async function sendEmail(subject: string, html: string): Promise<void> {
   const to = process.env.CONTACT_EMAIL_TO?.trim();
   if (!to) {
     throw new Error("CONTACT_EMAIL_TO is missing");
   }
-
-  const subject = `[Seashore Fiberglass] Lead (${submission.source}) - ${submission.name}`;
-  const html = formatSubmissionHtml(submission);
 
   const resendKey = process.env.RESEND_API_KEY?.trim();
   if (resendKey) {

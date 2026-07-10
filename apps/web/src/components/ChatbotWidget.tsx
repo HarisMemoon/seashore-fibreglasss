@@ -352,6 +352,7 @@ export function ChatbotWidget() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const firstUserMessageRef = useRef(false);
   const hasBeenOpenedRef = useRef(false);
+  const transcriptSentRef = useRef(false);
   const [isOpen, setIsOpen] = useState(true);
   const [hasTrackedOpen, setHasTrackedOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -428,6 +429,57 @@ export function ChatbotWidget() {
     () => [...messages].reverse().find((message) => message.role === "assistant"),
     [messages]
   );
+
+  // Keep a ref mirror of messages so unload/close handlers always read the latest transcript.
+  const messagesRef = useRef<UiMessage[]>(messages);
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
+
+  const sendTranscriptIfEligible = useCallback(() => {
+    if (transcriptSentRef.current) return;
+    const current = messagesRef.current;
+    const userMessageCount = current.filter((m) => m.role === "user").length;
+    if (userMessageCount < 2) return;
+    transcriptSentRef.current = true;
+
+    const body = JSON.stringify({
+      pagePath: pathname,
+      messages: current.map(({ role, content }) => ({ role, content })),
+    });
+
+    try {
+      if (navigator.sendBeacon) {
+        const blob = new Blob([body], { type: "application/json" });
+        if (navigator.sendBeacon("/api/chat/transcript", blob)) return;
+      }
+    } catch {
+      // Fall through to fetch.
+    }
+
+    void fetch("/api/chat/transcript", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+      keepalive: true,
+    }).catch(() => {
+      // Best-effort: transcript email failures should not surface to the user.
+    });
+  }, [pathname]);
+
+  // Safety net: send when the visitor leaves the page/tab, in case they never explicitly close the widget.
+  useEffect(() => {
+    const handlePageLeave = () => sendTranscriptIfEligible();
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") sendTranscriptIfEligible();
+    };
+    window.addEventListener("pagehide", handlePageLeave);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      window.removeEventListener("pagehide", handlePageLeave);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [sendTranscriptIfEligible]);
 
   async function requestAssistantReply(message: string, openQuoteOnReply = false) {
     const trimmedMessage = message.trim();
@@ -659,7 +711,10 @@ export function ChatbotWidget() {
               </div>
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  sendTranscriptIfEligible();
+                  setIsOpen(false);
+                }}
                 className="rounded-full border border-white/10 bg-white/5 p-2 text-white/60 transition hover:text-white"
                 aria-label="Close chatbot"
               >
@@ -848,6 +903,7 @@ export function ChatbotWidget() {
         type="button"
         onClick={() => {
           hasBeenOpenedRef.current = true;
+          if (isOpen) sendTranscriptIfEligible();
           setIsOpen((current) => !current);
         }}
         className={`group relative items-center gap-3 rounded-full border border-turquoise/20 bg-[#071321]/90 px-4 py-3 text-white shadow-2xl shadow-black/40 backdrop-blur-xl transition hover:border-turquoise/40 ${isOpen ? "hidden sm:flex" : "flex"}`}
