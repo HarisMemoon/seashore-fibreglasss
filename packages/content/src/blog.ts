@@ -12,6 +12,7 @@ export const BLOG_H1 = "Seashore Fiberglass Blog — Technical Advice for Decks 
 export const BLOG_POSTS: readonly BlogPost[] = [
   {
     slug: "common-deck-problems-ocean-city-nj",
+    image: "/blogCovers/1.PNG",
     title: "The Most Common Deck Problems We See in Ocean City NJ (And How to Fix Them)",
     metaTitle:
       "Common Fiberglass Deck Problems in Ocean City NJ | Seashore Fiberglass",
@@ -96,6 +97,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
   },
   {
     slug: "why-fiberglass-decks-outlast-other-options-jersey-shore",
+    image: "/blogCovers/2.PNG",
     title: "Why Fiberglass Decks Outlast Other Options on the Jersey Shore",
     metaTitle: "Why Fiberglass Decks Last on the Jersey Shore | Seashore Fiberglass",
     metaDescription:
@@ -171,6 +173,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
   },
   {
     slug: "deck-maintenance-guide-south-jersey",
+    image: "/blogCovers/3.PNG",
     title: "Year-Round Deck Maintenance Guide for South Jersey Homeowners",
     metaTitle: "Year-Round Fiberglass Deck Maintenance | South Jersey Shore",
     metaDescription:
@@ -252,6 +255,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
   },
   {
     slug: "re-gelcoating-vs-resurfacing-south-jersey",
+    image: "/blogCovers/4.PNG",
     title: "Recolor vs. Reglass — Choosing the Right Service for Your Deck",
     metaTitle: "Recolor vs Reglass Fiberglass Decks | South Jersey — Seashore Fiberglass",
     metaDescription:
@@ -319,6 +323,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
   },
   {
     slug: "flashings-door-pans-prevent-leaks-living-spaces",
+    image: "/blogCovers/5.PNG",
     title: "Flashings & Door Transitions — The Most Common Source of Fiberglass Deck Failures",
     metaTitle: "Deck Flashings & Door Transitions | Stop Fiberglass Deck Leaks",
     metaDescription:
@@ -394,6 +399,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
   },
   {
     slug: "composite-decks-coastal-areas-jersey-shore",
+    image: "/blogCovers/6.PNG",
     title: "Composite Decks in Coastal Areas — What Actually Works on the Jersey Shore",
     metaTitle: "Composite Decks on the Jersey Shore | Wolf Decking & Coastal Tips",
     metaDescription:
