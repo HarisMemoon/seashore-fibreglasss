@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { HOME_META } from '@seashore/content';
+import { HOME_META, SITE_NAME } from '@seashore/content';
 import './globals.css';
 import { Navbar } from '@seashore/ui';
 import { Footer } from '@seashore/ui';
@@ -15,6 +15,18 @@ export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: HOME_META.title,
   description: HOME_META.description,
+  openGraph: {
+    title: HOME_META.title,
+    description: HOME_META.description,
+    url: getSiteUrl(),
+    siteName: SITE_NAME,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: HOME_META.title,
+    description: HOME_META.description,
+  },
   ...(GSC_VERIFICATION || BING_VERIFICATION
     ? {
         verification: {

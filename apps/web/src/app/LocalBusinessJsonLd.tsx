@@ -10,7 +10,7 @@ const localBusinessSchema = {
   name: SITE_NAME,
   url: `${SITE_URL}/`,
   logo: `${SITE_URL}/logo.png`,
-  image: `${SITE_URL}/og-image.jpg`,
+  image: `${SITE_URL}/logoo.png`,
   description:
     "Family-owned fiberglass deck contractor serving the South Jersey Shore. Founded in 2020, built on 10+ years of experience — repair, reglass, recolor, new construction, composite decking and vinyl railing.",
   foundingDate: "2020",
