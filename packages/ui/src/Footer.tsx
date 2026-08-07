@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   ADDRESS,
   EMAIL,
@@ -16,7 +17,7 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-3">
           <div>
             {/* Logo — same file as navbar */}
-            <a href="/" aria-label={SITE_NAME} className="mb-4 inline-block">
+            <Link href="/" aria-label={SITE_NAME} className="mb-4 inline-block">
               <img
                 src="/logoo.png"
                 alt={`${SITE_NAME} logo`}
@@ -24,7 +25,7 @@ export function Footer() {
                 height={80}
                 className="h-18 w-auto object-contain md:h-48"
               />
-            </a>
+            </Link>
             <h3 className="font-heading mb-2 text-lg font-bold">{SITE_NAME}</h3>
             <p className="text-sm opacity-90">
               {ADDRESS.street}, {ADDRESS.city}, {ADDRESS.state} {ADDRESS.zip}
@@ -86,16 +87,16 @@ export function Footer() {
             <ul className="space-y-1.5 text-sm">
               {SERVICE_AREA_DETAILS.slice(0, 6).map((area) => (
                 <li key={area.slug}>
-                  <a
+                  <Link
                     href={`/service-areas/${area.slug}`}
                     className="opacity-80 transition hover:opacity-100 hover:text-turquoise"
                   >
                     {area.townName}
-                  </a>
+                  </Link>
                 </li>
               ))}
               <li>
-                <a
+                <Link
                   href="/service-areas"
                   className="mt-1 inline-flex items-center gap-1 text-turquoise text-xs font-semibold hover:underline"
                 >
@@ -112,7 +113,7 @@ export function Footer() {
                       clipRule="evenodd"
                     />
                   </svg>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

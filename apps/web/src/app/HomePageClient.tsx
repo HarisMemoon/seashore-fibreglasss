@@ -1762,6 +1762,7 @@ function GalleryPreviewSection() {
 
 export default function HomePageClient() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
   const [leadFormStatus, setLeadFormStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -1787,6 +1788,46 @@ export default function HomePageClient() {
     }`;
   const leadErrorClass =
     "mt-1.5 inline-flex items-center rounded-lg border border-red-500/40 bg-red-500/15 px-2.5 py-1 text-xs font-semibold text-red-200";
+
+  // Restore scroll position + hero video playback position when returning to
+  // the home page within the same tab session (Next.js remounts this page on
+  // every navigation, which otherwise resets both to the top/start).
+  useEffect(() => {
+    const savedScrollY = sessionStorage.getItem("seashore-home-scroll");
+    const savedVideoTime = sessionStorage.getItem("seashore-home-video-time");
+    const video = heroVideoRef.current;
+
+    if (savedVideoTime && video) {
+      const restoreTime = () => {
+        video.currentTime = parseFloat(savedVideoTime);
+      };
+      if (video.readyState >= 1) {
+        restoreTime();
+      } else {
+        video.addEventListener("loadedmetadata", restoreTime, { once: true });
+      }
+    }
+
+    if (savedScrollY) {
+      // Double rAF ensures this runs after Next.js's own scroll-to-top
+      // behavior on route transitions.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo(0, parseInt(savedScrollY, 10));
+        });
+      });
+    }
+
+    return () => {
+      sessionStorage.setItem("seashore-home-scroll", String(window.scrollY));
+      if (video) {
+        sessionStorage.setItem(
+          "seashore-home-video-time",
+          String(video.currentTime)
+        );
+      }
+    };
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -1899,11 +1940,12 @@ export default function HomePageClient() {
                 Poster: extract one frame as /public/bgVideo/hero-poster.jpg
             ─────────────────────────────────────────────────────────────────── */}
             <video
+              ref={heroVideoRef}
               autoPlay
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="auto"
               poster="/bgVideo/hero-poster.jpg"
               className="absolute inset-0 h-full w-full object-cover object-center"
               style={{ transform: "scale(1)" }}
