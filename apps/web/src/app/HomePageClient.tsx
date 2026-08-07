@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   BEST_TIME_OPTIONS,
@@ -1402,7 +1402,11 @@ function ReviewPhotoSlideshow({
 
 const PREVIEW_COUNT = 6;
 
-function GalleryPreviewSection() {
+function GalleryPreviewSection({
+  skipIntroAnim,
+}: {
+  skipIntroAnim: boolean;
+}) {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const active = activeIdx !== null ? GALLERY_ITEMS[activeIdx] : null;
 
@@ -1457,7 +1461,7 @@ function GalleryPreviewSection() {
           {/* Cards grid */}
           <motion.div
             variants={stagger}
-            initial="hidden"
+            initial={skipIntroAnim ? false : "hidden"}
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
             className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
@@ -1763,6 +1767,7 @@ function GalleryPreviewSection() {
 export default function HomePageClient() {
   const heroRef = useRef<HTMLDivElement>(null);
   const heroVideoRef = useRef<HTMLVideoElement>(null);
+  const [skipIntroAnim, setSkipIntroAnim] = useState(false);
   const [leadFormStatus, setLeadFormStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -1789,10 +1794,18 @@ export default function HomePageClient() {
   const leadErrorClass =
     "mt-1.5 inline-flex items-center rounded-lg border border-red-500/40 bg-red-500/15 px-2.5 py-1 text-xs font-semibold text-red-200";
 
-  // Restore scroll position + hero video playback position when returning to
-  // the home page within the same tab session (Next.js remounts this page on
-  // every navigation, which otherwise resets both to the top/start).
-  useEffect(() => {
+  // Restore scroll position + hero video playback position, and skip the
+  // entrance animations, when returning to the home page within the same tab
+  // session (Next.js remounts this page on every navigation, which otherwise
+  // resets scroll/video to the start and replays every intro animation).
+  useLayoutEffect(() => {
+    const hasVisited = sessionStorage.getItem("seashore-home-visited") === "1";
+    if (hasVisited) {
+      setSkipIntroAnim(true);
+    } else {
+      sessionStorage.setItem("seashore-home-visited", "1");
+    }
+
     const savedScrollY = sessionStorage.getItem("seashore-home-scroll");
     const savedVideoTime = sessionStorage.getItem("seashore-home-video-time");
     const video = heroVideoRef.current;
@@ -1921,7 +1934,7 @@ export default function HomePageClient() {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
+      initial={skipIntroAnim ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1, ease: "easeOut" }}
     >
@@ -2382,7 +2395,7 @@ export default function HomePageClient() {
         <ShoreFiberglassSection />
 
         {/* GALLERY PREVIEW */}
-        <GalleryPreviewSection />
+        <GalleryPreviewSection skipIntroAnim={skipIntroAnim} />
 
         {/* SERVICES */}
         <ServicesSection />

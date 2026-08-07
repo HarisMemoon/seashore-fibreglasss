@@ -9,7 +9,7 @@ const localBusinessSchema = {
   "@id": `${SITE_URL}/#business`,
   name: SITE_NAME,
   url: `${SITE_URL}/`,
-  logo: `${SITE_URL}/logo.png`,
+  logo: `${SITE_URL}/logoo.png`,
   image: `${SITE_URL}/logoo.png`,
   description:
     "Family-owned fiberglass deck contractor serving the South Jersey Shore. Founded in 2020, built on 10+ years of experience — repair, reglass, recolor, new construction, composite decking and vinyl railing.",
