@@ -341,7 +341,9 @@ function ServicesSection() {
                 <div className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-turquoise via-turquoise-light to-orange transition-transform duration-300 group-hover:scale-x-100" />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-turquoise/[0.04] via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className="relative mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-navy to-[#0d4a5c] text-turquoise shadow-lg shadow-navy/30 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:from-turquoise group-hover:to-orange group-hover:text-white group-hover:shadow-turquoise/30">
-                  <span className="[&_svg]:size-6">{serviceIcons[iconKey]}</span>
+                  <span className="[&_svg]:size-6">
+                    {serviceIcons[iconKey]}
+                  </span>
                 </div>
                 <h3 className="relative font-heading text-xl font-extrabold leading-tight text-navy transition-colors duration-300 group-hover:text-turquoise-dark">
                   {service.title}
@@ -1402,11 +1404,7 @@ function ReviewPhotoSlideshow({
 
 const PREVIEW_COUNT = 6;
 
-function GalleryPreviewSection({
-  skipIntroAnim,
-}: {
-  skipIntroAnim: boolean;
-}) {
+function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const active = activeIdx !== null ? GALLERY_ITEMS[activeIdx] : null;
 
@@ -1836,7 +1834,7 @@ export default function HomePageClient() {
       if (video) {
         sessionStorage.setItem(
           "seashore-home-video-time",
-          String(video.currentTime)
+          String(video.currentTime),
         );
       }
     };
@@ -1990,29 +1988,6 @@ export default function HomePageClient() {
 
             <NoiseOverlay />
           </div>
-
-          {/* Floating decorative elements */}
-          {/* <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <motion.div
-              animate={{ y: [-20, 20, -20], rotate: [0, 5, 0] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute right-[15%] top-[20%] flex h-36 w-36 items-center justify-center rounded-2xl border border-turquoise/30 bg-white/10 p-1.5 shadow-[0_0_35px_rgba(42,125,166,0.25)] backdrop-blur-md"
-            >
-              <Image
-                src="/logoo.png"
-                alt="Seashore Fiberglass"
-                width={270}
-                height={82}
-                className="h-auto w-full object-contain"
-                priority={false}
-              />
-            </motion.div>
-            <motion.div
-              animate={{ y: [10, -15, 10] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute right-[28%] top-[65%] h-3 w-3 rounded-full bg-turquoise/40"
-            />
-          </div> */}
 
           <motion.div className="relative mx-auto w-full max-w-7xl px-6 py-32">
             <motion.div
@@ -2306,7 +2281,7 @@ export default function HomePageClient() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5"
+                className="flex flex-col gap-4 sm:grid sm:grid-cols-3 lg:grid-cols-5"
               >
                 {TRUST_BADGES.map((badge, i) => {
                   const badgeIcons = [

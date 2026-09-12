@@ -1,11 +1,11 @@
-import type { Metadata } from 'next';
-import Script from 'next/script';
-import { HOME_META, SITE_NAME } from '@seashore/content';
-import './globals.css';
-import { Navbar } from '@seashore/ui';
-import { Footer } from '@seashore/ui';
-import { ChatbotWidget } from '@/components/ChatbotWidget';
-import { getSiteUrl } from '@/lib/site';
+import type { Metadata } from "next";
+import Script from "next/script";
+import { HOME_META, SITE_NAME } from "@seashore/content";
+import "./globals.css";
+import { Navbar } from "@seashore/ui";
+import { Footer } from "@seashore/ui";
+import { ChatbotWidget } from "@/components/ChatbotWidget";
+import { getSiteUrl } from "@/lib/site";
 
 const GA4_ID = process.env.GA4_ID;
 const GSC_VERIFICATION = process.env.GSC_VERIFICATION;
@@ -20,10 +20,10 @@ export const metadata: Metadata = {
     description: HOME_META.description,
     url: getSiteUrl(),
     siteName: SITE_NAME,
-    type: 'website',
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: HOME_META.title,
     description: HOME_META.description,
   },
@@ -31,7 +31,9 @@ export const metadata: Metadata = {
     ? {
         verification: {
           ...(GSC_VERIFICATION ? { google: GSC_VERIFICATION } : {}),
-          ...(BING_VERIFICATION ? { other: { 'msvalidate.01': BING_VERIFICATION } } : {}),
+          ...(BING_VERIFICATION
+            ? { other: { "msvalidate.01": BING_VERIFICATION } }
+            : {}),
         },
       }
     : {}),
