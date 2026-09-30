@@ -59,7 +59,7 @@ export interface ContactSubmission {
   bestTime?: string;
   message?: string;
   wantsFreeInspection?: boolean;
-  source: "home" | "contact" | "chatbot";
+  source: "home" | "contact" | "chatbot" | "voice" | "social";
 }
 
 export type ChatbotIntent =
