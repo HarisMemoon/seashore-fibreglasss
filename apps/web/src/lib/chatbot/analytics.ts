@@ -8,13 +8,17 @@ type ChatbotAnalyticsEvent =
   | "routed_click"
   | "quote_started"
   | "quote_submitted"
+  | "appointment_booked"
   | "handoff_to_call";
 
-export function trackChatbotEvent(event: ChatbotAnalyticsEvent, payload?: {
-  pagePath?: string;
-  label?: string;
-  meta?: Record<string, string>;
-}) {
+export function trackChatbotEvent(
+  event: ChatbotAnalyticsEvent,
+  payload?: {
+    pagePath?: string;
+    label?: string;
+    meta?: Record<string, string>;
+  },
+) {
   const body = JSON.stringify({
     event,
     pagePath: payload?.pagePath,

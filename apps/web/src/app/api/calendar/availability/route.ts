@@ -3,7 +3,7 @@ import {
   getCalendarClient,
   CALENDAR_ID,
   BUSINESS_TIMEZONE,
-  BUSINESS_HOURS,
+  getBusinessHoursForDate,
   SLOT_DURATION_MINUTES,
   BOOKING_LEAD_TIME_HOURS,
 } from "@/lib/googleCalendar";
@@ -11,6 +11,7 @@ import {
 type AvailabilityRequestBody = {
   date?: string; // "YYYY-MM-DD", defaults to today
   daysAhead?: number; // how many days forward to scan, defaults to 5, max 14
+  dates?: string[]; // explicit list of "YYYY-MM-DD" days to check instead of a range
 };
 
 type Slot = {
@@ -19,7 +20,12 @@ type Slot = {
   label: string; // human-readable, e.g. "Tue, Sep 15 · 2:00 PM"
 };
 
-function buildDayWindowUtc(dateStr: string): { dayStart: Date; dayEnd: Date } {
+function buildDayWindowUtc(
+  dateStr: string,
+): { dayStart: Date; dayEnd: Date } | null {
+  const hours = getBusinessHoursForDate(dateStr);
+  if (!hours) return null; // closed day (Sunday) — no self-serve slots
+
   // Business hours are defined in BUSINESS_TIMEZONE; this constructs UTC
   // instants for that local day using Intl to resolve the offset correctly
   // (handles DST without a manual offset table).
@@ -38,13 +44,12 @@ function buildDayWindowUtc(dateStr: string): { dayStart: Date; dayEnd: Date } {
 
   const dayStart = new Date(
     Date.parse(
-      `${dateStr}T${String(BUSINESS_HOURS.startHour).padStart(2, "0")}:00:00Z`,
+      `${dateStr}T${String(hours.startHour).padStart(2, "0")}:00:00Z`,
     ) - totalOffsetMs,
   );
   const dayEnd = new Date(
-    Date.parse(
-      `${dateStr}T${String(BUSINESS_HOURS.endHour).padStart(2, "0")}:00:00Z`,
-    ) - totalOffsetMs,
+    Date.parse(`${dateStr}T${String(hours.endHour).padStart(2, "0")}:00:00Z`) -
+      totalOffsetMs,
   );
   return { dayStart, dayEnd };
 }
@@ -52,6 +57,8 @@ function buildDayWindowUtc(dateStr: string): { dayStart: Date; dayEnd: Date } {
 function formatDateStr(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
+
+const DATE_STR_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 export async function POST(request: NextRequest) {
   let body: AvailabilityRequestBody;
@@ -64,12 +71,38 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const daysAhead = Math.min(Math.max(body.daysAhead ?? 5, 1), 14);
-  const startDateStr = body.date ?? formatDateStr(new Date());
+  const explicitDates = Array.isArray(body.dates)
+    ? body.dates.filter((d) => DATE_STR_PATTERN.test(d)).slice(0, 2)
+    : null;
 
-  const scanStart = new Date(`${startDateStr}T00:00:00Z`);
-  const scanEnd = new Date(scanStart);
-  scanEnd.setUTCDate(scanEnd.getUTCDate() + daysAhead);
+  if (explicitDates && explicitDates.length === 0) {
+    return NextResponse.json(
+      { ok: false, error: "No valid dates provided." },
+      { status: 400 },
+    );
+  }
+
+  const dayStrsToScan: string[] = explicitDates
+    ? [...explicitDates].sort()
+    : (() => {
+        const daysAhead = Math.min(Math.max(body.daysAhead ?? 5, 1), 14);
+        const startDateStr = body.date ?? formatDateStr(new Date());
+        const scanStart = new Date(`${startDateStr}T00:00:00Z`);
+        return Array.from({ length: daysAhead }, (_, i) => {
+          const d = new Date(scanStart);
+          d.setUTCDate(d.getUTCDate() + i);
+          return formatDateStr(d);
+        });
+      })();
+
+  // freebusy.query needs a timeMin/timeMax range; build it around whichever
+  // days we're actually scanning (works for both a contiguous range and
+  // two arbitrary explicit dates).
+  const scanStart = new Date(`${dayStrsToScan[0]}T00:00:00Z`);
+  const scanEnd = new Date(
+    `${dayStrsToScan[dayStrsToScan.length - 1]}T00:00:00Z`,
+  );
+  scanEnd.setUTCDate(scanEnd.getUTCDate() + 1); // end must be strictly after start
 
   let freeBusy;
   try {
@@ -104,11 +137,10 @@ export async function POST(request: NextRequest) {
   const slots: Slot[] = [];
   const slotMs = SLOT_DURATION_MINUTES * 60 * 1000;
 
-  for (let dayOffset = 0; dayOffset < daysAhead; dayOffset++) {
-    const dayDate = new Date(scanStart);
-    dayDate.setUTCDate(dayDate.getUTCDate() + dayOffset);
-    const dayStr = formatDateStr(dayDate);
-    const { dayStart, dayEnd } = buildDayWindowUtc(dayStr);
+  for (const dayStr of dayStrsToScan) {
+    const window = buildDayWindowUtc(dayStr);
+    if (!window) continue; // closed day (Sunday) — skip, no slots offered
+    const { dayStart, dayEnd } = window;
 
     for (
       let slotStart = dayStart.getTime();
@@ -139,6 +171,5 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // Cap the response — no channel needs more than a handful of options at once.
   return NextResponse.json({ ok: true, slots: slots.slice(0, 20) });
 }

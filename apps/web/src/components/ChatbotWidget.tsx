@@ -39,20 +39,22 @@ type UiMessage = ChatbotMessage & {
 };
 
 function cleanBrokenEncoding(input: string): string {
-  return input
-    // Common mojibake fragments seen from mixed UTF-8/Windows-1252 decoding
-    .replace(/â€”/g, "-")
-    .replace(/â€“/g, "-")
-    .replace(/â€˜|â€™/g, "'")
-    .replace(/â€œ|â€/g, '"')
-    .replace(/Â·/g, "·")
-    .replace(/Â/g, "")
-    // Normalize fancy punctuation to ASCII for consistency
-    .replace(/[—–]/g, "-")
-    .replace(/[‘’]/g, "'")
-    .replace(/[“”]/g, '"')
-    .replace(/\s{2,}/g, " ")
-    .trim();
+  return (
+    input
+      // Common mojibake fragments seen from mixed UTF-8/Windows-1252 decoding
+      .replace(/â€”/g, "-")
+      .replace(/â€“/g, "-")
+      .replace(/â€˜|â€™/g, "'")
+      .replace(/â€œ|â€/g, '"')
+      .replace(/Â·/g, "·")
+      .replace(/Â/g, "")
+      // Normalize fancy punctuation to ASCII for consistency
+      .replace(/[—–]/g, "-")
+      .replace(/[‘’]/g, "'")
+      .replace(/[“”]/g, '"')
+      .replace(/\s{2,}/g, " ")
+      .trim()
+  );
 }
 
 type QuoteFormState = {
@@ -96,7 +98,7 @@ function nextMessageId() {
 function seedQuoteForm(
   current: QuoteFormState,
   draft: ChatbotLeadDraft | undefined,
-  prompt: ChatbotLeadCapturePrompt | undefined
+  prompt: ChatbotLeadCapturePrompt | undefined,
 ): QuoteFormState {
   const next = { ...current };
   if (!next.city && (draft?.city || prompt?.suggestedCity)) {
@@ -166,7 +168,9 @@ function QuoteRequestCard({
     <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="font-heading text-sm font-bold text-white">Free quote request</h3>
+          <h3 className="font-heading text-sm font-bold text-white">
+            Free quote request
+          </h3>
           <p className="mt-1 text-xs leading-relaxed text-white/60">
             Guided for speed: tell us the issue, town, and best contact details.
           </p>
@@ -190,7 +194,9 @@ function QuoteRequestCard({
               key={issue}
               label={issue}
               active={form.issueType === issue}
-              onClick={() => setForm((current) => ({ ...current, issueType: issue }))}
+              onClick={() =>
+                setForm((current) => ({ ...current, issueType: issue }))
+              }
             />
           ))}
         </div>
@@ -203,7 +209,9 @@ function QuoteRequestCard({
           </label>
           <input
             value={form.name}
-            onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
+            onChange={(event) =>
+              setForm((current) => ({ ...current, name: event.target.value }))
+            }
             className={inputClass(Boolean(fieldErrors.name))}
             placeholder="Your name"
           />
@@ -214,7 +222,9 @@ function QuoteRequestCard({
           </label>
           <input
             value={form.phone}
-            onChange={(event) => setForm((current) => ({ ...current, phone: event.target.value }))}
+            onChange={(event) =>
+              setForm((current) => ({ ...current, phone: event.target.value }))
+            }
             className={inputClass(Boolean(fieldErrors.phone))}
             placeholder="(609) 338-4505"
           />
@@ -228,7 +238,9 @@ function QuoteRequestCard({
           </label>
           <input
             value={form.email}
-            onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
+            onChange={(event) =>
+              setForm((current) => ({ ...current, email: event.target.value }))
+            }
             className={inputClass(Boolean(fieldErrors.email))}
             placeholder="you@example.com"
           />
@@ -239,7 +251,12 @@ function QuoteRequestCard({
           </label>
           <input
             value={form.address}
-            onChange={(event) => setForm((current) => ({ ...current, address: event.target.value }))}
+            onChange={(event) =>
+              setForm((current) => ({
+                ...current,
+                address: event.target.value,
+              }))
+            }
             className={inputClass(Boolean(fieldErrors.address))}
             placeholder="Street address"
           />
@@ -256,8 +273,10 @@ function QuoteRequestCard({
             name="chatbotCity"
             value={form.city}
             options={SERVICE_AREA_FORM_OPTIONS}
-            onChange={(value) => setForm((current) => ({ ...current, city: value }))}
-            placeholder="Select your town"
+            onChange={(value) =>
+              setForm((current) => ({ ...current, city: value }))
+            }
+            placeholder="Wildwood"
             required
             invalid={Boolean(fieldErrors.city)}
             theme="dark"
@@ -272,7 +291,9 @@ function QuoteRequestCard({
             name="chatbotBestTime"
             value={form.bestTime}
             options={BEST_TIME_OPTIONS}
-            onChange={(value) => setForm((current) => ({ ...current, bestTime: value }))}
+            onChange={(value) =>
+              setForm((current) => ({ ...current, bestTime: value }))
+            }
             invalid={Boolean(fieldErrors.bestTime)}
             theme="dark"
           />
@@ -300,7 +321,7 @@ function QuoteRequestCard({
         </div>
       </div>
 
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-turquoise/90">
           Timeline
         </p>
@@ -310,11 +331,13 @@ function QuoteRequestCard({
               key={option}
               label={option}
               active={form.urgency === option}
-              onClick={() => setForm((current) => ({ ...current, urgency: option }))}
+              onClick={() =>
+                setForm((current) => ({ ...current, urgency: option }))
+              }
             />
           ))}
         </div>
-      </div>
+      </div> */}
 
       <div className="mt-4">
         <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white/55">
@@ -323,7 +346,9 @@ function QuoteRequestCard({
         <textarea
           rows={4}
           value={form.summary}
-          onChange={(event) => setForm((current) => ({ ...current, summary: event.target.value }))}
+          onChange={(event) =>
+            setForm((current) => ({ ...current, summary: event.target.value }))
+          }
           className={inputClass(Boolean(fieldErrors.message))}
           placeholder="Tell us what is happening with the deck, where the problem shows up, and anything time-sensitive."
         />
@@ -347,6 +372,170 @@ function QuoteRequestCard({
   );
 }
 
+type BookingSlot = {
+  start: string;
+  end: string;
+  label: string;
+};
+
+function BookingSlotsCard({
+  slots,
+  loading,
+  submitting,
+  error,
+  onSelect,
+  onCancel,
+}: {
+  slots: BookingSlot[];
+  loading: boolean;
+  submitting: boolean;
+  error: string | null;
+  onSelect: (slot: BookingSlot) => void;
+  onCancel: () => void;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h3 className="font-heading text-sm font-bold text-white">
+            Pick a time
+          </h3>
+          <p className="mt-1 text-xs leading-relaxed text-white/60">
+            Choose a slot and it goes straight on our calendar.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={onCancel}
+          className="rounded-full border border-white/10 px-2.5 py-1 text-[11px] font-semibold text-white/55 transition hover:text-white"
+        >
+          Hide
+        </button>
+      </div>
+
+      {loading && (
+        <p className="mt-4 text-sm text-white/60">Loading available times...</p>
+      )}
+
+      {!loading && error && (
+        <p className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 px-3 py-2 text-xs font-medium text-red-100">
+          {error}
+        </p>
+      )}
+
+      {!loading && !error && slots.length === 0 && (
+        <p className="mt-4 text-sm text-white/60">
+          No open times in the next few days — call or text us directly.
+        </p>
+      )}
+
+      {!loading && slots.length > 0 && (
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {slots.map((slot) => (
+            <button
+              key={slot.start}
+              type="button"
+              disabled={submitting}
+              onClick={() => onSelect(slot)}
+              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-xs font-semibold text-white/85 transition hover:border-turquoise/40 hover:text-white disabled:opacity-50"
+            >
+              {slot.label}
+            </button>
+          ))}
+        </div>
+      )}
+      {!loading && slots.length > 0 && (
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {slots.map((slot) => (
+            <button
+              key={slot.start}
+              type="button"
+              disabled={submitting}
+              onClick={() => onSelect(slot)}
+              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-xs font-semibold text-white/85 transition hover:border-turquoise/40 hover:text-white disabled:opacity-50"
+            >
+              {slot.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+function todayPlusDays(n: number): Date {
+  const d = new Date();
+  d.setDate(d.getDate() + n);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function toDateInputValue(d: Date): string {
+  return d.toISOString().slice(0, 10);
+}
+
+const BOOKING_MIN_LEAD_DAYS = 2;
+const BOOKING_MAX_LEAD_DAYS = 90;
+
+function CalendarDatePicker({
+  selected,
+  onChange,
+  onConfirm,
+  onCancel,
+}: {
+  selected: string;
+  onChange: (value: string) => void;
+  onConfirm: () => void;
+  onCancel: () => void;
+}) {
+  const minStr = toDateInputValue(todayPlusDays(BOOKING_MIN_LEAD_DAYS));
+  const maxStr = toDateInputValue(todayPlusDays(BOOKING_MAX_LEAD_DAYS));
+
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h3 className="font-heading text-sm font-bold text-white">
+            Pick a date
+          </h3>
+          <p className="mt-1 text-xs leading-relaxed text-white/60">
+            We&apos;ll show open times on that day.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={onCancel}
+          className="rounded-full border border-white/10 px-2.5 py-1 text-[11px] font-semibold text-white/55 transition hover:text-white"
+        >
+          Hide
+        </button>
+      </div>
+
+      <div className="mt-4">
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white/55">
+          Date
+        </label>
+        <input
+          type="date"
+          min={minStr}
+          max={maxStr}
+          value={selected}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-3 text-sm text-white focus:border-turquoise/60 focus:outline-none focus:ring-2 focus:ring-turquoise/20"
+        />
+      </div>
+
+      <button
+        type="button"
+        disabled={!selected}
+        onClick={onConfirm}
+        className="mt-4 flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-orange to-orange-light px-4 py-3 font-semibold text-white shadow-lg shadow-orange/20 transition enabled:hover:shadow-glow-orange disabled:opacity-40"
+      >
+        Show available times
+      </button>
+    </div>
+  );
+}
+
 export function ChatbotWidget() {
   const pathname = usePathname();
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -360,22 +549,48 @@ export function ChatbotWidget() {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [quoteSubmitting, setQuoteSubmitting] = useState(false);
   const [quoteSubmitError, setQuoteSubmitError] = useState<string | null>(null);
-  const [quoteFieldErrors, setQuoteFieldErrors] = useState<Record<string, string>>({});
-  const [quoteForm, setQuoteForm] = useState<QuoteFormState>(INITIAL_QUOTE_FORM);
+  const [quoteFieldErrors, setQuoteFieldErrors] = useState<
+    Record<string, string>
+  >({});
+  const [quoteForm, setQuoteForm] =
+    useState<QuoteFormState>(INITIAL_QUOTE_FORM);
   const [leadDraft, setLeadDraft] = useState<ChatbotLeadDraft>({});
   const [messages, setMessages] = useState<UiMessage[]>([WELCOME_MESSAGE]);
-
-  // Inactivity auto-collapse: on mobile, collapse after 6.5s of no user interaction
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [bookingLoading, setBookingLoading] = useState(false);
+  const [bookingSlots, setBookingSlots] = useState<BookingSlot[]>([]);
+  const [bookingSubmitting, setBookingSubmitting] = useState(false);
+  const [bookingError, setBookingError] = useState<string | null>(null);
+  const [bookingLeadInfo, setBookingLeadInfo] = useState<{
+    name: string;
+    phone: string;
+    email?: string;
+    city: string;
+    address?: string;
+  } | null>(null);
+  const [bookingStage, setBookingStage] = useState<
+    "date-select" | "slot-select"
+  >("slot-select");
+  const [selectedDate, setSelectedDate] = useState<string>("");
   const inactivityTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const resetMobileInactivityTimer = useCallback(() => {
-    if (typeof window === "undefined" || window.innerWidth >= 640) return;
-    if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
-    inactivityTimerRef.current = setTimeout(() => setIsOpen(false), 6500);
+  // Once true, the user has done *something* with the widget this time it was
+  // opened — never auto-close after that, no matter how long they go quiet
+  // (filling a form, waiting on slots to load, reading a date picker, etc).
+  const hasInteractedRef = useRef(false);
+
+  const markInteracted = useCallback(() => {
+    hasInteractedRef.current = true;
+    if (inactivityTimerRef.current) {
+      clearTimeout(inactivityTimerRef.current);
+      inactivityTimerRef.current = null;
+    }
   }, []);
 
-  // Start/clear inactivity timer based on open state (mobile only)
+  // Arm a single close-if-untouched timer when the widget opens on mobile.
+  // It only ever fires if the user hasn't interacted at all by then.
   useEffect(() => {
+    if (typeof window === "undefined" || window.innerWidth >= 640) return;
     if (!isOpen) {
       if (inactivityTimerRef.current) {
         clearTimeout(inactivityTimerRef.current);
@@ -383,11 +598,20 @@ export function ChatbotWidget() {
       }
       return;
     }
-    resetMobileInactivityTimer();
+    if (hasInteractedRef.current) return;
+    inactivityTimerRef.current = setTimeout(() => {
+      if (!hasInteractedRef.current) setIsOpen(false);
+    }, 6500);
     return () => {
       if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
     };
-  }, [isOpen, resetMobileInactivityTimer]);
+  }, [isOpen]);
+
+  // Reset the "touched" flag each time the widget is freshly opened, so a
+  // later open still gets its own untouched-close window.
+  useEffect(() => {
+    if (isOpen) hasInteractedRef.current = false;
+  }, [isOpen]);
 
   // Auto-minimize after 7 seconds on desktop if user hasn't interacted yet
   useEffect(() => {
@@ -406,7 +630,13 @@ export function ChatbotWidget() {
       if (!isOpen) return;
       if (window.innerWidth < 640) return;
       const active = document.activeElement;
-      if (active && (active.tagName === "TEXTAREA" || active.tagName === "INPUT" || active.tagName === "SELECT")) return;
+      if (
+        active &&
+        (active.tagName === "TEXTAREA" ||
+          active.tagName === "INPUT" ||
+          active.tagName === "SELECT")
+      )
+        return;
       setIsOpen(false);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -426,8 +656,9 @@ export function ChatbotWidget() {
   }, [messages, quoteOpen]);
 
   const latestAssistantMessage = useMemo(
-    () => [...messages].reverse().find((message) => message.role === "assistant"),
-    [messages]
+    () =>
+      [...messages].reverse().find((message) => message.role === "assistant"),
+    [messages],
   );
 
   // Keep a ref mirror of messages so unload/close handlers always read the latest transcript.
@@ -481,7 +712,10 @@ export function ChatbotWidget() {
     };
   }, [sendTranscriptIfEligible]);
 
-  async function requestAssistantReply(message: string, openQuoteOnReply = false) {
+  async function requestAssistantReply(
+    message: string,
+    openQuoteOnReply = false,
+  ) {
     const trimmedMessage = message.trim();
     if (!trimmedMessage || isSending) return;
 
@@ -494,7 +728,10 @@ export function ChatbotWidget() {
     setMessages((current) => [...current, userMessage]);
     setInput("");
     setIsSending(true);
-    trackChatbotEvent("message_sent", { pagePath: pathname, label: trimmedMessage });
+    trackChatbotEvent("message_sent", {
+      pagePath: pathname,
+      label: trimmedMessage,
+    });
 
     if (!firstUserMessageRef.current) {
       firstUserMessageRef.current = true;
@@ -516,9 +753,11 @@ export function ChatbotWidget() {
         }),
       });
 
-      const data = (await response.json().catch(() => null)) as
-        | { ok?: boolean; error?: string; reply?: ChatbotResponse }
-        | null;
+      const data = (await response.json().catch(() => null)) as {
+        ok?: boolean;
+        error?: string;
+        reply?: ChatbotResponse;
+      } | null;
 
       if (!response.ok || !data?.ok || !data.reply) {
         throw new Error(data?.error || "Chatbot request failed.");
@@ -550,15 +789,20 @@ export function ChatbotWidget() {
         setLeadDraft((current) => ({
           ...current,
           issueType: current.issueType || reply.leadCapture?.suggestedIssueType,
-          serviceSlug: current.serviceSlug || reply.leadCapture?.suggestedServiceSlug,
+          serviceSlug:
+            current.serviceSlug || reply.leadCapture?.suggestedServiceSlug,
           city: current.city || reply.leadCapture?.suggestedCity,
         }));
-        setQuoteForm((current) => seedQuoteForm(current, leadDraft, reply.leadCapture));
+        setQuoteForm((current) =>
+          seedQuoteForm(current, leadDraft, reply.leadCapture),
+        );
       }
 
       if (openQuoteOnReply || reply.intent === "quote-request") {
         setQuoteOpen(true);
-        setQuoteForm((current) => seedQuoteForm(current, leadDraft, reply.leadCapture));
+        setQuoteForm((current) =>
+          seedQuoteForm(current, leadDraft, reply.leadCapture),
+        );
       }
     } catch (error) {
       const messageText =
@@ -573,13 +817,114 @@ export function ChatbotWidget() {
           role: "assistant",
           content: cleanBrokenEncoding(messageText),
           confidence: "low",
-          recommendedLinks: [{ label: "Contact page", href: "/contact", kind: "contact" }],
+          recommendedLinks: [
+            { label: "Contact page", href: "/contact", kind: "contact" },
+          ],
           quickReplies: CHATBOT_STARTER_PROMPTS,
           requiresHumanFollowup: true,
         },
       ]);
     } finally {
       setIsSending(false);
+    }
+  }
+
+  async function fetchSlotsAndShow(
+    leadInfo: {
+      name: string;
+      phone: string;
+      email?: string;
+      address?: string;
+      city: string;
+    },
+    dates: string[],
+  ) {
+    setBookingLeadInfo(leadInfo);
+    setBookingStage("slot-select");
+    setBookingLoading(true);
+    setBookingError(null);
+
+    try {
+      const response = await fetch("/api/calendar/availability", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dates }),
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok || !data?.ok) {
+        throw new Error(data?.error || "Could not load available times.");
+      }
+      setBookingSlots(data.slots ?? []);
+    } catch (error) {
+      setBookingError(
+        error instanceof Error
+          ? error.message
+          : "Could not load available times.",
+      );
+    } finally {
+      setBookingLoading(false);
+    }
+  }
+
+  async function confirmBookingSlot(slot: BookingSlot) {
+    if (!bookingLeadInfo) return;
+    markInteracted();
+    setBookingSubmitting(true);
+    setBookingError(null);
+
+    try {
+      const response = await fetch("/api/calendar/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: bookingLeadInfo.name,
+          phone: bookingLeadInfo.phone,
+          email: bookingLeadInfo.email,
+          city: bookingLeadInfo.city,
+          address: bookingLeadInfo.address,
+          preferredTime: slot.start,
+          source: "chatbot",
+        }),
+      });
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok || !data?.ok) {
+        if (data?.conflict) {
+          setBookingError(
+            "That slot was just taken — pick another time below.",
+          );
+          void fetchSlotsAndShow(bookingLeadInfo, [selectedDate]);
+          return;
+        }
+        throw new Error(
+          data?.error || "Could not book that time. Please try another.",
+        );
+      }
+
+      trackChatbotEvent("appointment_booked", {
+        pagePath: pathname,
+        label: slot.label,
+      });
+      setBookingOpen(false);
+      setMessages((current) => [
+        ...current,
+        {
+          id: nextMessageId(),
+          role: "assistant",
+          content: cleanBrokenEncoding(
+            `You're booked for ${slot.label}. It's on our calendar — see you then.`,
+          ),
+          confidence: "high",
+        },
+      ]);
+    } catch (error) {
+      setBookingError(
+        error instanceof Error
+          ? error.message
+          : "Could not book that time. Please try another.",
+      );
+    } finally {
+      setBookingSubmitting(false);
     }
   }
 
@@ -627,6 +972,13 @@ export function ChatbotWidget() {
         preferredContactMethod: quoteForm.preferredContactMethod,
         summary: quoteForm.summary,
       });
+      const submittedLead = {
+        name: quoteForm.name.trim(),
+        phone: quoteForm.phone.trim(),
+        email: quoteForm.email.trim() || undefined,
+        address: quoteForm.address.trim(),
+        city: quoteForm.city,
+      };
       setQuoteForm(INITIAL_QUOTE_FORM);
       setMessages((current) => [
         ...current,
@@ -634,13 +986,20 @@ export function ChatbotWidget() {
           id: nextMessageId(),
           role: "assistant",
           content: cleanBrokenEncoding(
-            "Your quote request is in. The team will follow up shortly, usually the same day or next morning."
+            "Your quote request is in. Want to lock in an inspection time right now? Pick a slot below, or we'll follow up shortly either way.",
           ),
           confidence: "high",
-          recommendedLinks: [{ label: "Contact page", href: "/contact", kind: "contact" }],
+          recommendedLinks: [
+            { label: "Contact page", href: "/contact", kind: "contact" },
+          ],
           quickReplies: ["What service do I need?", "Do you serve my town?"],
         },
       ]);
+      setSelectedDate("");
+      setBookingLeadInfo(submittedLead);
+      setBookingStage("date-select");
+      setBookingOpen(true);
+      markInteracted();
     } catch (error) {
       const typedError = error as PostContactError;
       if (typedError.fieldErrors) {
@@ -649,7 +1008,7 @@ export function ChatbotWidget() {
       setQuoteSubmitError(
         error instanceof Error
           ? error.message
-          : "We could not send your quote request. Please try again shortly."
+          : "We could not send your quote request. Please try again shortly.",
       );
     } finally {
       setQuoteSubmitting(false);
@@ -657,10 +1016,13 @@ export function ChatbotWidget() {
   }
 
   function onQuickReplyClick(prompt: string) {
-    resetMobileInactivityTimer();
+    markInteracted();
     if (prompt === "Start my free quote") {
       if (!quoteOpen) {
-        trackChatbotEvent("quote_started", { pagePath: pathname, label: "quick-reply" });
+        trackChatbotEvent("quote_started", {
+          pagePath: pathname,
+          label: "quick-reply",
+        });
       }
       void requestAssistantReply(prompt, true);
       return;
@@ -670,7 +1032,10 @@ export function ChatbotWidget() {
 
   function onLinkClick(link: ChatbotLink) {
     if (link.kind === "phone") {
-      trackChatbotEvent("handoff_to_call", { pagePath: pathname, label: link.label });
+      trackChatbotEvent("handoff_to_call", {
+        pagePath: pathname,
+        label: link.label,
+      });
       return;
     }
     trackChatbotEvent("routed_click", {
@@ -692,7 +1057,10 @@ export function ChatbotWidget() {
       {isOpen && (
         <div className="flex flex-1 flex-col overflow-hidden bg-[#071321] sm:flex-none sm:h-[min(42rem,calc(100dvh-6rem))] sm:max-h-[calc(100dvh-6rem)] sm:w-[min(26rem,calc(100vw-1rem))] sm:rounded-[28px] sm:border sm:border-white/10 sm:bg-[#071321]/95 sm:shadow-2xl sm:shadow-black/50 sm:backdrop-blur-2xl">
           {/* Mobile drag handle — visual only; close via the × button */}
-          <div className="flex w-full justify-center pb-2 pt-3 sm:hidden" aria-hidden>
+          <div
+            className="flex w-full justify-center pb-2 pt-3 sm:hidden"
+            aria-hidden
+          >
             <span className="h-1 w-12 rounded-full bg-white/25" />
           </div>
 
@@ -704,9 +1072,12 @@ export function ChatbotWidget() {
                 <div className="inline-flex items-center gap-2 rounded-full border border-turquoise/20 bg-turquoise/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-turquoise">
                   Guided Assistant
                 </div>
-                <h2 className="font-heading mt-3 text-lg font-bold text-white">Ask {CHATBOT_NAME}</h2>
+                <h2 className="font-heading mt-3 text-lg font-bold text-white">
+                  Ask {CHATBOT_NAME}
+                </h2>
                 <p className="mt-1 max-w-xs text-sm leading-relaxed text-white/65">
-                  Ask about your deck, our services, or schedule a free inspection.
+                  Ask about your deck, our services, or schedule a free
+                  inspection.
                 </p>
               </div>
               <button
@@ -718,7 +1089,12 @@ export function ChatbotWidget() {
                 className="rounded-full border border-white/10 bg-white/5 p-2 text-white/60 transition hover:text-white"
                 aria-label="Close chatbot"
               >
-                <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                <svg
+                  className="h-4 w-4"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden
+                >
                   <path
                     fillRule="evenodd"
                     d="M4.22 4.22a.75.75 0 011.06 0L10 8.94l4.72-4.72a.75.75 0 111.06 1.06L11.06 10l4.72 4.72a.75.75 0 11-1.06 1.06L10 11.06l-4.72 4.72a.75.75 0 01-1.06-1.06L8.94 10 4.22 5.28a.75.75 0 010-1.06z"
@@ -729,7 +1105,10 @@ export function ChatbotWidget() {
             </div>
           </div>
 
-          <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
+          <div
+            ref={scrollRef}
+            className="min-h-0 flex-1 overflow-y-auto px-4 py-4"
+          >
             <div className="space-y-3">
               {messages.map((message) => {
                 const isAssistant = message.role === "assistant";
@@ -752,31 +1131,32 @@ export function ChatbotWidget() {
                       )}
                       <p>{message.content}</p>
 
-                      {message.recommendedLinks && message.recommendedLinks.length > 0 && (
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {message.recommendedLinks.map((link) =>
-                            link.href.startsWith("tel:") ? (
-                              <a
-                                key={`${message.id}-${link.href}`}
-                                href={link.href}
-                                onClick={() => onLinkClick(link)}
-                                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/85 transition hover:border-turquoise/40 hover:text-white"
-                              >
-                                {link.label}
-                              </a>
-                            ) : (
-                              <Link
-                                key={`${message.id}-${link.href}`}
-                                href={link.href}
-                                onClick={() => onLinkClick(link)}
-                                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/85 transition hover:border-turquoise/40 hover:text-white"
-                              >
-                                {link.label}
-                              </Link>
-                            )
-                          )}
-                        </div>
-                      )}
+                      {message.recommendedLinks &&
+                        message.recommendedLinks.length > 0 && (
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {message.recommendedLinks.map((link) =>
+                              link.href.startsWith("tel:") ? (
+                                <a
+                                  key={`${message.id}-${link.href}`}
+                                  href={link.href}
+                                  onClick={() => onLinkClick(link)}
+                                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/85 transition hover:border-turquoise/40 hover:text-white"
+                                >
+                                  {link.label}
+                                </a>
+                              ) : (
+                                <Link
+                                  key={`${message.id}-${link.href}`}
+                                  href={link.href}
+                                  onClick={() => onLinkClick(link)}
+                                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/85 transition hover:border-turquoise/40 hover:text-white"
+                                >
+                                  {link.label}
+                                </Link>
+                              ),
+                            )}
+                          </div>
+                        )}
 
                       {message.requiresHumanFollowup && (
                         <p className="mt-3 text-xs text-white/55">
@@ -812,6 +1192,31 @@ export function ChatbotWidget() {
                   onCancel={() => setQuoteOpen(false)}
                 />
               )}
+              {bookingOpen && bookingStage === "date-select" && (
+                <CalendarDatePicker
+                  selected={selectedDate}
+                  onChange={(value) => {
+                    setSelectedDate(value);
+                    markInteracted();
+                  }}
+                  onConfirm={() =>
+                    bookingLeadInfo &&
+                    fetchSlotsAndShow(bookingLeadInfo, [selectedDate])
+                  }
+                  onCancel={() => setBookingOpen(false)}
+                />
+              )}
+
+              {bookingOpen && bookingStage === "slot-select" && (
+                <BookingSlotsCard
+                  slots={bookingSlots}
+                  loading={bookingLoading}
+                  submitting={bookingSubmitting}
+                  error={bookingError}
+                  onSelect={confirmBookingSlot}
+                  onCancel={() => setBookingOpen(false)}
+                />
+              )}
 
               {isSending && (
                 <div className="flex justify-start">
@@ -823,42 +1228,48 @@ export function ChatbotWidget() {
             </div>
           </div>
 
-          {latestAssistantMessage?.quickReplies && latestAssistantMessage.quickReplies.length > 0 && (
-            <div className="border-t border-white/10 px-4 py-3">
-              <div className="flex flex-wrap gap-2">
-                {latestAssistantMessage.quickReplies.map((prompt) => (
-                  <button
-                    key={prompt}
-                    type="button"
-                    onClick={() => onQuickReplyClick(prompt)}
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/80 transition hover:border-turquoise/40 hover:text-white"
-                  >
-                    {prompt}
-                  </button>
-                ))}
-                {!quoteOpen && latestAssistantMessage.leadCapture && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      trackChatbotEvent("quote_started", {
-                        pagePath: pathname,
-                        label: "assistant-cta",
-                      });
-                      setQuoteOpen(true);
-                      setQuoteSubmitError(null);
-                      setQuoteFieldErrors({});
-                      setQuoteForm((current) =>
-                        seedQuoteForm(current, leadDraft, latestAssistantMessage.leadCapture)
-                      );
-                    }}
-                    className="rounded-full bg-gradient-to-r from-orange to-orange-light px-3 py-1.5 text-xs font-semibold text-white"
-                  >
-                    Start my free quote
-                  </button>
-                )}
+          {latestAssistantMessage?.quickReplies &&
+            latestAssistantMessage.quickReplies.length > 0 && (
+              <div className="border-t border-white/10 px-4 py-3">
+                <div className="flex flex-wrap gap-2">
+                  {latestAssistantMessage.quickReplies.map((prompt) => (
+                    <button
+                      key={prompt}
+                      type="button"
+                      onClick={() => onQuickReplyClick(prompt)}
+                      className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/80 transition hover:border-turquoise/40 hover:text-white"
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                  {!quoteOpen && latestAssistantMessage.leadCapture && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        trackChatbotEvent("quote_started", {
+                          pagePath: pathname,
+                          label: "assistant-cta",
+                        });
+                        setQuoteOpen(true);
+                        markInteracted();
+                        setQuoteSubmitError(null);
+                        setQuoteFieldErrors({});
+                        setQuoteForm((current) =>
+                          seedQuoteForm(
+                            current,
+                            leadDraft,
+                            latestAssistantMessage.leadCapture,
+                          ),
+                        );
+                      }}
+                      className="rounded-full bg-gradient-to-r from-orange to-orange-light px-3 py-1.5 text-xs font-semibold text-white"
+                    >
+                      Start my free quote
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           <form
             onSubmit={(event) => {
@@ -876,7 +1287,10 @@ export function ChatbotWidget() {
                   id="chatbot-input"
                   rows={1}
                   value={input}
-                  onChange={(event) => { setInput(event.target.value); resetMobileInactivityTimer(); }}
+                  onChange={(event) => {
+                    setInput(event.target.value);
+                    markInteracted();
+                  }}
                   placeholder="Ask about service, town, or quote..."
                   className="max-h-28 min-h-[28px] w-full resize-none overflow-hidden bg-transparent text-base sm:text-sm text-white placeholder:text-white/35 focus:outline-none"
                   onKeyDown={(event) => {
@@ -912,7 +1326,12 @@ export function ChatbotWidget() {
         <span className="absolute inset-0 rounded-full bg-gradient-to-r from-turquoise/20 to-orange/10 opacity-0 transition group-hover:opacity-100" />
         <span className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border border-[#071321] bg-orange shadow-sm shadow-orange/60" />
         <span className="relative flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-turquoise to-[#1b3a5c] shadow-lg shadow-turquoise/20">
-          <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+          <svg
+            className="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden
+          >
             <path d="M3 4.75A2.75 2.75 0 015.75 2h8.5A2.75 2.75 0 0117 4.75v5.5A2.75 2.75 0 0114.25 13H9.372L5.33 16.11A.75.75 0 014.125 15.5V13H5.75A2.75 2.75 0 013 10.25v-5.5z" />
           </svg>
         </span>
@@ -920,7 +1339,9 @@ export function ChatbotWidget() {
           <span className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-turquoise/90">
             Live guidance
           </span>
-          <span className="font-heading block text-sm font-bold">Ask {CHATBOT_NAME}</span>
+          <span className="font-heading block text-sm font-bold">
+            Ask {CHATBOT_NAME}
+          </span>
         </span>
       </button>
     </div>
