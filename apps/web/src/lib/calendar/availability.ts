@@ -59,6 +59,7 @@ export async function getAvailableSlots(input: {
   daysAhead?: number;
   dates?: string[];
 }): Promise<AvailabilityResult> {
+  console.log("[getAvailableSlots] input received:", JSON.stringify(input));
   const explicitDates = Array.isArray(input.dates)
     ? input.dates.filter((d) => DATE_STR_PATTERN.test(d)).slice(0, 2)
     : null;
@@ -150,6 +151,11 @@ export async function getAvailableSlots(input: {
       });
     }
   }
-
+  console.log(
+    "[getAvailableSlots] dayStrsToScan:",
+    dayStrsToScan,
+    "slots found:",
+    slots.length,
+  );
   return { ok: true, slots: slots.slice(0, 20) };
 }
