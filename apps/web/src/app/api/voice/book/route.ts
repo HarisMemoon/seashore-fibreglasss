@@ -112,12 +112,7 @@ export async function POST(request: NextRequest) {
         results: [
           {
             toolCallId,
-            result: JSON.stringify({
-              ok: true,
-              summary: `Booked for ${spokenTime}.`,
-              eventId: result.eventId,
-              start: result.start,
-            }),
+            result: `Booked for ${spokenTime}.`,
           },
         ],
       },

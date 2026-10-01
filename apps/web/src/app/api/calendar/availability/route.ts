@@ -43,21 +43,19 @@ export async function POST(request: NextRequest) {
     // Vapi's `result` field must be a single-line string — give it a
     // human-readable summary the model can speak directly, plus the raw
     // slots as JSON text in case it wants to reference exact values.
-    const readableSummary =
+    const readableResult =
       result.slots.length > 0
-        ? `Available times: ${result.slots.map((s) => s.label).join(", ")}.`
-        : "No available times found for that date.";
+        ? `Available times: ${result.slots
+            .map((s) => `${s.label} (exact time: ${s.start})`)
+            .join("; ")}.`
+        : "No available times were found for that date.";
 
     return NextResponse.json(
       {
         results: [
           {
             toolCallId,
-            result: JSON.stringify({
-              ok: true,
-              summary: readableSummary,
-              slots: result.slots,
-            }),
+            result: readableResult,
           },
         ],
       },
