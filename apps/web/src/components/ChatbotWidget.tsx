@@ -28,6 +28,7 @@ import {
   CHATBOT_URGENCY_OPTIONS,
   CHATBOT_WELCOME_MESSAGE,
 } from "@/lib/chatbot/content";
+import { log } from "console";
 
 type UiMessage = ChatbotMessage & {
   id: string;
@@ -855,6 +856,7 @@ export function ChatbotWidget() {
         throw new Error(data?.error || "Could not load available times.");
       }
       setBookingSlots(data.slots ?? []);
+      console.log("Fetched slots:", data.slots);
     } catch (error) {
       setBookingError(
         error instanceof Error

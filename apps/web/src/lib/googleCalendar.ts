@@ -5,7 +5,10 @@ const REQUIRED_ENV_VARS = [
   "GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY",
   "GOOGLE_CALENDAR_ID",
 ] as const;
-
+const privateKey = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY?.replace(
+  /\\n/g,
+  "\n",
+).replace(/^"|"$/g, "");
 function assertEnv() {
   const missing = REQUIRED_ENV_VARS.filter((key) => !process.env[key]);
   if (missing.length > 0) {
@@ -26,9 +29,7 @@ export function getCalendarAuth() {
 
   cachedAuth = new google.auth.JWT({
     email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    key: normalizePrivateKey(
-      process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY as string,
-    ),
+    key: normalizePrivateKey(privateKey as string),
     scopes: ["https://www.googleapis.com/auth/calendar"],
   });
 

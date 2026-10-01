@@ -1,67 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  getCalendarClient,
-  CALENDAR_ID,
-  BUSINESS_TIMEZONE,
-  getBusinessHoursForDate,
-  SLOT_DURATION_MINUTES,
-  BOOKING_LEAD_TIME_HOURS,
-} from "@/lib/googleCalendar";
-
-type AvailabilityRequestBody = {
-  date?: string; // "YYYY-MM-DD", defaults to today
-  daysAhead?: number; // how many days forward to scan, defaults to 5, max 14
-  dates?: string[]; // explicit list of "YYYY-MM-DD" days to check instead of a range
-};
-
-type Slot = {
-  start: string; // ISO 8601
-  end: string; // ISO 8601
-  label: string; // human-readable, e.g. "Tue, Sep 15 · 2:00 PM"
-};
-
-function buildDayWindowUtc(
-  dateStr: string,
-): { dayStart: Date; dayEnd: Date } | null {
-  const hours = getBusinessHoursForDate(dateStr);
-  if (!hours) return null; // closed day (Sunday) — no self-serve slots
-
-  // Business hours are defined in BUSINESS_TIMEZONE; this constructs UTC
-  // instants for that local day using Intl to resolve the offset correctly
-  // (handles DST without a manual offset table).
-  const probe = new Date(`${dateStr}T12:00:00Z`);
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: BUSINESS_TIMEZONE,
-    timeZoneName: "shortOffset",
-  }).formatToParts(probe);
-  const offsetPart =
-    parts.find((p) => p.type === "timeZoneName")?.value ?? "GMT+0";
-  const offsetMatch = offsetPart.match(/GMT([+-]\d+)(?::(\d+))?/);
-  const offsetHours = offsetMatch ? parseInt(offsetMatch[1], 10) : 0;
-  const offsetMinutes = offsetMatch?.[2] ? parseInt(offsetMatch[2], 10) : 0;
-  const totalOffsetMs =
-    (offsetHours * 60 + Math.sign(offsetHours || 1) * offsetMinutes) * 60_000;
-
-  const dayStart = new Date(
-    Date.parse(
-      `${dateStr}T${String(hours.startHour).padStart(2, "0")}:00:00Z`,
-    ) - totalOffsetMs,
-  );
-  const dayEnd = new Date(
-    Date.parse(`${dateStr}T${String(hours.endHour).padStart(2, "0")}:00:00Z`) -
-      totalOffsetMs,
-  );
-  return { dayStart, dayEnd };
-}
-
-function formatDateStr(date: Date): string {
-  return date.toISOString().slice(0, 10);
-}
-
-const DATE_STR_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+import { getAvailableSlots } from "@/lib/calendar/availability";
 
 export async function POST(request: NextRequest) {
-  let body: AvailabilityRequestBody;
+  let body: any;
   try {
     body = await request.json();
   } catch {
@@ -71,105 +12,66 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const explicitDates = Array.isArray(body.dates)
-    ? body.dates.filter((d) => DATE_STR_PATTERN.test(d)).slice(0, 2)
-    : null;
+  // Vapi sends a different envelope: { message: { toolCalls: [{ id, function: { arguments } }] } }
+  const vapiToolCall =
+    body?.message?.toolCalls?.[0] ?? body?.message?.toolCallList?.[0];
 
-  if (explicitDates && explicitDates.length === 0) {
-    return NextResponse.json(
-      { ok: false, error: "No valid dates provided." },
-      { status: 400 },
-    );
-  }
+  if (vapiToolCall) {
+    const toolCallId: string = vapiToolCall.id;
+    let args: any = {};
+    try {
+      args =
+        typeof vapiToolCall.function?.arguments === "string"
+          ? JSON.parse(vapiToolCall.function.arguments)
+          : (vapiToolCall.function?.arguments ?? {});
+    } catch {
+      return NextResponse.json(
+        { results: [{ toolCallId, error: "Could not parse tool arguments." }] },
+        { status: 200 },
+      );
+    }
 
-  const dayStrsToScan: string[] = explicitDates
-    ? [...explicitDates].sort()
-    : (() => {
-        const daysAhead = Math.min(Math.max(body.daysAhead ?? 5, 1), 14);
-        const startDateStr = body.date ?? formatDateStr(new Date());
-        const scanStart = new Date(`${startDateStr}T00:00:00Z`);
-        return Array.from({ length: daysAhead }, (_, i) => {
-          const d = new Date(scanStart);
-          d.setUTCDate(d.getUTCDate() + i);
-          return formatDateStr(d);
-        });
-      })();
+    const result = await getAvailableSlots({ dates: args.dates });
 
-  // freebusy.query needs a timeMin/timeMax range; build it around whichever
-  // days we're actually scanning (works for both a contiguous range and
-  // two arbitrary explicit dates).
-  const scanStart = new Date(`${dayStrsToScan[0]}T00:00:00Z`);
-  const scanEnd = new Date(
-    `${dayStrsToScan[dayStrsToScan.length - 1]}T00:00:00Z`,
-  );
-  scanEnd.setUTCDate(scanEnd.getUTCDate() + 1); // end must be strictly after start
+    if (!result.ok) {
+      return NextResponse.json(
+        { results: [{ toolCallId, error: result.error }] },
+        { status: 200 }, // Vapi requires 200 even on logical errors
+      );
+    }
 
-  let freeBusy;
-  try {
-    const calendar = getCalendarClient();
-    const response = await calendar.freebusy.query({
-      requestBody: {
-        timeMin: scanStart.toISOString(),
-        timeMax: scanEnd.toISOString(),
-        timeZone: BUSINESS_TIMEZONE,
-        items: [{ id: CALENDAR_ID }],
-      },
-    });
-    freeBusy = response.data.calendars?.[CALENDAR_ID]?.busy ?? [];
-  } catch (error) {
-    console.error("Calendar availability lookup failed:", error);
+    // Vapi's `result` field must be a single-line string — give it a
+    // human-readable summary the model can speak directly, plus the raw
+    // slots as JSON text in case it wants to reference exact values.
+    const readableSummary =
+      result.slots.length > 0
+        ? `Available times: ${result.slots.map((s) => s.label).join(", ")}.`
+        : "No available times found for that date.";
+
     return NextResponse.json(
       {
-        ok: false,
-        error: "Could not reach the calendar. Please try again shortly.",
+        results: [
+          {
+            toolCallId,
+            result: JSON.stringify({
+              ok: true,
+              summary: readableSummary,
+              slots: result.slots,
+            }),
+          },
+        ],
       },
-      { status: 502 },
+      { status: 200 },
     );
   }
 
-  const busyRanges = freeBusy.map((b) => ({
-    start: new Date(b.start as string).getTime(),
-    end: new Date(b.end as string).getTime(),
-  }));
-
-  const earliestBookable =
-    Date.now() + BOOKING_LEAD_TIME_HOURS * 60 * 60 * 1000;
-  const slots: Slot[] = [];
-  const slotMs = SLOT_DURATION_MINUTES * 60 * 1000;
-
-  for (const dayStr of dayStrsToScan) {
-    const window = buildDayWindowUtc(dayStr);
-    if (!window) continue; // closed day (Sunday) — skip, no slots offered
-    const { dayStart, dayEnd } = window;
-
-    for (
-      let slotStart = dayStart.getTime();
-      slotStart + slotMs <= dayEnd.getTime();
-      slotStart += slotMs
-    ) {
-      const slotEnd = slotStart + slotMs;
-      if (slotStart < earliestBookable) continue;
-
-      const overlapsBusy = busyRanges.some(
-        (b) => slotStart < b.end && slotEnd > b.start,
-      );
-      if (overlapsBusy) continue;
-
-      const slotStartDate = new Date(slotStart);
-      slots.push({
-        start: slotStartDate.toISOString(),
-        end: new Date(slotEnd).toISOString(),
-        label: new Intl.DateTimeFormat("en-US", {
-          timeZone: BUSINESS_TIMEZONE,
-          weekday: "short",
-          month: "short",
-          day: "numeric",
-          hour: "numeric",
-          minute: "2-digit",
-        }).format(slotStartDate),
-      });
-    }
+  // Normal path — your chatbot widget and any direct API callers, unchanged.
+  const result = await getAvailableSlots(body);
+  if (!result.ok) {
+    return NextResponse.json(
+      { ok: false, error: result.error },
+      { status: result.status },
+    );
   }
-
-  return NextResponse.json({ ok: true, slots: slots.slice(0, 20) });
+  return NextResponse.json({ ok: true, slots: result.slots });
 }
