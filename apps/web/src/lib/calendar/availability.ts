@@ -151,11 +151,6 @@ export async function getAvailableSlots(input: {
       });
     }
   }
-  console.log(
-    "[getAvailableSlots] dayStrsToScan:",
-    dayStrsToScan,
-    "slots found:",
-    slots.length,
-  );
+
   return { ok: true, slots: slots.slice(0, 20) };
 }

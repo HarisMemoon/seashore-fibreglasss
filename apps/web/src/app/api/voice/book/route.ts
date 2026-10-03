@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
   } else {
     payload = body;
   }
-
+  console.log("[voice/book] payload received:", JSON.stringify(payload));
   const errors: string[] = [];
   if (!payload.name?.trim()) errors.push("name is required");
   if (!payload.phone?.trim()) errors.push("phone is required");
