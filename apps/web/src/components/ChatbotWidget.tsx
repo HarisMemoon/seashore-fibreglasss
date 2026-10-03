@@ -169,7 +169,7 @@ function QuoteRequestCard({
     <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="font-heading text-sm font-bold text-white">
+          <h3 className="font-sans text-sm font-bold text-white">
             Free quote request
           </h3>
           <p className="mt-1 text-xs leading-relaxed text-white/60">
@@ -186,7 +186,7 @@ function QuoteRequestCard({
       </div>
 
       <div className="mt-4">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-turquoise/90">
+        <p className="text-[11px] font-semibold  tracking-[0.16em] text-turquoise/90">
           Issue type
         </p>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -205,7 +205,7 @@ function QuoteRequestCard({
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <div>
-          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white/55">
+          <label className="mb-1.5 block text-xs font-semibold  tracking-wide text-white/55">
             Full name
           </label>
           <input
@@ -218,7 +218,7 @@ function QuoteRequestCard({
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white/55">
+          <label className="mb-1.5 block text-xs font-semibold  tracking-wide text-white/55">
             Phone
           </label>
           <input
@@ -234,7 +234,7 @@ function QuoteRequestCard({
 
       <div className="mt-3 grid gap-3 sm:grid-cols-2">
         <div>
-          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white/55">
+          <label className="mb-1.5 block text-xs font-semibold  tracking-wide text-white/55">
             Email
           </label>
           <input
@@ -247,7 +247,7 @@ function QuoteRequestCard({
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white/55">
+          <label className="mb-1.5 block text-xs font-semibold  tracking-wide text-white/55">
             Project address
           </label>
           <input
@@ -264,9 +264,9 @@ function QuoteRequestCard({
         </div>
       </div>
 
-      <div className="mt-3 grid gap-3 sm:grid-cols-2">
+      <div className="mt-3 grid space-y-3">
         <div>
-          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white/55">
+          <label className="mb-1.5 block text-xs font-semibold  tracking-wide text-white/55">
             City / area
           </label>
           <StyledSelect
@@ -284,7 +284,7 @@ function QuoteRequestCard({
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white/55">
+          <label className="mb-1.5 block text-xs font-semibold  tracking-wide text-white/55">
             Best time
           </label>
           <StyledSelect
@@ -302,7 +302,7 @@ function QuoteRequestCard({
       </div>
 
       <div className="mt-4">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-turquoise/90">
+        <p className="text-[11px] font-semibold  tracking-[0.16em] text-turquoise/90">
           Preferred contact method
         </p>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -323,7 +323,7 @@ function QuoteRequestCard({
       </div>
 
       {/* <div className="mt-4">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-turquoise/90">
+        <p className="text-[11px] font-semibold  tracking-[0.16em] text-turquoise/90">
           Timeline
         </p>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -341,7 +341,7 @@ function QuoteRequestCard({
       </div> */}
 
       <div className="mt-4">
-        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white/55">
+        <label className="mb-1.5 block text-xs font-semibold  tracking-wide text-white/55">
           Project notes
         </label>
         <textarea
@@ -365,9 +365,18 @@ function QuoteRequestCard({
         type="button"
         onClick={onSubmit}
         disabled={submitting}
-        className="mt-4 flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-orange to-orange-light px-4 py-3 font-semibold text-white shadow-lg shadow-orange/20 transition enabled:hover:shadow-glow-orange disabled:opacity-60"
+        className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-orange/30 bg-orange/10 px-4 py-3 text-sm font-semibold text-orange-light shadow-sm transition hover:border-orange/50 hover:bg-orange/15 hover:text-white active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {submitting ? "Sending quote request..." : "Send Free Quote Request"}
+        {submitting ? (
+          <>
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-orange-light/30 border-t-orange-light" />
+            <span>Sending request...</span>
+          </>
+        ) : (
+          <>
+            <span>Confirm inspection request</span>
+          </>
+        )}
       </button>
     </div>
   );
@@ -398,7 +407,7 @@ function BookingSlotsCard({
     <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="font-heading text-sm font-bold text-white">
+          <h3 className="font-sans text-sm font-bold text-white">
             Pick a time
           </h3>
           <p className="mt-1 text-xs leading-relaxed text-white/60">
@@ -415,7 +424,19 @@ function BookingSlotsCard({
       </div>
 
       {loading && (
-        <p className="mt-4 text-sm text-white/60">Loading available times...</p>
+        <button
+          type="button"
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-orange/30 bg-orange/10 px-4 py-3 text-sm font-semibold text-orange-light shadow-sm transition hover:border-orange/50 hover:bg-orange/15 hover:text-white active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {loading ? (
+            <>
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-orange-light/30 border-t-orange-light" />
+              <span>Fetching available Dates...</span>
+            </>
+          ) : (
+            <></>
+          )}
+        </button>
       )}
 
       {!loading && error && (
@@ -438,22 +459,7 @@ function BookingSlotsCard({
               type="button"
               disabled={submitting}
               onClick={() => onSelect(slot)}
-              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-xs font-semibold text-white/85 transition hover:border-turquoise/40 hover:text-white disabled:opacity-50"
-            >
-              {slot.label}
-            </button>
-          ))}
-        </div>
-      )}
-      {!loading && slots.length > 0 && (
-        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
-          {slots.map((slot) => (
-            <button
-              key={slot.start}
-              type="button"
-              disabled={submitting}
-              onClick={() => onSelect(slot)}
-              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-xs font-semibold text-white/85 transition hover:border-turquoise/40 hover:text-white disabled:opacity-50"
+              className="rounded-xl border border-orange/30 bg-orange/10 px-3 py-2.5 text-xs font-semibold text-orange-light shadow-sm transition hover:border-orange/60 hover:bg-orange/15 hover:text-white active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {slot.label}
             </button>
@@ -492,10 +498,10 @@ function CalendarDatePicker({
   const maxStr = toDateInputValue(todayPlusDays(BOOKING_MAX_LEAD_DAYS));
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
+    <div className="min-w-0 w-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-2xl shadow-black/20 backdrop-blur-xl">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="font-heading text-sm font-bold text-white">
+          <h3 className="font-sans text-sm font-bold text-white">
             Pick a date
           </h3>
           <p className="mt-1 text-xs leading-relaxed text-white/60">
@@ -511,8 +517,8 @@ function CalendarDatePicker({
         </button>
       </div>
 
-      <div className="mt-4">
-        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white/55">
+      <div className="mt-4 min-w-0">
+        <label className="mb-1.5 block text-xs font-semibold  tracking-wide text-white/55">
           Date
         </label>
         <input
@@ -521,7 +527,10 @@ function CalendarDatePicker({
           max={maxStr}
           value={selected}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-3 text-sm text-white focus:border-turquoise/60 focus:outline-none focus:ring-2 focus:ring-turquoise/20"
+          className="block min-w-0 w-full max-w-full appearance-none rounded-xl border border-white/10 bg-white/[0.04] px-3 py-3 text-sm text-white box-border focus:border-turquoise/60 focus:outline-none focus:ring-2 focus:ring-turquoise/20"
+          style={{
+            WebkitAppearance: "none",
+          }}
         />
       </div>
 
@@ -529,7 +538,7 @@ function CalendarDatePicker({
         type="button"
         disabled={!selected}
         onClick={onConfirm}
-        className="mt-4 flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-orange to-orange-light px-4 py-3 font-semibold text-white shadow-lg shadow-orange/20 transition enabled:hover:shadow-glow-orange disabled:opacity-40"
+        className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-orange/30 bg-orange/10 px-4 py-3 text-sm font-semibold text-orange-light shadow-sm transition hover:border-orange/50 hover:bg-orange/15 hover:text-white active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
       >
         Show available times
       </button>
@@ -548,6 +557,9 @@ export function ChatbotWidget() {
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [quoteOpen, setQuoteOpen] = useState(false);
+  const [bookOpen, setBookOpen] = useState(false);
+  const [showQuoteCta, setShowQuoteCta] = useState(true);
+  const quoteFormRef = useRef<HTMLDivElement>(null);
   const [quoteSubmitting, setQuoteSubmitting] = useState(false);
   const [quoteSubmitError, setQuoteSubmitError] = useState<string | null>(null);
   const [quoteFieldErrors, setQuoteFieldErrors] = useState<
@@ -617,12 +629,15 @@ export function ChatbotWidget() {
   // Auto-minimize after 7 seconds on desktop if user hasn't interacted yet
   useEffect(() => {
     if (typeof window !== "undefined" && window.innerWidth < 640) return;
-    if (!hasBeenOpenedRef.current) {
-      const timer = setTimeout(() => {
+    if (hasBeenOpenedRef.current) return;
+
+    const timer = setTimeout(() => {
+      if (!hasInteractedRef.current && !hasBeenOpenedRef.current) {
         setIsOpen(false);
-      }, 7000);
-      return () => clearTimeout(timer);
-    }
+      }
+    }, 7000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   // Collapse on scroll (desktop only) — not on mobile where swipe = scroll
@@ -712,7 +727,16 @@ export function ChatbotWidget() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [sendTranscriptIfEligible]);
+  useEffect(() => {
+    if (!quoteOpen) return;
 
+    requestAnimationFrame(() => {
+      quoteFormRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }, [quoteOpen]);
   async function requestAssistantReply(
     message: string,
     openQuoteOnReply = false,
@@ -908,6 +932,7 @@ export function ChatbotWidget() {
         label: slot.label,
       });
       setBookingOpen(false);
+      setBookOpen(true);
       setMessages((current) => [
         ...current,
         {
@@ -956,7 +981,7 @@ export function ChatbotWidget() {
         wantsFreeInspection: true,
         source: "chatbot",
       });
-
+      setShowQuoteCta(false);
       trackChatbotEvent("quote_submitted", {
         pagePath: pathname,
         label: quoteForm.issueType || "unknown",
@@ -1049,7 +1074,7 @@ export function ChatbotWidget() {
 
   return (
     <div
-      className={`fixed z-[9999] flex flex-col gap-3 ${
+      className={`fixed z-[9999] flex flex-col gap-3 font-sans antialiased ${
         isOpen
           ? "inset-0 items-stretch sm:inset-auto sm:bottom-4 sm:right-6 sm:items-end"
           : "bottom-2 right-4 items-end sm:bottom-4 sm:right-6"
@@ -1071,16 +1096,48 @@ export function ChatbotWidget() {
             <div className="absolute -right-10 top-0 h-28 w-28 rounded-full bg-orange/20 blur-3xl" />
             <div className="relative flex items-start justify-between gap-4">
               <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-turquoise/20 bg-turquoise/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-turquoise">
+                <div className="inline-flex items-center gap-2 rounded-full border border-turquoise/20 bg-turquoise/10 px-2.5 py-1 text-[11px] font-semibold  tracking-[0.18em] text-turquoise">
                   Guided Assistant
                 </div>
-                <h2 className="font-heading mt-3 text-lg font-bold text-white">
+                <h2 className="font-sans mt-3 text-lg font-bold text-white">
                   Ask {CHATBOT_NAME}
                 </h2>
                 <p className="mt-1 max-w-xs text-sm leading-relaxed text-white/65">
                   Ask about your deck, our services, or schedule a free
                   inspection.
                 </p>
+                {showQuoteCta && (
+                  <div className="relative mt-4 flex justify-start">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        trackChatbotEvent("quote_started", {
+                          pagePath: pathname,
+                          label: "header-cta",
+                        });
+
+                        markInteracted();
+                        setShowQuoteCta(false);
+                        setQuoteSubmitError(null);
+                        setQuoteFieldErrors({});
+                        setQuoteOpen(true);
+
+                        setQuoteForm((current) =>
+                          seedQuoteForm(
+                            current,
+                            leadDraft,
+                            latestAssistantMessage?.leadCapture,
+                          ),
+                        );
+                      }}
+                      className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-orange/30 bg-orange/10 px-3 py-1.5 text-[11px] font-semibold text-orange-light shadow-sm backdrop-blur-md transition hover:border-orange/50 hover:bg-orange/15 hover:text-white active:scale-[0.98] sm:px-3.5 sm:py-2 sm:text-xs"
+                    >
+                      <span className="whitespace-nowrap">
+                        Confirm inspection appointment
+                      </span>
+                    </button>
+                  </div>
+                )}
               </div>
               <button
                 type="button"
@@ -1126,11 +1183,11 @@ export function ChatbotWidget() {
                           : "bg-gradient-to-r from-turquoise to-[#3a9dc6] text-white"
                       }`}
                     >
-                      {isAssistant && message.confidence && (
+                      {/* {isAssistant && message.confidence && (
                         <div className="mb-2 inline-flex rounded-full border border-white/10 bg-white/[0.04] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/45">
                           {message.confidence} confidence
                         </div>
-                      )}
+                      )} */}
                       <p>{message.content}</p>
 
                       {message.recommendedLinks &&
@@ -1184,15 +1241,20 @@ export function ChatbotWidget() {
               })}
 
               {quoteOpen && (
-                <QuoteRequestCard
-                  form={quoteForm}
-                  setForm={setQuoteForm}
-                  submitting={quoteSubmitting}
-                  submitError={quoteSubmitError}
-                  fieldErrors={quoteFieldErrors}
-                  onSubmit={submitQuoteRequest}
-                  onCancel={() => setQuoteOpen(false)}
-                />
+                <div ref={quoteFormRef}>
+                  <QuoteRequestCard
+                    form={quoteForm}
+                    setForm={setQuoteForm}
+                    submitting={quoteSubmitting}
+                    submitError={quoteSubmitError}
+                    fieldErrors={quoteFieldErrors}
+                    onSubmit={submitQuoteRequest}
+                    onCancel={() => {
+                      setQuoteOpen(false);
+                      setShowQuoteCta(true);
+                    }}
+                  />
+                </div>
               )}
               {bookingOpen && bookingStage === "date-select" && (
                 <CalendarDatePicker
@@ -1230,7 +1292,10 @@ export function ChatbotWidget() {
             </div>
           </div>
 
-          {latestAssistantMessage?.quickReplies &&
+          {!quoteOpen &&
+            !bookOpen &&
+            !messages.some((message) => message.role === "user") &&
+            latestAssistantMessage?.quickReplies &&
             latestAssistantMessage.quickReplies.length > 0 && (
               <div className="border-t border-white/10 px-4 py-3">
                 <div className="flex flex-wrap gap-2">
@@ -1244,31 +1309,6 @@ export function ChatbotWidget() {
                       {prompt}
                     </button>
                   ))}
-                  {!quoteOpen && latestAssistantMessage.leadCapture && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        trackChatbotEvent("quote_started", {
-                          pagePath: pathname,
-                          label: "assistant-cta",
-                        });
-                        setQuoteOpen(true);
-                        markInteracted();
-                        setQuoteSubmitError(null);
-                        setQuoteFieldErrors({});
-                        setQuoteForm((current) =>
-                          seedQuoteForm(
-                            current,
-                            leadDraft,
-                            latestAssistantMessage.leadCapture,
-                          ),
-                        );
-                      }}
-                      className="rounded-full bg-gradient-to-r from-orange to-orange-light px-3 py-1.5 text-xs font-semibold text-white"
-                    >
-                      Start my free quote
-                    </button>
-                  )}
                 </div>
               </div>
             )}
@@ -1338,10 +1378,10 @@ export function ChatbotWidget() {
           </svg>
         </span>
         <span className="relative text-left">
-          <span className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-turquoise/90">
+          <span className="block text-[11px] font-semibold  tracking-[0.18em] text-turquoise/90">
             Live guidance
           </span>
-          <span className="font-heading block text-sm font-bold">
+          <span className="font-sans block text-sm font-bold">
             Ask {CHATBOT_NAME}
           </span>
         </span>

@@ -1,8 +1,18 @@
 import { z } from "zod";
-import { BEST_TIME_OPTIONS, SERVICE_AREA_FORM_OPTIONS, SERVICE_INQUIRY_OPTIONS } from "@seashore/content";
-const cityEnum = z.enum([...SERVICE_AREA_FORM_OPTIONS] as [string, ...string[]]);
+import {
+  BEST_TIME_OPTIONS,
+  SERVICE_AREA_FORM_OPTIONS,
+  SERVICE_INQUIRY_OPTIONS,
+} from "@seashore/content";
+const cityEnum = z.enum([...SERVICE_AREA_FORM_OPTIONS] as [
+  string,
+  ...string[],
+]);
 const bestTimeEnum = z.enum([...BEST_TIME_OPTIONS] as [string, ...string[]]);
-const serviceEnum = z.enum([...SERVICE_INQUIRY_OPTIONS] as [string, ...string[]]);
+const serviceEnum = z.enum([...SERVICE_INQUIRY_OPTIONS] as [
+  string,
+  ...string[],
+]);
 
 export const contactSubmissionSchema = z
   .object({
@@ -13,12 +23,10 @@ export const contactSubmissionSchema = z
       .max(120, "Name is too long."),
     phone: z.preprocess(
       (v) => (v === undefined || v === null ? "" : String(v).trim()),
-      z
-        .string()
-        .refine((v) => {
-          const digits = v.replace(/\D/g, "");
-          return digits.length >= 10 && digits.length <= 15;
-        }, "Enter a valid phone number with at least 10 digits.")
+      z.string().refine((v) => {
+        const digits = v.replace(/\D/g, "");
+        return digits.length >= 10 && digits.length <= 15;
+      }, "Enter a valid phone number with at least 10 digits."),
     ),
     email: z.preprocess(
       (v) => (v === undefined || v === null ? "" : String(v).trim()),
@@ -27,39 +35,45 @@ export const contactSubmissionSchema = z
           z.literal(""),
           z.string().email("Enter a valid email address."),
         ])
-        .transform((v) => (v === "" ? undefined : v))
+        .transform((v) => (v === "" ? undefined : v)),
     ),
     address: z.preprocess(
       (v) => (v === undefined || v === null ? "" : String(v).trim()),
       z
         .string()
         .min(5, "Enter your project address.")
-        .max(240, "Address is too long.")
+        .max(240, "Address is too long."),
     ),
     city: z.preprocess(
       (v) => (v === undefined || v === null ? "" : String(v).trim()),
-      cityEnum
+      cityEnum,
     ),
     service: z.preprocess(
-      (v) => (v === undefined || v === null || v === "" ? undefined : String(v).trim()),
-      serviceEnum.optional()
+      (v) =>
+        v === undefined || v === null || v === ""
+          ? undefined
+          : String(v).trim(),
+      serviceEnum.optional(),
     ),
     bestTime: z.preprocess(
-      (v) => (v === undefined || v === null || v === "" ? undefined : String(v).trim()),
-      bestTimeEnum.optional()
+      (v) =>
+        v === undefined || v === null || v === ""
+          ? undefined
+          : String(v).trim(),
+      bestTimeEnum.optional(),
     ),
     message: z.preprocess(
       (v) => (v === undefined || v === null ? "" : String(v).trim()),
       z
         .string()
         .max(5000, "Message is too long (max 5000 characters).")
-        .transform((v) => (v === "" ? undefined : v))
+        .transform((v) => (v === "" ? undefined : v)),
     ),
     wantsFreeInspection: z.preprocess(
       (v) => (v === true ? true : v === false ? false : undefined),
-      z.boolean().optional()
+      z.boolean().optional(),
     ),
-    source: z.enum(["home", "contact", "chatbot"]),
+    source: z.enum(["home", "contact", "chatbot", "voice", "social"]),
   })
   .strict();
 
