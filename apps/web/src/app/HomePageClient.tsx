@@ -1997,7 +1997,7 @@ export default function HomePageClient() {
               className="max-w-3xl"
             >
               <motion.div variants={fadeUp} className="mb-8">
-                <span className="inline-flex items-center gap-2.5 rounded-full border border-turquoise/25 bg-turquoise/8 px-5 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-turquoise backdrop-blur-md">
+                <span className="inline-flex items-center gap-2.5 rounded-full border border-turquoise/25 bg-turquoise/8 px-5 py-2 text-[11px] font-bold  tracking-[0.22em] text-turquoise backdrop-blur-md">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-turquoise opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-turquoise" />
@@ -2008,7 +2008,7 @@ export default function HomePageClient() {
 
               <motion.h1
                 variants={fadeUp}
-                className="font-heading text-[clamp(2.6rem,6vw,4.5rem)] font-extrabold leading-[1.05] tracking-tight text-white"
+                className="font-heading text-[clamp(2.6rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-white"
               >
                 {HERO_HEADING}
               </motion.h1>
@@ -2019,32 +2019,6 @@ export default function HomePageClient() {
               >
                 {HERO_SUBHEADING}
               </motion.p>
-
-              {/*
-              <motion.div variants={fadeUp} className="mt-10 flex flex-wrap gap-4">
-                <Link
-                  href="/contact"
-                  className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-orange to-orange-light px-8 py-4 font-bold text-white shadow-lg shadow-orange/25 transition-all duration-400 hover:shadow-glow-orange hover:shadow-2xl"
-                >
-                  <span className="relative z-10 flex items-center gap-2.5">
-                    {HERO_PRIMARY_CTA}
-                    <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
-                    </svg>
-                  </span>
-                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-orange-dark to-orange transition-transform duration-500 group-hover:translate-x-0" />
-                </Link>
-                <a
-                  href={`tel:${PHONE.replace(/\D/g, "")}`}
-                  className="group flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 px-8 py-4 font-semibold text-white backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-white/10 hover:shadow-glow-white"
-                >
-                  <svg className="h-4 w-4 transition-transform duration-300 group-hover:rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                  </svg>
-                  {HERO_SECONDARY_CTA}
-                </a>
-              </motion.div>
-              */}
 
               {/* Animated stat counters */}
               <motion.div
@@ -2062,7 +2036,7 @@ export default function HomePageClient() {
                     variants={fadeUp}
                     className="group rounded-2xl border border-white/8 bg-white/[0.03] px-6 py-4 backdrop-blur-md transition-all duration-300 hover:border-turquoise/25 hover:bg-white/[0.06]"
                   >
-                    <p className="font-heading text-2xl font-extrabold text-white">
+                    <p className="font-heading text-2xl font-bold text-white text-center">
                       <AnimatedCounter target={stat.num} />
                     </p>
                     <p className="mt-0.5 text-[11px] font-medium tracking-wide text-white/45">
