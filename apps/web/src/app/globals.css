@@ -161,3 +161,10 @@ html.nav-scrolled .site-nav {
 .hover-underline:hover::after {
   width: 100%;
 }
+
+/* While the homepage gallery lightbox is open, hide the floating chatbot
+   (launcher + panel) so it can never cover the lightbox controls — the
+   chatbot root sits at inline z-index 2147483000, far above the lightbox. */
+html.seashore-lightbox-open [data-chatbot-widget] {
+  display: none !important;
+}

@@ -48,14 +48,6 @@ const stagger = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.1 } },
 };
-const staggerQuick = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.065, delayChildren: 0.05 } },
-};
-const scaleUp = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: { opacity: 1, scale: 1 },
-};
 
 function InView({
   children,
@@ -226,7 +218,7 @@ function ServicesSection() {
       <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.05) 0%, rgba(232,124,43,0) 70%)" }} />
 
       <div className="relative mx-auto max-w-7xl">
-        <InView className="text-center">
+        <div className="text-center">
           <SectionLabel>What We Do</SectionLabel>
           <h2 className="font-heading mt-5 text-[clamp(2rem,3.8vw,3rem)] font-extrabold text-navy">
             Our Core Services
@@ -235,19 +227,15 @@ function ServicesSection() {
             Every service is engineered for South Jersey Shore conditions —
             salt, humidity, UV, freeze-thaw.
           </p>
-        </InView>
+        </div>
 
         {/* Service cards */}
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service, i) => {
             const iconKey = iconKeys[i] ?? "repair";
             return (
-              <motion.div
+              <div
                 key={service.slug}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: i * 0.07 }}
                 className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200/70 bg-white p-8 shadow-[0_8px_48px_rgba(13,45,74,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:border-turquoise/40 hover:shadow-[0_20px_64px_rgba(13,45,74,0.14)]"
               >
                 <div className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-turquoise via-turquoise-light to-orange transition-transform duration-300 group-hover:scale-x-100" />
@@ -281,13 +269,13 @@ function ServicesSection() {
                     />
                   </svg>
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
         </div>
 
         {/* All services link */}
-        <InView className="mt-10 flex justify-center">
+        <div className="mt-10 flex justify-center">
           <Link
             href="/services"
             className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition-colors hover:text-navy"
@@ -306,7 +294,7 @@ function ServicesSection() {
               />
             </svg>
           </Link>
-        </InView>
+        </div>
       </div>
     </section>
   );
@@ -552,57 +540,34 @@ function ShoreFiberglassSection() {
 
       <div className="relative mx-auto max-w-7xl">
         {/* ── HEADER ─────────────────────────────────────── */}
-        <motion.div
-          className="mx-auto max-w-3xl text-center"
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.div variants={fadeUp}>
+        <div className="mx-auto max-w-3xl text-center">
+          <div>
             <span className="inline-flex items-center gap-2.5 rounded-full border border-turquoise/25 bg-white/90 px-5 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-turquoise shadow-sm">
               <span className="relative flex h-2 w-2">
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-turquoise" />
               </span>
               Why fiberglass
             </span>
-          </motion.div>
+          </div>
 
-          <motion.h2
-            variants={fadeUp}
-            className="font-heading mt-6 text-[clamp(2rem,3.8vw,3rem)] font-extrabold leading-[1.08] tracking-tight text-navy"
-          >
+          <h2 className="font-heading mt-6 text-[clamp(2rem,3.8vw,3rem)] font-extrabold leading-[1.08] tracking-tight text-navy">
             {SHORE_HOME_HEADLINE_PREFIX}{" "}
             <span className="italic text-turquoise">
               {SHORE_HOME_HEADLINE_ACCENT}
             </span>
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            variants={fadeUp}
-            className="mt-5 text-[1.05rem] leading-relaxed text-slate-500"
-          >
+          <p className="mt-5 text-[1.05rem] leading-relaxed text-slate-500">
             {SHORE_HOME_INTRO}
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* ── SHORE CHALLENGES (left) + NARRATIVE (right) ── */}
         <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-14">
-          <motion.div
-            variants={staggerQuick}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.12 }}
-            className="flex flex-col gap-4"
-          >
+          <div className="flex flex-col gap-4">
             {SHORE_HOME_STRESSORS.map((item, i) => (
-              <motion.div
+              <div
                 key={item.title}
-                variants={fadeUp}
-                whileHover={{
-                  y: -5,
-                  transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] },
-                }}
                 className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_14px_48px_-22px_rgba(13,45,74,0.18)] ring-1 ring-white transition-all duration-300 hover:border-turquoise/30 hover:shadow-[0_20px_56px_-20px_rgba(13,121,137,0.22)]"
               >
                 <div
@@ -632,19 +597,12 @@ function ShoreFiberglassSection() {
                 <span className="pointer-events-none absolute bottom-3 right-4 font-heading text-[2rem] font-extrabold leading-none text-slate-100 select-none transition-colors duration-300 group-hover:text-turquoise/10 sm:bottom-4 sm:right-5 sm:text-[2.5rem]">
                   {i + 1}
                 </span>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={staggerQuick}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.12 }}
-            className="relative overflow-hidden rounded-3xl border border-slate-200/75 bg-white/85 px-8 py-10 shadow-[0_18px_60px_-28px_rgba(13,45,74,0.16)] sm:px-11 sm:py-12 lg:sticky lg:top-28"
-          >
-            <motion.div
-              variants={fadeUp}
+          <div className="relative overflow-hidden rounded-3xl border border-slate-200/75 bg-white/85 px-8 py-10 shadow-[0_18px_60px_-28px_rgba(13,45,74,0.16)] sm:px-11 sm:py-12 lg:sticky lg:top-28">
+            <div
               aria-hidden
               className="absolute left-0 top-0 hidden h-full w-1 bg-gradient-to-b from-turquoise via-turquoise-light to-navy/20 sm:block"
             />
@@ -656,22 +614,20 @@ function ShoreFiberglassSection() {
 
             <div className="relative space-y-5 sm:pl-6">
               {SHORE_HOME_WHY_PARAGRAPHS.map((paragraph, i) => (
-                <motion.p
+                <p
                   key={paragraph.slice(0, 52)}
-                  variants={fadeUp}
-                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                   className={`text-[1.05rem] leading-[1.9] text-slate-600 ${i > 0 ? "border-t border-slate-100 pt-5" : ""}`}
                 >
                   {paragraph}
-                </motion.p>
+                </p>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* ── BUILT DIFFERENT — Core Services pattern ── */}
         <div className="mt-24">
-          <InView className="text-center">
+          <div className="text-center">
             <SectionLabel>Our standard</SectionLabel>
             <h2 className="font-heading mt-5 text-[clamp(2rem,3.8vw,3rem)] font-extrabold text-navy">
               {SHORE_HOME_BUILT_DIFFERENT_TITLE}
@@ -679,13 +635,9 @@ function ShoreFiberglassSection() {
             <p className="mx-auto mt-4 max-w-xl text-[1.05rem] leading-relaxed text-slate-500">
               {SHORE_HOME_BUILT_DIFFERENT_SUB}
             </p>
-          </InView>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
+          <div
             className="mt-12 flex flex-wrap justify-center gap-3"
             role="tablist"
             aria-label="Deck assembly layers"
@@ -717,27 +669,19 @@ function ShoreFiberglassSection() {
                   </span>
                   <span className="leading-snug">{tab.label}</span>
                   {isActive ? (
-                    <motion.span
-                      layoutId="shore-standard-tab-dot"
-                      className="inline-flex size-1.5 shrink-0 items-center justify-center rounded-full bg-turquoise"
-                    />
+                    <span className="inline-flex size-1.5 shrink-0 items-center justify-center rounded-full bg-turquoise" />
                   ) : null}
                 </button>
               );
             })}
-          </motion.div>
+          </div>
 
           <div className="mt-10">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={standardFilter}
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -14 }}
-                transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-                className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-[0_8px_48px_rgba(13,45,74,0.09)]"
-                role="tabpanel"
-              >
+            <div
+              key={standardFilter}
+              className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-[0_8px_48px_rgba(13,45,74,0.09)]"
+              role="tabpanel"
+            >
                 <div className="h-1.5 w-full bg-gradient-to-r from-turquoise via-turquoise-light to-navy" />
 
                 <div className="grid gap-0 lg:grid-cols-[1fr_1.1fr]">
@@ -792,12 +736,7 @@ function ShoreFiberglassSection() {
                       <div className="space-y-5">
                         {activeFilter.customContent.sections.map(
                           (section, si) => (
-                            <motion.div
-                              key={section.heading}
-                              initial={{ opacity: 0, x: 16 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: si * 0.08, duration: 0.3 }}
-                            >
+                            <div key={section.heading}>
                               <span className="mb-2 block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-turquoise">
                                 {section.heading}
                               </span>
@@ -823,7 +762,7 @@ function ShoreFiberglassSection() {
                                   </li>
                                 ))}
                               </ul>
-                            </motion.div>
+                            </div>
                           ),
                         )}
                       </div>
@@ -836,13 +775,7 @@ function ShoreFiberglassSection() {
                           const specKey =
                             typeof spec === "string" ? spec : spec.summary;
                           return (
-                            <motion.li
-                              key={specKey}
-                              initial={{ opacity: 0, x: 16 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: i * 0.07, duration: 0.3 }}
-                              className="flex items-start gap-3"
-                            >
+                            <li key={specKey} className="flex items-start gap-3">
                               <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-turquoise/15 text-turquoise">
                                 <svg
                                   className="h-3 w-3"
@@ -881,7 +814,7 @@ function ShoreFiberglassSection() {
                                   </div>
                                 )}
                               </span>
-                            </motion.li>
+                            </li>
                           );
                         })}
                       </ul>
@@ -919,11 +852,10 @@ function ShoreFiberglassSection() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+            </div>
           </div>
 
-          <InView className="mt-10 text-center">
+          <div className="mt-10 text-center">
             <div className="flex justify-center">
               <SectionLabel>How we work</SectionLabel>
             </div>
@@ -946,9 +878,9 @@ function ShoreFiberglassSection() {
                 </div>
               ))}
             </div>
-          </InView>
+          </div>
 
-          <InView className="mt-10 flex justify-center">
+          <div className="mt-10 flex justify-center">
             <Link
               href="/services"
               className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition-colors hover:text-navy"
@@ -967,7 +899,7 @@ function ShoreFiberglassSection() {
                 />
               </svg>
             </Link>
-          </InView>
+          </div>
         </div>
       </div>
     </section>
@@ -1339,11 +1271,18 @@ function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
     return () => window.removeEventListener("keydown", handler);
   }, [activeIdx]);
 
-  // lock scroll when modal open
+  // lock scroll when modal open; also hide the floating chatbot (its root
+  // sits at inline z-index 2147483000, far above this modal, and its
+  // launcher would otherwise cover the modal footer — see globals.css)
   useEffect(() => {
     document.body.style.overflow = activeIdx !== null ? "hidden" : "";
+    document.documentElement.classList.toggle(
+      "seashore-lightbox-open",
+      activeIdx !== null,
+    );
     return () => {
       document.body.style.overflow = "";
+      document.documentElement.classList.remove("seashore-lightbox-open");
     };
   }, [activeIdx]);
 
@@ -1524,6 +1463,53 @@ function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
                 </button>
               </div>
 
+              {/* Mobile nav — Prev / Next at the TOP of the detail view (mobile only) */}
+              <div className="flex items-center justify-between gap-2 border-b border-white/10 px-5 py-3 md:hidden">
+                <button
+                  type="button"
+                  onClick={prev}
+                  className="flex items-center gap-1.5 rounded-full border border-white/15 px-3.5 py-2 text-xs font-semibold text-white/70 transition hover:border-white/30 hover:text-white"
+                >
+                  <svg
+                    className="h-3.5 w-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                  Prev
+                </button>
+                <span className="text-xs text-white/30">
+                  {activeIdx + 1} / {PREVIEW_COUNT}
+                </span>
+                <button
+                  type="button"
+                  onClick={next}
+                  className="flex items-center gap-1.5 rounded-full border border-white/15 px-3.5 py-2 text-xs font-semibold text-white/70 transition hover:border-white/30 hover:text-white"
+                >
+                  Next
+                  <svg
+                    className="h-3.5 w-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
+
               {/* Modal body */}
               <div className="flex-1 overflow-y-auto px-5 py-5 md:px-6">
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1594,9 +1580,9 @@ function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
               </div>
 
               {/* Modal footer — nav + gallery link */}
-              <div className="flex items-center justify-between gap-3 border-t border-white/10 px-5 py-4 md:px-6">
-                {/* Prev / Next */}
-                <div className="flex items-center gap-2">
+              <div className="flex items-center justify-start gap-3 border-t border-white/10 px-5 py-4 md:justify-between md:px-6">
+                {/* Prev / Next — desktop only; on mobile this nav sits at the top of the modal */}
+                <div className="hidden items-center gap-2 md:flex">
                   <button
                     type="button"
                     onClick={prev}
@@ -2131,15 +2117,9 @@ export default function HomePageClient() {
               </svg>
             </motion.div>
           </div>
-          <InView>
+          <div>
             <div className="relative mx-auto max-w-7xl px-6">
-              <motion.div
-                variants={stagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="flex flex-col gap-4 sm:grid sm:grid-cols-3 lg:grid-cols-5"
-              >
+              <div className="flex flex-col gap-4 sm:grid sm:grid-cols-3 lg:grid-cols-5">
                 {TRUST_BADGES.map((badge, i) => {
                   const badgeIcons = [
                     <svg
@@ -2196,10 +2176,8 @@ export default function HomePageClient() {
                     </svg>,
                   ];
                   return (
-                    <motion.div
+                    <div
                       key={badge}
-                      variants={scaleUp}
-                      custom={i}
                       className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 transition-all duration-300 hover:bg-white/94 hover:shadow-xl"
                     >
                       <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0D7989] to-[#1B3A5C] text-white shadow-sm">
@@ -2209,19 +2187,15 @@ export default function HomePageClient() {
                         {badge}
                       </span>
                       <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-amber-100/40 to-transparent opacity-0 transition-all duration-700 group-hover:translate-x-full group-hover:opacity-100" />
-                    </motion.div>
+                    </div>
                   );
                 })}
-                <motion.div
-                  variants={scaleUp}
-                  custom={TRUST_BADGES.length}
-                  className="group relative col-span-2 flex items-center justify-center overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 sm:order-first sm:col-span-1 transition-all duration-300 hover:bg-white/94 hover:shadow-xl"
-                >
+                <div className="group relative col-span-2 flex items-center justify-center overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 sm:order-first sm:col-span-1 transition-all duration-300 hover:bg-white/94 hover:shadow-xl">
                   <BBBSeal />
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
             </div>
-          </InView>
+          </div>
         </section>
 
         <ShoreFiberglassSection />

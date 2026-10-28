@@ -1074,6 +1074,7 @@ export function ChatbotWidget() {
 
   return (
     <div
+      data-chatbot-widget
       className={`fixed z-[9999] flex flex-col gap-3 font-sans antialiased ${
         isOpen
           ? "inset-0 items-stretch sm:inset-auto sm:bottom-4 sm:right-6 sm:items-end"
