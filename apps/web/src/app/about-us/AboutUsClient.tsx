@@ -782,12 +782,7 @@ export default function AboutUsClient() {
       {/* ══════════════════ CONNECT WITH US ══════════════════ */}
       <section className="border-t border-slate-100 bg-white px-6 py-16 md:py-24">
         <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
+          <div>
             <SectionLabel>Find us online</SectionLabel>
             <h2 className="font-heading mt-4 text-3xl font-bold text-navy md:text-4xl">
               Connect With Us & Verify Our Reputation
@@ -797,22 +792,15 @@ export default function AboutUsClient() {
               work across the Shore — on every platform where we share our
               story.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-            variants={staggerContainer}
-            className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
-          >
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {SOCIAL_PLATFORMS.map((platform) => (
-              <motion.a
+              <a
                 key={platform.key}
                 href={platform.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                variants={cardVariant}
                 className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white to-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-turquoise/40 hover:shadow-xl"
               >
                 {/* Top accent bar */}
@@ -855,9 +843,9 @@ export default function AboutUsClient() {
                     />
                   </svg>
                 </span>
-              </motion.a>
+              </a>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
       {/* ══════════════════ CTA ══════════════════ */}

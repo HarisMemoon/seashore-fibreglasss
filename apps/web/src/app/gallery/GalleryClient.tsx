@@ -4,7 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import type { GalleryItem } from "@seashore/types";
 import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 const FILTER_OPTIONS = [
   "All",
@@ -19,7 +26,10 @@ const FILTER_OPTIONS = [
 type FilterOption = (typeof FILTER_OPTIONS)[number];
 
 /** Display labels and filter keys for grouped "All" view */
-const CATEGORY_GROUPS: { label: string; filter: Exclude<FilterOption, "All"> }[] = [
+const CATEGORY_GROUPS: {
+  label: string;
+  filter: Exclude<FilterOption, "All">;
+}[] = [
   { label: "Repair & Structural Work", filter: "Repair" },
   { label: "Reglass & Full Resurfacing", filter: "Reglass" },
   { label: "Recolor & Re-Gelcoating", filter: "Recolor" },
@@ -100,8 +110,18 @@ function GalleryCard({
     >
       <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-card transition group-hover:border-turquoise/25 group-hover:shadow-card-hover">
         <div className="grid grid-cols-2 gap-1 p-1">
-          <BeforeAfterVisual variant="before" label="Before" imageAlt={item.beforeImageAlt} src={item.beforeImage} />
-          <BeforeAfterVisual variant="after" label="After" imageAlt={item.afterImageAlt} src={item.afterImage} />
+          <BeforeAfterVisual
+            variant="before"
+            label="Before"
+            imageAlt={item.beforeImageAlt}
+            src={item.beforeImage}
+          />
+          <BeforeAfterVisual
+            variant="after"
+            label="After"
+            imageAlt={item.afterImageAlt}
+            src={item.afterImage}
+          />
         </div>
         <div className="px-4 pb-4 pt-3">
           <div className="flex items-center gap-2 flex-wrap">
@@ -118,9 +138,12 @@ function GalleryCard({
             {item.title}
           </h2>
           <p className="mt-2 line-clamp-2 text-sm text-slate-600">
-            <span className="font-medium text-slate-800">Before:</span> {item.beforeDescription}
+            <span className="font-medium text-slate-800">Before:</span>{" "}
+            {item.beforeDescription}
           </p>
-          <p className="mt-1 text-xs font-semibold text-turquoise">Tap to see full before &amp; after →</p>
+          <p className="mt-1 text-xs font-semibold text-turquoise">
+            Tap to see full before &amp; after →
+          </p>
         </div>
       </div>
     </button>
@@ -130,15 +153,18 @@ function GalleryCard({
 /** Rotating copy so repeated inline CTAs don't feel copy-pasted */
 const CTA_VARIANTS: { heading: string; button: string }[] = [
   {
-    heading: "Serving homeowners from Ocean City to Cape May — free inspections, no pressure.",
+    heading:
+      "Serving homeowners from Ocean City to Cape May — free inspections, no pressure.",
     button: "Get My Free Inspection",
   },
   {
-    heading: "Every project starts with a free, honest inspection — no pressure, just clear answers.",
+    heading:
+      "Every project starts with a free, honest inspection — no pressure, just clear answers.",
     button: "Schedule My Free Inspection",
   },
   {
-    heading: "Ready to get your deck Shore-ready? Let's talk about your project.",
+    heading:
+      "Ready to get your deck Shore-ready? Let's talk about your project.",
     button: "Get My Free Quote",
   },
 ];
@@ -177,7 +203,8 @@ function CityFilterDropdown({
   useEffect(() => {
     if (!open) return;
     const onPointerDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node))
+        setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -210,14 +237,25 @@ function CityFilterDropdown({
             : "border-slate-200 bg-white text-slate-700 hover:border-turquoise/40 hover:text-turquoise"
         }`}
       >
-        <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+        <svg
+          className="h-4 w-4 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth={2}
             d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"
           />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+          />
         </svg>
         <span className="max-w-[12rem] truncate">{label}</span>
         <svg
@@ -227,7 +265,12 @@ function CityFilterDropdown({
           viewBox="0 0 24 24"
           aria-hidden
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
@@ -268,7 +311,9 @@ function CategoryDivider({ label, count }: { label: string; count: number }) {
   return (
     <div className="col-span-full mt-4 mb-1 flex items-center gap-4">
       <div className="flex items-baseline gap-3">
-        <h2 className="font-heading text-xl font-extrabold text-navy">{label}</h2>
+        <h2 className="font-heading text-xl font-extrabold text-navy">
+          {label}
+        </h2>
         <span className="rounded-full bg-turquoise/10 px-2.5 py-0.5 text-xs font-bold text-turquoise-dark">
           {count} {count === 1 ? "project" : "projects"}
         </span>
@@ -286,8 +331,11 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
   const titleId = useId();
 
   const cities = useMemo(
-    () => Array.from(new Set(items.map((item) => item.location).filter(Boolean))).sort(),
-    [items]
+    () =>
+      Array.from(
+        new Set(items.map((item) => item.location).filter(Boolean)),
+      ).sort(),
+    [items],
   );
 
   const onToggleCity = useCallback((city: string) => {
@@ -308,7 +356,7 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
   const filteredItems = items.filter(
     (item) =>
       matchesFilter(item.category, activeFilter) &&
-      (selectedCities.size === 0 || selectedCities.has(item.location))
+      (selectedCities.size === 0 || selectedCities.has(item.location)),
   );
 
   const close = useCallback(() => setOpenIndex(null), []);
@@ -337,9 +385,14 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    // Hide the chatbot while the lightbox is open — its launcher sits at an
+    // extreme z-index and would otherwise float over the lightbox controls
+    // (same mechanism as the homepage modal — see globals.css)
+    document.documentElement.classList.add("seashore-lightbox-open");
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      document.documentElement.classList.remove("seashore-lightbox-open");
     };
   }, [openIndex, close, goPrev, goNext]);
 
@@ -361,7 +414,7 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
 
   const pushCard = (item: GalleryItem, idx: number) => {
     gridNodes.push(
-      <GalleryCard key={item.id} item={item} onOpen={() => openAt(idx)} />
+      <GalleryCard key={item.id} item={item} onOpen={() => openAt(idx)} />,
     );
     cardCount += 1;
     if (cardCount % CTA_INTERVAL === 0) {
@@ -373,11 +426,15 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
   if (activeFilter === "All") {
     CATEGORY_GROUPS.forEach(({ label, filter }) => {
       const groupItems = filteredItems.filter((item) =>
-        matchesFilter(item.category, filter)
+        matchesFilter(item.category, filter),
       );
       if (groupItems.length === 0) return;
       gridNodes.push(
-        <CategoryDivider key={`divider-${filter}`} label={label} count={groupItems.length} />
+        <CategoryDivider
+          key={`divider-${filter}`}
+          label={label}
+          count={groupItems.length}
+        />,
       );
       groupItems.forEach((item) => {
         pushCard(item, filteredItems.indexOf(item));
@@ -415,7 +472,10 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
             {filter}
           </button>
         ))}
-        <span className="mx-1 hidden h-6 w-px bg-slate-200 sm:block" aria-hidden />
+        <span
+          className="mx-1 hidden h-6 w-px bg-slate-200 sm:block"
+          aria-hidden
+        />
         <CityFilterDropdown
           cities={cities}
           selected={selectedCities}
@@ -424,13 +484,16 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
         />
         {filteredItems.length < items.length && (
           <span className="ml-2 self-center text-xs text-slate-500">
-            {filteredItems.length} project{filteredItems.length !== 1 ? "s" : ""} shown
+            {filteredItems.length} project
+            {filteredItems.length !== 1 ? "s" : ""} shown
           </span>
         )}
       </div>
 
       {filteredItems.length === 0 && (
-        <p className="py-12 text-center text-slate-500">No projects match this filter.</p>
+        <p className="py-12 text-center text-slate-500">
+          No projects match this filter.
+        </p>
       )}
 
       {/* Desktop + tablet: grid */}
@@ -440,10 +503,15 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
 
       {/* Mobile: horizontal snap carousel */}
       <div className="md:hidden">
-        <p className="mb-4 text-center text-sm text-slate-500">Swipe sideways to browse projects</p>
+        <p className="mb-4 text-center text-sm text-slate-500">
+          Swipe sideways to browse projects
+        </p>
         <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4">
           {filteredItems.map((item, i) => (
-            <div key={item.id} className="w-[min(92vw,420px)] shrink-0 snap-center">
+            <div
+              key={item.id}
+              className="w-[min(92vw,420px)] shrink-0 snap-center"
+            >
               <GalleryCard item={item} onOpen={() => openAt(i)} />
             </div>
           ))}
@@ -490,7 +558,10 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
                       · {openIndex + 1} / {filteredItems.length}
                     </span>
                   </div>
-                  <h2 id={titleId} className="font-heading mt-1 text-xl font-bold text-navy md:text-2xl">
+                  <h2
+                    id={titleId}
+                    className="font-heading mt-1 text-xl font-bold text-navy md:text-2xl"
+                  >
                     {active.title}
                   </h2>
                 </div>
@@ -501,8 +572,18 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
                   className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition hover:bg-slate-50 hover:text-navy"
                   aria-label="Close"
                 >
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
@@ -510,22 +591,40 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
               <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 md:px-6">
                 <div className="grid gap-6 md:grid-cols-2">
                   <figure className="m-0">
-                    <BeforeAfterVisual variant="before" label="Before" imageAlt={active.beforeImageAlt} src={active.beforeImage} />
+                    <BeforeAfterVisual
+                      variant="before"
+                      label="Before"
+                      imageAlt={active.beforeImageAlt}
+                      src={active.beforeImage}
+                    />
                     <figcaption className="mt-3 text-sm leading-relaxed text-slate-600">
                       {active.beforeDescription.split("\n\n").map((para, i) => (
                         <p key={i} className={i > 0 ? "mt-2" : ""}>
-                          {i === 0 && <span className="font-semibold text-navy">Before — </span>}
+                          {i === 0 && (
+                            <span className="font-semibold text-navy">
+                              Before —{" "}
+                            </span>
+                          )}
                           {para}
                         </p>
                       ))}
                     </figcaption>
                   </figure>
                   <figure className="m-0">
-                    <BeforeAfterVisual variant="after" label="After" imageAlt={active.afterImageAlt} src={active.afterImage} />
+                    <BeforeAfterVisual
+                      variant="after"
+                      label="After"
+                      imageAlt={active.afterImageAlt}
+                      src={active.afterImage}
+                    />
                     <figcaption className="mt-3 text-sm leading-relaxed text-slate-600">
                       {active.afterDescription.split("\n\n").map((para, i) => (
                         <p key={i} className={i > 0 ? "mt-2" : ""}>
-                          {i === 0 && <span className="font-semibold text-navy">After — </span>}
+                          {i === 0 && (
+                            <span className="font-semibold text-navy">
+                              After —{" "}
+                            </span>
+                          )}
                           {para}
                         </p>
                       ))}
@@ -541,8 +640,18 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
                   disabled={openIndex <= 0}
                   className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-navy transition enabled:hover:border-turquoise/40 enabled:hover:bg-turquoise/5 disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
                   </svg>
                   Previous
                 </button>
@@ -553,8 +662,18 @@ export function GalleryClient({ items }: { items: readonly GalleryItem[] }) {
                   className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-navy transition enabled:hover:border-turquoise/40 enabled:hover:bg-turquoise/5 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   Next
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
                   </svg>
                 </button>
               </div>
