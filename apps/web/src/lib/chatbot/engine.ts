@@ -263,6 +263,35 @@ async function maybePolishWithOpenAI(input: {
 }
 
 // ---------------------------------------------------------------------------
+// Friendly fallback — used whenever we don't have a confident answer, and by
+// the API route for any failure, so visitors always get a warm steer back to
+// Seashore topics instead of a raw error or a blunt refusal. Service names
+// below are copied verbatim from SERVICE_DETAILS_KB in content.ts.
+// ---------------------------------------------------------------------------
+
+export const FRIENDLY_FALLBACK_ANSWER =
+  "That's a little outside what I can help with — I'm Seashore Fiberglass's own assistant, built specifically to help with our services and bookings. I'm happy to answer questions about services like Fiberglass Deck Repair, Fiberglass Deck Resurfacing (Reglass), Composite Decks & Deck Steps, or Vinyl Railing, check whether we serve your town, or talk through a deck problem you're seeing. If you'd like, you can book a free inspection appointment right here in this chat — and if you'd rather talk it through, you can call the number listed on our Contact Us page and speak with our voice assistant.";
+
+export const FRIENDLY_FALLBACK_ANSWER_ES =
+  "Eso está un poco fuera de lo que puedo ayudarte. Soy el asistente propio de Seashore Fiberglass, creado específicamente para ayudar con nuestros servicios y reservas. Con gusto respondo preguntas sobre servicios como Fiberglass Deck Repair, Fiberglass Deck Resurfacing (Reglass), Composite Decks & Deck Steps o Vinyl Railing, confirmo si trabajamos en tu ciudad o te ayudo con un problema que estés viendo en tu deck. Si quieres, puedes reservar una inspección gratuita aquí mismo en este chat — y si prefieres hablarlo, puedes llamar al número que aparece en nuestra página de Contact Us y hablar con nuestro asistente de voz.";
+
+export function buildFriendlyFallbackReply(message?: string): ChatbotResponse {
+  const spanish = message ? isSpanish(message) : false;
+  return {
+    answer: spanish ? FRIENDLY_FALLBACK_ANSWER_ES : FRIENDLY_FALLBACK_ANSWER,
+    intent: "fallback",
+    confidence: "low",
+    recommendedLinks: [
+      { label: "Services", href: "/services", kind: "service" },
+      { label: "Service areas", href: "/service-areas", kind: "service-area" },
+      { label: "Contact us", href: "/contact", kind: "contact" },
+    ],
+    quickReplies: CHATBOT_STARTER_PROMPTS,
+    requiresHumanFollowup: true,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Main response builder
 // ---------------------------------------------------------------------------
 
@@ -483,9 +512,7 @@ export async function createChatbotResponse(request: ChatbotRequest): Promise<Ch
   intent = "fallback";
   confidence = "low";
   requiresHumanFollowup = true;
-  answer = spanish
-    ? `Puedo ayudarte con preguntas sobre reparación de decks, servicios, áreas de cobertura e inspecciones gratuitas. ¿Puedes contarme qué está pasando con tu deck?`
-    : `I can help with deck repair questions, service comparisons, South Jersey Shore coverage, and free inspection requests. Could you tell me a bit more about what's going on with your deck?`;
+  answer = spanish ? FRIENDLY_FALLBACK_ANSWER_ES : FRIENDLY_FALLBACK_ANSWER;
   links.push(
     { label: "Services", href: "/services", kind: "service" },
     { label: "Service areas", href: "/service-areas", kind: "service-area" },

@@ -105,94 +105,6 @@ function Stars({ count }: { count: number }) {
   );
 }
 
-function AnimatedCounter({
-  target,
-  suffix = "",
-}: {
-  target: string;
-  suffix?: string;
-}) {
-  const num = parseInt(target.replace(/\D/g, ""), 10) || 0;
-  const [count, setCount] = useState(0);
-  const [started, setStarted] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const el = ref.current;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry && entry.isIntersecting) {
-          setStarted(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    observer.observe(el);
-
-    // Fallback: if element is already visible on mount, start immediately
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-      setStarted(true);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!started || num <= 0) return;
-    let current = 0;
-    const totalSteps = 40;
-    const step = Math.max(1, Math.floor(num / totalSteps));
-    const interval = setInterval(() => {
-      current += step;
-      if (current >= num) {
-        setCount(num);
-        clearInterval(interval);
-      } else {
-        setCount(current);
-      }
-    }, 30);
-    return () => clearInterval(interval);
-  }, [started, num]);
-
-  const hasPlus = target.includes("+");
-
-  return (
-    <div ref={ref}>
-      <span className="tabular-nums">
-        {started ? count : num}
-        {hasPlus ? "+" : ""}
-        {suffix}
-      </span>
-    </div>
-  );
-}
-
-function NoiseOverlay() {
-  return (
-    <div
-      className="pointer-events-none absolute inset-0 opacity-[0.03]"
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
-      }}
-    />
-  );
-}
-
-type LiveGoogleReview = {
-  name: string;
-  quote: string;
-  city: string;
-  stars: number;
-  reviewDate?: string;
-  photoCount?: number;
-  images?: readonly string[];
-};
-
 const serviceIcons: Record<string, React.ReactNode> = {
   repair: (
     <svg
@@ -310,8 +222,8 @@ function ServicesSection() {
           backgroundSize: "48px 48px",
         }}
       />
-      <div className="pointer-events-none absolute -right-32 top-0 h-[400px] w-[400px] rounded-full bg-turquoise/8 blur-[120px] max-sm:hidden" />
-      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full bg-orange/[0.05] blur-[100px] max-sm:hidden" />
+      <div className="pointer-events-none absolute -right-32 top-0 h-[400px] w-[400px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.08) 0%, rgba(42,125,166,0) 70%)" }} />
+      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.05) 0%, rgba(232,124,43,0) 70%)" }} />
 
       <div className="relative mx-auto max-w-7xl">
         <InView className="text-center">
@@ -634,9 +546,9 @@ function ShoreFiberglassSection() {
       />
 
       {/* Ambient orbs — turquoise + orange, same as hero */}
-      <div className="pointer-events-none absolute -right-32 top-0 h-[480px] w-[480px] rounded-full bg-turquoise/[0.07] blur-[120px] max-sm:hidden" />
-      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full bg-orange/[0.05] blur-[100px] max-sm:hidden" />
-      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[200px] w-[200px] -translate-x-1/2 rounded-full bg-turquoise/[0.04] blur-[80px] max-sm:hidden" />
+      <div className="pointer-events-none absolute -right-32 top-0 h-[480px] w-[480px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.07) 0%, rgba(42,125,166,0) 70%)" }} />
+      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.05) 0%, rgba(232,124,43,0) 70%)" }} />
+      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[200px] w-[200px] -translate-x-1/2 rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.04) 0%, rgba(42,125,166,0) 70%)" }} />
 
       <div className="relative mx-auto max-w-7xl">
         {/* ── HEADER ─────────────────────────────────────── */}
@@ -648,9 +560,8 @@ function ShoreFiberglassSection() {
           viewport={{ once: true, amount: 0.2 }}
         >
           <motion.div variants={fadeUp}>
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-turquoise/25 bg-white/90 px-5 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-turquoise shadow-sm backdrop-blur-sm">
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-turquoise/25 bg-white/90 px-5 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-turquoise shadow-sm">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-turquoise opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-turquoise" />
               </span>
               Why fiberglass
@@ -700,7 +611,7 @@ function ShoreFiberglassSection() {
                 />
 
                 <div
-                  className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-turquoise/[0.07] opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+                  className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.07) 0%, rgba(42,125,166,0) 70%)" }}
                   aria-hidden
                 />
 
@@ -730,7 +641,7 @@ function ShoreFiberglassSection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.12 }}
-            className="relative overflow-hidden rounded-3xl border border-slate-200/75 bg-white/85 px-8 py-10 shadow-[0_18px_60px_-28px_rgba(13,45,74,0.16)] backdrop-blur-sm sm:px-11 sm:py-12 lg:sticky lg:top-28"
+            className="relative overflow-hidden rounded-3xl border border-slate-200/75 bg-white/85 px-8 py-10 shadow-[0_18px_60px_-28px_rgba(13,45,74,0.16)] sm:px-11 sm:py-12 lg:sticky lg:top-28"
           >
             <motion.div
               variants={fadeUp}
@@ -740,7 +651,7 @@ function ShoreFiberglassSection() {
 
             <div
               aria-hidden
-              className="pointer-events-none absolute -right-20 top-8 h-48 w-48 rounded-full bg-turquoise/[0.06] blur-[72px] max-sm:hidden"
+              className="pointer-events-none absolute -right-20 top-8 h-48 w-48 rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.06) 0%, rgba(42,125,166,0) 70%)" }}
             />
 
             <div className="relative space-y-5 sm:pl-6">
@@ -1085,7 +996,7 @@ function ServiceCoverageSection() {
           backgroundSize: "40px 40px",
         }}
       />
-      <div className="pointer-events-none absolute -right-24 top-16 h-[320px] w-[320px] rounded-full bg-turquoise/[0.08] blur-[90px] max-sm:hidden" />
+      <div className="pointer-events-none absolute -right-24 top-16 h-[320px] w-[320px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.08) 0%, rgba(42,125,166,0) 70%)" }} />
 
       <div className="relative mx-auto max-w-7xl">
         <div className="text-center">
@@ -1166,7 +1077,7 @@ function ServiceCoverageSection() {
             >
               <div className="relative overflow-hidden bg-gradient-to-br from-navy via-[#152c45] to-navy-dark px-8 pb-10 pt-9 sm:px-10 sm:pb-11 sm:pt-10">
                 <div
-                  className="pointer-events-none absolute -right-8 top-1/2 h-[200px] w-[200px] -translate-y-1/2 rounded-full bg-white/[0.04] blur-2xl"
+                  className="pointer-events-none absolute -right-8 top-1/2 h-[200px] w-[200px] -translate-y-1/2 rounded-full" style={{ background: "radial-gradient(circle, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 70%)" }}
                   aria-hidden
                 />
                 <p className="text-[11px] font-bold uppercase tracking-[0.26em] text-turquoise-light/90">
@@ -1334,7 +1245,7 @@ function ReviewPhotoSlideshow({
           type="button"
           onClick={prev}
           aria-label="Previous photo"
-          className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition hover:bg-black/70"
+          className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition hover:bg-black/70"
         >
           <svg
             className="h-4 w-4"
@@ -1354,7 +1265,7 @@ function ReviewPhotoSlideshow({
           type="button"
           onClick={next}
           aria-label="Next photo"
-          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition hover:bg-black/70"
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition hover:bg-black/70"
         >
           <svg
             className="h-4 w-4"
@@ -1371,7 +1282,7 @@ function ReviewPhotoSlideshow({
           </svg>
         </button>
         {/* Counter */}
-        <span className="absolute bottom-2 right-3 rounded-full bg-black/50 px-2.5 py-0.5 text-[11px] font-semibold text-white backdrop-blur-sm">
+        <span className="absolute bottom-2 right-3 rounded-full bg-black/50 px-2.5 py-0.5 text-[11px] font-semibold text-white">
           {slide + 1} / {total}
         </span>
       </div>
@@ -1439,9 +1350,8 @@ function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
   return (
     <>
       <section className="relative overflow-hidden bg-gradient-to-b from-navy-dark via-[#0d2137] to-navy-dark px-4 py-20 md:py-28 sm:px-6">
-        <NoiseOverlay />
-        <div className="pointer-events-none absolute -left-24 top-1/4 h-80 w-80 rounded-full bg-turquoise/15 blur-[110px] max-sm:hidden" />
-        <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-orange/10 blur-[90px] max-sm:hidden" />
+        <div className="pointer-events-none absolute -left-24 top-1/4 h-80 w-80 rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.15) 0%, rgba(42,125,166,0) 70%)" }} />
+        <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.1) 0%, rgba(232,124,43,0) 70%)" }} />
 
         <div className="relative mx-auto max-w-7xl">
           {/* Header */}
@@ -1488,7 +1398,7 @@ function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
                         ) : (
                           <div className="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-900" />
                         )}
-                        <span className="absolute bottom-2 left-2 rounded-full bg-black/50 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white/90 backdrop-blur-sm">
+                        <span className="absolute bottom-2 left-2 rounded-full bg-black/50 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white/90">
                           Before
                         </span>
                       </div>
@@ -1506,7 +1416,7 @@ function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
                         ) : (
                           <div className="absolute inset-0 bg-gradient-to-br from-teal/60 to-navy-dark" />
                         )}
-                        <span className="absolute bottom-2 right-2 rounded-full bg-turquoise/70 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+                        <span className="absolute bottom-2 right-2 rounded-full bg-turquoise/70 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
                           After
                         </span>
                       </div>
@@ -1539,7 +1449,7 @@ function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
           <InView className="mt-12 flex justify-center">
             <Link
               href="/gallery"
-              className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-7 py-3.5 text-sm font-bold text-white backdrop-blur-md transition hover:border-turquoise/50 hover:bg-white/10"
+              className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-7 py-3.5 text-sm font-bold text-white transition hover:border-turquoise/50 hover:bg-white/10"
             >
               View full gallery — all 10 projects
               <svg
@@ -1568,7 +1478,7 @@ function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 p-4"
             onClick={close}
           >
             <motion.div
@@ -1631,7 +1541,7 @@ function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
                       ) : (
                         <div className="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-900" />
                       )}
-                      <span className="absolute bottom-3 left-3 rounded-full bg-black/50 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+                      <span className="absolute bottom-3 left-3 rounded-full bg-black/50 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
                         Before
                       </span>
                     </div>
@@ -1663,7 +1573,7 @@ function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
                       ) : (
                         <div className="absolute inset-0 bg-gradient-to-br from-teal/60 to-navy-dark" />
                       )}
-                      <span className="absolute bottom-3 right-3 rounded-full bg-turquoise/70 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+                      <span className="absolute bottom-3 right-3 rounded-full bg-turquoise/70 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
                         After
                       </span>
                     </div>
@@ -1775,11 +1685,12 @@ export default function HomePageClient() {
   const [leadCity, setLeadCity] = useState("");
   const [leadService, setLeadService] = useState("");
   const [leadBestTime, setLeadBestTime] = useState("Anytime");
-  const [displayReviews, setDisplayReviews] = useState<LiveGoogleReview[]>([
-    ...REVIEWS,
-  ]);
-  const [googleRating, setGoogleRating] = useState(5);
-  const [googleReviewTotal, setGoogleReviewTotal] = useState(50);
+  // Static reviews display: the live Google Reviews fetch was removed, so
+  // this section always renders the static REVIEWS below, with the same
+  // rating/total the dynamic state initialised to (5 / 50).
+  const displayReviews = REVIEWS;
+  const googleRating = 5;
+  const googleReviewTotal = 50;
   const [activeReviewIdx, setActiveReviewIdx] = useState<number | null>(null);
   const activeReview =
     activeReviewIdx !== null ? displayReviews[activeReviewIdx] : null;
@@ -1837,38 +1748,6 @@ export default function HomePageClient() {
           String(video.currentTime),
         );
       }
-    };
-  }, []);
-
-  useEffect(() => {
-    let mounted = true;
-
-    async function loadGoogleReviews() {
-      try {
-        const res = await fetch("/api/google-reviews", { cache: "no-store" });
-        if (!res.ok) return;
-
-        const data = (await res.json()) as {
-          ok?: boolean;
-          rating?: number;
-          total?: number;
-          reviews?: LiveGoogleReview[];
-        };
-
-        if (!mounted || !data?.ok) return;
-
-        if (typeof data.rating === "number") setGoogleRating(data.rating);
-        if (typeof data.total === "number") setGoogleReviewTotal(data.total);
-        if (Array.isArray(data.reviews) && data.reviews.length > 0)
-          setDisplayReviews(data.reviews);
-      } catch {
-        // Keep static fallback reviews when Google API is unavailable.
-      }
-    }
-
-    void loadGoogleReviews();
-    return () => {
-      mounted = false;
     };
   }, []);
 
@@ -1932,7 +1811,7 @@ export default function HomePageClient() {
 
   return (
     <motion.div
-      initial={skipIntroAnim ? false : { opacity: 0 }}
+      initial={false}
       animate={{ opacity: 1 }}
       transition={{ duration: 1, ease: "easeOut" }}
     >
@@ -1947,8 +1826,12 @@ export default function HomePageClient() {
             <div className="absolute inset-0 bg-gradient-to-br from-[#1B3A5C] via-[#0d3a5c] to-[#060e18]" />
 
             {/* ── Hero video background ──────────────────────────────────────────
-                Drop a compressed MP4 (<15 MB) at /public/bgVideo/hero.mp4
-                Poster: extract one frame as /public/bgVideo/hero-poster.jpg
+                Compressed MP4s: /public/bgVideo/hero.mp4 (desktop, ≤2 MB) and
+                /public/bgVideo/hero-mobile.mp4 (≤640px via <source media>, ≤1 MB).
+                The poster frame renders immediately as the first hero layer and
+                the autoplaying video starts over it once it can play, on all
+                screen sizes. preload="metadata" keeps the video from competing
+                with JS hydration during first load.
             ─────────────────────────────────────────────────────────────────── */}
             <video
               ref={heroVideoRef}
@@ -1956,12 +1839,17 @@ export default function HomePageClient() {
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               poster="/bgVideo/hero-poster.jpg"
               className="absolute inset-0 h-full w-full object-cover object-center"
               style={{ transform: "scale(1)" }}
               aria-hidden
             >
+              <source
+                src="/bgVideo/hero-mobile.mp4"
+                type="video/mp4"
+                media="(max-width: 640px)"
+              />
               <source src="/bgVideo/hero.mp4" type="video/mp4" />
             </video>
 
@@ -1973,8 +1861,8 @@ export default function HomePageClient() {
             <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/40 via-transparent to-navy-dark/80" />
 
             {/* Depth glow orbs — softened over real footage */}
-            <div className="animate-float-slow absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-turquoise/10 blur-[90px] max-sm:hidden" />
-            <div className="animate-float-slower absolute -bottom-20 left-1/4 h-[320px] w-[320px] rounded-full bg-orange/8 blur-[75px] max-sm:hidden" />
+            <div className="animate-float-slow absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.1) 0%, rgba(42,125,166,0) 70%)" }} />
+            <div className="animate-float-slower absolute -bottom-20 left-1/4 h-[320px] w-[320px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.08) 0%, rgba(232,124,43,0) 70%)" }} />
 
             {/* Very subtle grid texture */}
             <div
@@ -1986,20 +1874,18 @@ export default function HomePageClient() {
               }}
             />
 
-            <NoiseOverlay />
           </div>
 
           <motion.div className="relative mx-auto w-full max-w-7xl px-6 py-32">
             <motion.div
-              initial="hidden"
+              initial={false}
               animate="visible"
               variants={stagger}
               className="max-w-3xl"
             >
               <motion.div variants={fadeUp} className="mb-8">
-                <span className="inline-flex items-center gap-2.5 rounded-full border border-turquoise/25 bg-turquoise/8 px-5 py-2 text-[11px] font-bold  tracking-[0.22em] text-turquoise backdrop-blur-md">
+                <span className="inline-flex items-center gap-2.5 rounded-full border border-turquoise/25 bg-turquoise/15 px-5 py-2 text-[11px] font-bold  tracking-[0.22em] text-turquoise">
                   <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-turquoise opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-turquoise" />
                   </span>
                   Ocean City NJ · South Jersey Shore
@@ -2020,31 +1906,28 @@ export default function HomePageClient() {
                 {HERO_SUBHEADING}
               </motion.p>
 
-              {/* Animated stat counters */}
-              <motion.div
-                variants={stagger}
-                className="mt-16 flex flex-wrap gap-4"
-              >
+              {/* Stat counters — plain static markup: no motion wrapper,
+                  no count-up, no reveal. Values render identically in SSR. */}
+              <div className="mt-16 flex flex-wrap gap-4">
                 {[
                   { num: "10+", label: "Years on the Shore" },
                   { num: "50+", label: "5-Star Reviews" },
                   { num: "13", label: "Shore Towns Served" },
                   { num: "20+", label: "Year Deck Lifespan" },
                 ].map((stat) => (
-                  <motion.div
+                  <div
                     key={stat.label}
-                    variants={fadeUp}
-                    className="group rounded-2xl border border-white/8 bg-white/[0.03] px-6 py-4 backdrop-blur-md transition-all duration-300 hover:border-turquoise/25 hover:bg-white/[0.06]"
+                    className="group rounded-2xl border border-white/8 bg-white/[0.07] px-6 py-4 transition-all duration-300 hover:border-turquoise/25 hover:bg-white/[0.1]"
                   >
                     <p className="font-heading text-2xl font-bold text-white text-center">
-                      <AnimatedCounter target={stat.num} />
+                      {stat.num}
                     </p>
                     <p className="mt-0.5 text-[11px] font-medium tracking-wide text-white/45">
                       {stat.label}
                     </p>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             </motion.div>
           </motion.div>
 
@@ -2317,7 +2200,7 @@ export default function HomePageClient() {
                       key={badge}
                       variants={scaleUp}
                       custom={i}
-                      className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 sm:backdrop-blur-sm transition-all duration-300 hover:bg-white/94 hover:shadow-xl"
+                      className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 transition-all duration-300 hover:bg-white/94 hover:shadow-xl"
                     >
                       <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0D7989] to-[#1B3A5C] text-white shadow-sm">
                         {badgeIcons[i]}
@@ -2332,7 +2215,7 @@ export default function HomePageClient() {
                 <motion.div
                   variants={scaleUp}
                   custom={TRUST_BADGES.length}
-                  className="group relative col-span-2 flex items-center justify-center overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 sm:order-first sm:col-span-1 sm:backdrop-blur-sm transition-all duration-300 hover:bg-white/94 hover:shadow-xl"
+                  className="group relative col-span-2 flex items-center justify-center overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 sm:order-first sm:col-span-1 transition-all duration-300 hover:bg-white/94 hover:shadow-xl"
                 >
                   <BBBSeal />
                 </motion.div>
@@ -2350,10 +2233,9 @@ export default function HomePageClient() {
         <ServicesSection />
 
         {/* Section */}
-        <section className="relative overflow-hidden bg-navy-dark px-6 py-28">
-          <NoiseOverlay />
-          <div className="animate-float-slow absolute -left-24 top-1/2 h-[360px] w-[360px] -translate-y-1/2 rounded-full bg-turquoise/8 blur-[80px] max-sm:hidden" />
-          <div className="animate-float-slower absolute -right-16 bottom-0 h-[240px] w-[240px] rounded-full bg-orange/6 blur-[60px] max-sm:hidden" />
+        <section id="home-reviews" className="relative overflow-hidden bg-navy-dark px-6 py-28">
+          <div className="animate-float-slow absolute -left-24 top-1/2 h-[360px] w-[360px] -translate-y-1/2 rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.08) 0%, rgba(42,125,166,0) 70%)" }} />
+          <div className="animate-float-slower absolute -right-16 bottom-0 h-[240px] w-[240px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.06) 0%, rgba(232,124,43,0) 70%)" }} />
 
           <div className="relative mx-auto max-w-7xl">
             <InView className="flex flex-col items-start gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -2363,7 +2245,7 @@ export default function HomePageClient() {
                   What Our Neighbors Say
                 </h2>
               </div>
-              <div className="flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.04] px-6 py-3.5 backdrop-blur-md">
+              <div className="flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.07] px-6 py-3.5">
                 <div className="flex">
                   {[1, 2, 3, 4, 5].map((n) => (
                     <svg
@@ -2395,7 +2277,7 @@ export default function HomePageClient() {
                 <motion.div
                   key={`${review.name}-${idx}`}
                   variants={fadeUp}
-                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] p-7 sm:backdrop-blur-md transition-all duration-400 hover:border-turquoise/20 hover:bg-white/[0.07]"
+                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.07] p-7 transition-all duration-400 hover:border-turquoise/20 hover:bg-white/[0.1]"
                 >
                   {/* Stretched link — covers whole card, sits behind interactive elements */}
                   <a
@@ -2484,7 +2366,7 @@ export default function HomePageClient() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+              className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 p-4"
               onClick={() => setActiveReviewIdx(null)}
             >
               <motion.div
@@ -2619,9 +2501,8 @@ export default function HomePageClient() {
 
         {/* Section */}
         <section className="relative overflow-hidden bg-navy-dark px-6 py-28">
-          <NoiseOverlay />
-          <div className="animate-float-slow absolute -right-20 -top-20 h-[340px] w-[340px] rounded-full bg-turquoise/12 blur-[85px] max-sm:hidden" />
-          <div className="animate-float-slower absolute -left-16 bottom-0 h-[220px] w-[220px] rounded-full bg-orange/8 blur-[65px] max-sm:hidden" />
+          <div className="animate-float-slow absolute -right-20 -top-20 h-[340px] w-[340px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.12) 0%, rgba(42,125,166,0) 70%)" }} />
+          <div className="animate-float-slower absolute -left-16 bottom-0 h-[220px] w-[220px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.08) 0%, rgba(232,124,43,0) 70%)" }} />
           <div
             className="absolute inset-0 opacity-[0.025]"
             style={{
@@ -2675,7 +2556,7 @@ export default function HomePageClient() {
                   className="relative overflow-hidden rounded-3xl border border-slate-700/80 bg-slate-900/90 p-8 shadow-2xl shadow-black/45 ring-1 ring-slate-700/60"
                   noValidate
                 >
-                  <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-turquoise/10 blur-3xl" />
+                  <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.1) 0%, rgba(42,125,166,0) 70%)" }} />
 
                   <h3 className="relative font-heading text-xl font-bold text-white">
                     Request a Free Inspection

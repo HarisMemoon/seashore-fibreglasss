@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ADDRESS,
@@ -18,7 +19,7 @@ export function Footer() {
           <div>
             {/* Logo — same file as navbar */}
             <Link href="/" aria-label={SITE_NAME} className="mb-4 inline-block">
-              <img
+              <Image
                 src="/logoo.png"
                 alt={`${SITE_NAME} logo`}
                 width={266}

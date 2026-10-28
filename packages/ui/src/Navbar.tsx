@@ -16,11 +16,18 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Toggle the scrolled style via a class on <html> (styled by .site-nav in
+  // globals.css) instead of React state, so scrolling never re-renders.
+  // Same 24px threshold and same visuals as before.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      document.documentElement.classList.toggle(
+        'nav-scrolled',
+        window.scrollY > 24,
+      );
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -28,13 +35,7 @@ export function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-5">
-      <nav
-        className={`relative mx-auto max-w-7xl overflow-hidden rounded-2xl border backdrop-blur-2xl transition-all duration-300 ${
-          scrolled
-            ? 'border-[#7fd7e1]/15 bg-[rgba(8,18,30,0.65)] shadow-[0_8px_30px_rgba(0,0,0,0.4),0_0_0_1px_rgba(127,215,225,0.06)] py-0 px-4 md:px-5'
-            : 'border-[#7fd7e1]/20 bg-[rgba(8,18,30,0.45)] shadow-[0_10px_40px_rgba(0,0,0,0.3),0_0_0_1px_rgba(127,215,225,0.08)] py-0 px-4 md:px-5'
-        }`}
-      >
+      <nav className="site-nav relative mx-auto max-w-7xl overflow-hidden rounded-2xl border border-[#7fd7e1]/20 bg-[rgba(8,18,30,0.45)] shadow-[0_10px_40px_rgba(0,0,0,0.3),0_0_0_1px_rgba(127,215,225,0.08)] backdrop-blur-2xl transition-all duration-300 py-0 px-4 md:px-5">
         {/* Futuristic glow line at top */}
         <div className="absolute inset-x-[8%] top-0 h-px bg-gradient-to-r from-transparent via-[#7fd7e1]/70 to-transparent" />
 

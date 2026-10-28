@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --font-heading: "Montserrat", "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --font-sans: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  /* --font-heading (Montserrat) and --font-sans (Inter) are provided by
+     next/font/google in layout.tsx via its variable classes on <html>. */
 
   --color-navy: #1b3a5c;
   --color-turquoise: #2a7da6;
@@ -13,6 +13,17 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Navbar scrolled state — the Navbar scroll listener toggles .nav-scrolled
+   on <html> instead of re-rendering with React state. These values are the
+   exact styles the old `scrolled` state applied. */
+html.nav-scrolled .site-nav {
+  border-color: rgba(127, 215, 225, 0.15);
+  background-color: rgba(8, 18, 30, 0.65);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(127, 215, 225, 0.06);
 }
 
 /* Custom scrollbar */

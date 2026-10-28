@@ -1,11 +1,10 @@
 # Seashore Fiberglass
 
-Monorepo for the Seashore Fiberglass website and API.
+Monorepo for the Seashore Fiberglass website.
 
 ## Structure
 
 - `apps/web` - Next.js 14 App Router + TypeScript + Tailwind
-- `apps/api` - Nest.js API
 - `packages/content` - Website copy as TS constants
 - `packages/types` - Shared TypeScript types
 - `packages/ui` - Shared UI components (Navbar, Footer)
@@ -23,9 +22,6 @@ pnpm install
 
 # Run web app
 pnpm dev:web
-
-# Run API
-pnpm dev:api
 
 # Build all
 pnpm build
