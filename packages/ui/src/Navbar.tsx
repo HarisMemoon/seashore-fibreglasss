@@ -35,9 +35,9 @@ export function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-5">
-      <nav className="site-nav relative mx-auto max-w-7xl overflow-hidden rounded-2xl border border-[#7fd7e1]/20 bg-[rgba(8,18,30,0.45)] shadow-[0_10px_40px_rgba(0,0,0,0.3),0_0_0_1px_rgba(127,215,225,0.08)] backdrop-blur-2xl transition-all duration-300 py-0 px-4 md:px-5">
+      <nav className="site-nav relative mx-auto max-w-7xl overflow-hidden rounded-2xl border border-[#7fd7e1]/20 bg-[rgba(1,12,20,0.75)] shadow-[0_10px_40px_rgba(0,0,0,0.3),0_0_0_1px_rgba(127,215,225,0.08)] backdrop-blur-xl transition-all duration-300 py-0 px-4 md:px-5">
         {/* Futuristic glow line at top */}
-        <div className="absolute inset-x-[8%] top-0 h-px bg-gradient-to-r from-transparent via-[#7fd7e1]/70 to-transparent" />
+        <div className="absolute inset-x-[8%] top-0 h-px bg-gradient-to-r from-transparent via-[#7fd7e1]/10 to-transparent" />
 
         <div className="flex h-[72px] items-center justify-between gap-4">
           {/* Logo — no box, just a soft glow */}
@@ -60,7 +60,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-lg px-3.5 py-2 text-[13px] font-medium tracking-wide text-white/70 transition-all duration-200 hover:bg-white/10 hover:text-white"
+                className="rounded-lg px-3.5 py-2 text-[13px] font-medium tracking-wide text-white/90 transition-all duration-200 hover:bg-white/10 hover:text-white"
               >
                 {link.label}
               </Link>
@@ -126,7 +126,7 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="block rounded-lg px-4 py-2.5 text-sm font-medium tracking-wide text-white/80 transition hover:bg-white/[0.08] hover:text-white"
+                  className="block rounded-lg px-4 py-2.5 text-sm font-medium tracking-wide text-white/90 transition hover:bg-white/[0.08] hover:text-white"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
