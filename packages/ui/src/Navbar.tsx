@@ -35,7 +35,7 @@ export function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-5">
-      <nav className="site-nav relative mx-auto max-w-7xl overflow-hidden rounded-2xl border border-[#7fd7e1]/20 bg-[rgba(1,12,20,0.75)] shadow-[0_10px_40px_rgba(0,0,0,0.3),0_0_0_1px_rgba(127,215,225,0.08)] backdrop-blur-xl transition-all duration-300 py-0 px-4 md:px-5">
+      <nav className="site-nav relative mx-auto max-w-7xl overflow-hidden rounded-xl border border-[#7fd7e1]/20 bg-[rgba(6,18,30,0.45)] shadow-[0_10px_40px_rgba(0,0,0,0.3),0_0_0_1px_rgba(127,215,225,0.08)]  transition-all duration-300 py-0 px-4 md:px-5">
         {/* Futuristic glow line at top */}
         <div className="absolute inset-x-[8%] top-0 h-px bg-gradient-to-r from-transparent via-[#7fd7e1]/10 to-transparent" />
 
@@ -46,7 +46,7 @@ export function Navbar() {
             className="flex-shrink-0 rounded-xl px-2 py-2 [filter:drop-shadow(0_0_18px_rgba(127,215,225,0.55))] transition-all hover:[filter:drop-shadow(0_0_26px_rgba(127,215,225,0.8))]"
           >
             <Image
-              src="/logoo.png"
+              src="/logo.png"
               alt="Seashore Fiberglass logo"
               width={340}
               height={100}
@@ -55,7 +55,7 @@ export function Navbar() {
             />
           </Link>
 
-          <div className="hidden flex-1 items-center justify-center gap-0.5 md:flex">
+          <div className="hidden flex-1 items-center justify-center gap-0.5 lg:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -69,19 +69,19 @@ export function Navbar() {
 
           <div className="flex flex-shrink-0 items-center gap-2">
             {/* Social icons — desktop only */}
-            <div className="hidden items-center border-r border-white/10 pr-2 mr-1 md:flex">
+            <div className="hidden items-center border-r border-white/10 pr-2 mr-1 lg:flex">
               <SocialIconBar variant="light" size="sm" />
             </div>
             <Link
               href="/contact"
-              className="hidden items-center rounded-xl bg-gradient-to-r from-[#E87C2B] to-[#f0963e] px-4 py-2 text-[12.5px] font-bold tracking-wide text-white shadow-[0_0_18px_rgba(232,124,43,0.3)] transition hover:shadow-[0_0_24px_rgba(232,124,43,0.45)] md:inline-flex"
+              className="hidden items-center rounded-xl bg-gradient-to-r from-[#E87C2B] to-[#f0963e] px-4 py-2 text-[12.5px] font-bold tracking-wide text-white shadow-[0_0_18px_rgba(232,124,43,0.3)] transition hover:shadow-[0_0_24px_rgba(232,124,43,0.45)] lg:inline-flex"
             >
               Contact Us
             </Link>
 
             <button
               type="button"
-              className="flex h-9 w-9 items-center justify-center rounded-xl text-white/85 transition hover:bg-white/10 hover:text-white md:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-xl text-white/85 transition hover:bg-white/10 hover:text-white lg:hidden"
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
               onClick={() => setIsMobileMenuOpen((v) => !v)}
@@ -120,7 +120,7 @@ export function Navbar() {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="overflow-hidden border-t border-[#7fd7e1]/15 md:hidden">
+          <div className="overflow-hidden border-t border-[#7fd7e1]/15 lg:hidden">
             <div className="space-y-0.5 p-2">
               {navLinks.map((link) => (
                 <Link

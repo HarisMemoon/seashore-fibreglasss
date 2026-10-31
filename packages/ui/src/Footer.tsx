@@ -20,7 +20,7 @@ export function Footer() {
             {/* Logo — same file as navbar */}
             <Link href="/" aria-label={SITE_NAME} className="mb-4 inline-block">
               <Image
-                src="/logoo.png"
+                src="/logo.png"
                 alt={`${SITE_NAME} logo`}
                 width={266}
                 height={80}
@@ -123,7 +123,9 @@ export function Footer() {
             <p className="text-sm opacity-90">{TRUST_BADGES.join(" · ")}</p>
             <BBBSeal className="mt-4 inline-block" />
             <div className="mt-6">
-              <h4 className="font-heading mb-3 text-sm font-semibold text-white/70">Connect With Us</h4>
+              <h4 className="font-heading mb-3 text-sm font-semibold text-white/70">
+                Connect With Us
+              </h4>
               <SocialIconBar variant="light" size="md" />
             </div>
           </div>

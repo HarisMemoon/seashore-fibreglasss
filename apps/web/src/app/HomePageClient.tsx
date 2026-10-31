@@ -214,8 +214,20 @@ function ServicesSection() {
           backgroundSize: "48px 48px",
         }}
       />
-      <div className="pointer-events-none absolute -right-32 top-0 h-[400px] w-[400px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.08) 0%, rgba(42,125,166,0) 70%)" }} />
-      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.05) 0%, rgba(232,124,43,0) 70%)" }} />
+      <div
+        className="pointer-events-none absolute -right-32 top-0 h-[400px] w-[400px] rounded-full max-sm:hidden"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(42,125,166,0.08) 0%, rgba(42,125,166,0) 70%)",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full max-sm:hidden"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(232,124,43,0.05) 0%, rgba(232,124,43,0) 70%)",
+        }}
+      />
 
       <div className="relative mx-auto max-w-7xl">
         <div className="text-center">
@@ -534,9 +546,27 @@ function ShoreFiberglassSection() {
       />
 
       {/* Ambient orbs — turquoise + orange, same as hero */}
-      <div className="pointer-events-none absolute -right-32 top-0 h-[480px] w-[480px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.07) 0%, rgba(42,125,166,0) 70%)" }} />
-      <div className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.05) 0%, rgba(232,124,43,0) 70%)" }} />
-      <div className="pointer-events-none absolute left-1/2 top-1/4 h-[200px] w-[200px] -translate-x-1/2 rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.04) 0%, rgba(42,125,166,0) 70%)" }} />
+      <div
+        className="pointer-events-none absolute -right-32 top-0 h-[480px] w-[480px] rounded-full max-sm:hidden"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(42,125,166,0.07) 0%, rgba(42,125,166,0) 70%)",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute -left-24 bottom-1/3 h-[320px] w-[320px] rounded-full max-sm:hidden"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(232,124,43,0.05) 0%, rgba(232,124,43,0) 70%)",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute left-1/2 top-1/4 h-[200px] w-[200px] -translate-x-1/2 rounded-full max-sm:hidden"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(42,125,166,0.04) 0%, rgba(42,125,166,0) 70%)",
+        }}
+      />
 
       <div className="relative mx-auto max-w-7xl">
         {/* ── HEADER ─────────────────────────────────────── */}
@@ -576,7 +606,11 @@ function ShoreFiberglassSection() {
                 />
 
                 <div
-                  className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.07) 0%, rgba(42,125,166,0) 70%)" }}
+                  className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(42,125,166,0.07) 0%, rgba(42,125,166,0) 70%)",
+                  }}
                   aria-hidden
                 />
 
@@ -609,7 +643,11 @@ function ShoreFiberglassSection() {
 
             <div
               aria-hidden
-              className="pointer-events-none absolute -right-20 top-8 h-48 w-48 rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.06) 0%, rgba(42,125,166,0) 70%)" }}
+              className="pointer-events-none absolute -right-20 top-8 h-48 w-48 rounded-full max-sm:hidden"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(42,125,166,0.06) 0%, rgba(42,125,166,0) 70%)",
+              }}
             />
 
             <div className="relative space-y-5 sm:pl-6">
@@ -682,176 +720,176 @@ function ShoreFiberglassSection() {
               className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-[0_8px_48px_rgba(13,45,74,0.09)]"
               role="tabpanel"
             >
-                <div className="h-1.5 w-full bg-gradient-to-r from-turquoise via-turquoise-light to-navy" />
+              <div className="h-1.5 w-full bg-gradient-to-r from-turquoise via-turquoise-light to-navy" />
 
-                <div className="grid gap-0 lg:grid-cols-[1fr_1.1fr]">
-                  <div className="flex flex-col justify-between gap-8 p-8 sm:p-10">
-                    <div>
-                      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-navy to-[#0d4a5c] text-white shadow-lg shadow-navy/30">
-                        <span
-                          style={{
-                            width: 28,
-                            height: 28,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          {activeStandardIcon}
+              <div className="grid gap-0 lg:grid-cols-[1fr_1.1fr]">
+                <div className="flex flex-col justify-between gap-8 p-8 sm:p-10">
+                  <div>
+                    <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-navy to-[#0d4a5c] text-white shadow-lg shadow-navy/30">
+                      <span
+                        style={{
+                          width: 28,
+                          height: 28,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {activeStandardIcon}
+                      </span>
+                    </div>
+                    <h3 className="font-heading text-2xl font-extrabold leading-tight text-navy sm:text-3xl">
+                      {activeFilter.label}
+                    </h3>
+                    <p className="mt-4 text-[1rem] leading-[1.8] text-slate-500">
+                      {activeFilter.description}
+                    </p>
+                  </div>
+
+                  <Link
+                    href={`/services/${SERVICES[0].slug}`}
+                    className="group inline-flex w-fit items-center gap-2.5 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white shadow-md shadow-navy/30 transition-all duration-300 hover:bg-turquoise-dark hover:shadow-turquoise/20"
+                  >
+                    Full service details
+                    <svg
+                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </Link>
+                </div>
+
+                <div className="flex flex-col justify-center gap-5 border-t border-slate-100 bg-gradient-to-br from-slate-50 to-[#f0f7fb] p-8 sm:p-10 lg:border-l lg:border-t-0">
+                  <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-slate-400">
+                    What&apos;s included
+                  </p>
+                  {activeFilter.customContent ? (
+                    <div className="space-y-5">
+                      {activeFilter.customContent.sections.map(
+                        (section, si) => (
+                          <div key={section.heading}>
+                            <span className="mb-2 block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-turquoise">
+                              {section.heading}
+                            </span>
+                            <ul className="space-y-2">
+                              {section.items.map((item) => (
+                                <li
+                                  key={item}
+                                  className="flex items-start gap-3"
+                                >
+                                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-turquoise/15 text-turquoise">
+                                    <svg
+                                      className="h-3 w-3"
+                                      viewBox="0 0 12 12"
+                                      fill="currentColor"
+                                      aria-hidden
+                                    >
+                                      <path d="M10.28 2.28a.75.75 0 00-1.06 0L4.5 7 2.78 5.28a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l5.25-5.25a.75.75 0 000-1.06z" />
+                                    </svg>
+                                  </span>
+                                  <span className="text-[0.9rem] leading-relaxed text-slate-700">
+                                    {item}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ),
+                      )}
+                    </div>
+                  ) : (
+                    <ul className="space-y-4">
+                      {activeFilter.indices.map((specIndex, i) => {
+                        const spec = SHORE_SPECS[specIndex];
+                        const label =
+                          SHORE_STANDARD_LABELS[specIndex] ?? "Standard";
+                        const specKey =
+                          typeof spec === "string" ? spec : spec.summary;
+                        return (
+                          <li key={specKey} className="flex items-start gap-3">
+                            <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-turquoise/15 text-turquoise">
+                              <svg
+                                className="h-3 w-3"
+                                viewBox="0 0 12 12"
+                                fill="currentColor"
+                                aria-hidden
+                              >
+                                <path d="M10.28 2.28a.75.75 0 00-1.06 0L4.5 7 2.78 5.28a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l5.25-5.25a.75.75 0 000-1.06z" />
+                              </svg>
+                            </span>
+                            <span className="min-w-0">
+                              <span className="block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-turquoise">
+                                {label}
+                              </span>
+                              {typeof spec === "string" ? (
+                                <span className="text-[0.95rem] leading-[1.65] text-slate-700">
+                                  {spec}
+                                </span>
+                              ) : (
+                                <div>
+                                  <span className="block text-[0.9rem] font-medium leading-snug text-slate-600">
+                                    {spec.summary}
+                                  </span>
+                                  <div className="mt-2 space-y-2">
+                                    {spec.scopes.map((scope) => (
+                                      <div key={scope.label}>
+                                        <span className="text-[0.85rem] font-semibold text-navy">
+                                          {scope.label}:{" "}
+                                        </span>
+                                        <span className="text-[0.85rem] leading-relaxed text-slate-600">
+                                          {scope.detail}
+                                        </span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+
+                  <div className="mt-4 grid grid-cols-3 divide-x divide-slate-200 rounded-2xl border border-slate-200 bg-white">
+                    {[
+                      {
+                        label: "Shore-rated",
+                        value: "100%",
+                        sub: "salt + UV",
+                      },
+                      {
+                        label: "Warranty",
+                        value: "10 yr",
+                        sub: "workmanship",
+                      },
+                      { label: "Timeline", value: "2-7d", sub: "typical" },
+                    ].map(({ label, value, sub }) => (
+                      <div
+                        key={label}
+                        className="flex flex-col items-center gap-0.5 p-4 text-center"
+                      >
+                        <span className="font-heading text-lg font-extrabold text-navy">
+                          {value}
+                        </span>
+                        <span className="text-[0.7rem] font-bold uppercase tracking-wider text-turquoise">
+                          {label}
+                        </span>
+                        <span className="text-[0.68rem] text-slate-400">
+                          {sub}
                         </span>
                       </div>
-                      <h3 className="font-heading text-2xl font-extrabold leading-tight text-navy sm:text-3xl">
-                        {activeFilter.label}
-                      </h3>
-                      <p className="mt-4 text-[1rem] leading-[1.8] text-slate-500">
-                        {activeFilter.description}
-                      </p>
-                    </div>
-
-                    <Link
-                      href={`/services/${SERVICES[0].slug}`}
-                      className="group inline-flex w-fit items-center gap-2.5 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-white shadow-md shadow-navy/30 transition-all duration-300 hover:bg-turquoise-dark hover:shadow-turquoise/20"
-                    >
-                      Full service details
-                      <svg
-                        className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </Link>
-                  </div>
-
-                  <div className="flex flex-col justify-center gap-5 border-t border-slate-100 bg-gradient-to-br from-slate-50 to-[#f0f7fb] p-8 sm:p-10 lg:border-l lg:border-t-0">
-                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-slate-400">
-                      What&apos;s included
-                    </p>
-                    {activeFilter.customContent ? (
-                      <div className="space-y-5">
-                        {activeFilter.customContent.sections.map(
-                          (section, si) => (
-                            <div key={section.heading}>
-                              <span className="mb-2 block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-turquoise">
-                                {section.heading}
-                              </span>
-                              <ul className="space-y-2">
-                                {section.items.map((item) => (
-                                  <li
-                                    key={item}
-                                    className="flex items-start gap-3"
-                                  >
-                                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-turquoise/15 text-turquoise">
-                                      <svg
-                                        className="h-3 w-3"
-                                        viewBox="0 0 12 12"
-                                        fill="currentColor"
-                                        aria-hidden
-                                      >
-                                        <path d="M10.28 2.28a.75.75 0 00-1.06 0L4.5 7 2.78 5.28a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l5.25-5.25a.75.75 0 000-1.06z" />
-                                      </svg>
-                                    </span>
-                                    <span className="text-[0.9rem] leading-relaxed text-slate-700">
-                                      {item}
-                                    </span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          ),
-                        )}
-                      </div>
-                    ) : (
-                      <ul className="space-y-4">
-                        {activeFilter.indices.map((specIndex, i) => {
-                          const spec = SHORE_SPECS[specIndex];
-                          const label =
-                            SHORE_STANDARD_LABELS[specIndex] ?? "Standard";
-                          const specKey =
-                            typeof spec === "string" ? spec : spec.summary;
-                          return (
-                            <li key={specKey} className="flex items-start gap-3">
-                              <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-turquoise/15 text-turquoise">
-                                <svg
-                                  className="h-3 w-3"
-                                  viewBox="0 0 12 12"
-                                  fill="currentColor"
-                                  aria-hidden
-                                >
-                                  <path d="M10.28 2.28a.75.75 0 00-1.06 0L4.5 7 2.78 5.28a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l5.25-5.25a.75.75 0 000-1.06z" />
-                                </svg>
-                              </span>
-                              <span className="min-w-0">
-                                <span className="block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-turquoise">
-                                  {label}
-                                </span>
-                                {typeof spec === "string" ? (
-                                  <span className="text-[0.95rem] leading-[1.65] text-slate-700">
-                                    {spec}
-                                  </span>
-                                ) : (
-                                  <div>
-                                    <span className="block text-[0.9rem] font-medium leading-snug text-slate-600">
-                                      {spec.summary}
-                                    </span>
-                                    <div className="mt-2 space-y-2">
-                                      {spec.scopes.map((scope) => (
-                                        <div key={scope.label}>
-                                          <span className="text-[0.85rem] font-semibold text-navy">
-                                            {scope.label}:{" "}
-                                          </span>
-                                          <span className="text-[0.85rem] leading-relaxed text-slate-600">
-                                            {scope.detail}
-                                          </span>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                )}
-                              </span>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    )}
-
-                    <div className="mt-4 grid grid-cols-3 divide-x divide-slate-200 rounded-2xl border border-slate-200 bg-white">
-                      {[
-                        {
-                          label: "Shore-rated",
-                          value: "100%",
-                          sub: "salt + UV",
-                        },
-                        {
-                          label: "Warranty",
-                          value: "10 yr",
-                          sub: "workmanship",
-                        },
-                        { label: "Timeline", value: "2-7d", sub: "typical" },
-                      ].map(({ label, value, sub }) => (
-                        <div
-                          key={label}
-                          className="flex flex-col items-center gap-0.5 p-4 text-center"
-                        >
-                          <span className="font-heading text-lg font-extrabold text-navy">
-                            {value}
-                          </span>
-                          <span className="text-[0.7rem] font-bold uppercase tracking-wider text-turquoise">
-                            {label}
-                          </span>
-                          <span className="text-[0.68rem] text-slate-400">
-                            {sub}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
+                    ))}
                   </div>
                 </div>
+              </div>
             </div>
           </div>
 
@@ -928,7 +966,13 @@ function ServiceCoverageSection() {
           backgroundSize: "40px 40px",
         }}
       />
-      <div className="pointer-events-none absolute -right-24 top-16 h-[320px] w-[320px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.08) 0%, rgba(42,125,166,0) 70%)" }} />
+      <div
+        className="pointer-events-none absolute -right-24 top-16 h-[320px] w-[320px] rounded-full max-sm:hidden"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(42,125,166,0.08) 0%, rgba(42,125,166,0) 70%)",
+        }}
+      />
 
       <div className="relative mx-auto max-w-7xl">
         <div className="text-center">
@@ -1009,7 +1053,11 @@ function ServiceCoverageSection() {
             >
               <div className="relative overflow-hidden bg-gradient-to-br from-navy via-[#152c45] to-navy-dark px-8 pb-10 pt-9 sm:px-10 sm:pb-11 sm:pt-10">
                 <div
-                  className="pointer-events-none absolute -right-8 top-1/2 h-[200px] w-[200px] -translate-y-1/2 rounded-full" style={{ background: "radial-gradient(circle, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 70%)" }}
+                  className="pointer-events-none absolute -right-8 top-1/2 h-[200px] w-[200px] -translate-y-1/2 rounded-full"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 70%)",
+                  }}
                   aria-hidden
                 />
                 <p className="text-[11px] font-bold uppercase tracking-[0.26em] text-turquoise-light/90">
@@ -1289,8 +1337,20 @@ function GalleryPreviewSection({ skipIntroAnim }: { skipIntroAnim: boolean }) {
   return (
     <>
       <section className="relative overflow-hidden bg-gradient-to-b from-navy-dark via-[#0d2137] to-navy-dark px-4 py-20 md:py-28 sm:px-6">
-        <div className="pointer-events-none absolute -left-24 top-1/4 h-80 w-80 rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.15) 0%, rgba(42,125,166,0) 70%)" }} />
-        <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.1) 0%, rgba(232,124,43,0) 70%)" }} />
+        <div
+          className="pointer-events-none absolute -left-24 top-1/4 h-80 w-80 rounded-full max-sm:hidden"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(42,125,166,0.15) 0%, rgba(42,125,166,0) 70%)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full max-sm:hidden"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(232,124,43,0.1) 0%, rgba(232,124,43,0) 70%)",
+          }}
+        />
 
         <div className="relative mx-auto max-w-7xl">
           {/* Header */}
@@ -1847,8 +1907,20 @@ export default function HomePageClient() {
             <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/40 via-transparent to-navy-dark/80" />
 
             {/* Depth glow orbs — softened over real footage */}
-            <div className="animate-float-slow absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.1) 0%, rgba(42,125,166,0) 70%)" }} />
-            <div className="animate-float-slower absolute -bottom-20 left-1/4 h-[320px] w-[320px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.08) 0%, rgba(232,124,43,0) 70%)" }} />
+            <div
+              className="animate-float-slow absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full max-sm:hidden"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(42,125,166,0.1) 0%, rgba(42,125,166,0) 70%)",
+              }}
+            />
+            <div
+              className="animate-float-slower absolute -bottom-20 left-1/4 h-[320px] w-[320px] rounded-full max-sm:hidden"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(232,124,43,0.08) 0%, rgba(232,124,43,0) 70%)",
+              }}
+            />
 
             {/* Very subtle grid texture */}
             <div
@@ -1859,7 +1931,6 @@ export default function HomePageClient() {
                 backgroundSize: "80px 80px",
               }}
             />
-
           </div>
 
           <motion.div className="relative mx-auto w-full max-w-7xl px-6 py-32">
@@ -2207,10 +2278,24 @@ export default function HomePageClient() {
         <ServicesSection />
 
         {/* Section */}
-        <section id="home-reviews" className="relative overflow-hidden bg-navy-dark px-6 py-28">
-          <div className="animate-float-slow absolute -left-24 top-1/2 h-[360px] w-[360px] -translate-y-1/2 rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.08) 0%, rgba(42,125,166,0) 70%)" }} />
-          <div className="animate-float-slower absolute -right-16 bottom-0 h-[240px] w-[240px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.06) 0%, rgba(232,124,43,0) 70%)" }} />
-
+        <section
+          id="home-reviews"
+          className="relative overflow-hidden bg-navy-dark px-6 py-28"
+        >
+          <div
+            className="pointer-events-none absolute -left-24 top-1/2 h-[360px] w-[360px] -translate-y-1/2 rounded-full max-sm:hidden [transform:translateZ(0)] [will-change:transform]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(42,125,166,0.08) 0%, rgba(42,125,166,0) 70%)",
+            }}
+          />
+          <div
+            className="pointer-events-none absolute -right-16 bottom-0 h-[240px] w-[240px] rounded-full max-sm:hidden [transform:translateZ(0)] [will-change:transform]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(232,124,43,0.06) 0%, rgba(232,124,43,0) 70%)",
+            }}
+          />
           <div className="relative mx-auto max-w-7xl">
             <InView className="flex flex-col items-start gap-6 sm:flex-row sm:items-end sm:justify-between">
               <div>
@@ -2475,8 +2560,20 @@ export default function HomePageClient() {
 
         {/* Section */}
         <section className="relative overflow-hidden bg-navy-dark px-6 py-28">
-          <div className="animate-float-slow absolute -right-20 -top-20 h-[340px] w-[340px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.12) 0%, rgba(42,125,166,0) 70%)" }} />
-          <div className="animate-float-slower absolute -left-16 bottom-0 h-[220px] w-[220px] rounded-full max-sm:hidden" style={{ background: "radial-gradient(circle, rgba(232,124,43,0.08) 0%, rgba(232,124,43,0) 70%)" }} />
+          <div
+            className="animate-float-slow absolute -right-20 -top-20 h-[340px] w-[340px] rounded-full max-sm:hidden"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(42,125,166,0.12) 0%, rgba(42,125,166,0) 70%)",
+            }}
+          />
+          <div
+            className="animate-float-slower absolute -left-16 bottom-0 h-[220px] w-[220px] rounded-full max-sm:hidden"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(232,124,43,0.08) 0%, rgba(232,124,43,0) 70%)",
+            }}
+          />
           <div
             className="absolute inset-0 opacity-[0.025]"
             style={{
@@ -2530,7 +2627,13 @@ export default function HomePageClient() {
                   className="relative overflow-hidden rounded-3xl border border-slate-700/80 bg-slate-900/90 p-8 shadow-2xl shadow-black/45 ring-1 ring-slate-700/60"
                   noValidate
                 >
-                  <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full" style={{ background: "radial-gradient(circle, rgba(42,125,166,0.1) 0%, rgba(42,125,166,0) 70%)" }} />
+                  <div
+                    className="absolute -right-16 -top-16 h-48 w-48 rounded-full"
+                    style={{
+                      background:
+                        "radial-gradient(circle, rgba(42,125,166,0.1) 0%, rgba(42,125,166,0) 70%)",
+                    }}
+                  />
 
                   <h3 className="relative font-heading text-xl font-bold text-white">
                     Request a Free Inspection

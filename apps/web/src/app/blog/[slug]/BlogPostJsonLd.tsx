@@ -4,7 +4,13 @@ import { getSiteUrl } from "@/lib/site";
 
 const SITE_URL = getSiteUrl();
 
-export default function BlogPostJsonLd({ post, path }: { post: BlogPost; path: string }) {
+export default function BlogPostJsonLd({
+  post,
+  path,
+}: {
+  post: BlogPost;
+  path: string;
+}) {
   const url = `${SITE_URL}${path}`;
 
   const jsonLd = {
@@ -39,7 +45,7 @@ export default function BlogPostJsonLd({ post, path }: { post: BlogPost; path: s
           url: `${SITE_URL}/`,
           logo: {
             "@type": "ImageObject",
-            url: `${SITE_URL}/logoo.png`,
+            url: `${SITE_URL}/logo.png`,
           },
         },
         mainEntityOfPage: {
@@ -53,8 +59,18 @@ export default function BlogPostJsonLd({ post, path }: { post: BlogPost; path: s
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-          { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Blog",
+            item: `${SITE_URL}/blog`,
+          },
           { "@type": "ListItem", position: 3, name: post.title, item: url },
         ],
       },

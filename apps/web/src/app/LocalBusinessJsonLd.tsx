@@ -1,4 +1,10 @@
-import { ADDRESS, EMAIL, PHONE, SERVICE_AREAS, SITE_NAME } from "@seashore/content";
+import {
+  ADDRESS,
+  EMAIL,
+  PHONE,
+  SERVICE_AREAS,
+  SITE_NAME,
+} from "@seashore/content";
 import { getSiteUrl } from "@/lib/site";
 
 const SITE_URL = getSiteUrl();
@@ -9,8 +15,8 @@ const localBusinessSchema = {
   "@id": `${SITE_URL}/#business`,
   name: SITE_NAME,
   url: `${SITE_URL}/`,
-  logo: `${SITE_URL}/logoo.png`,
-  image: `${SITE_URL}/logoo.png`,
+  logo: `${SITE_URL}/logo.png`,
+  image: `${SITE_URL}/logo.png`,
   description:
     "Family-owned fiberglass deck contractor serving the South Jersey Shore. Founded in 2020, built on 10+ years of experience — repair, reglass, recolor, new construction, composite decking and vinyl railing.",
   foundingDate: "2020",
@@ -33,7 +39,14 @@ const localBusinessSchema = {
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
       opens: "08:00",
       closes: "17:00",
     },
@@ -64,12 +77,39 @@ const localBusinessSchema = {
     "@type": "OfferCatalog",
     name: "Fiberglass Deck Services",
     itemListElement: [
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Fiberglass Deck Repair" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Fiberglass Deck Reglass & Resurfacing" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Fiberglass Deck New Construction" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Fiberglass Deck Recolor & Re-Gelcoating" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Composite Decking" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Vinyl Railing Installation" } },
+      {
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: "Fiberglass Deck Repair" },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Fiberglass Deck Reglass & Resurfacing",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Fiberglass Deck New Construction",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Fiberglass Deck Recolor & Re-Gelcoating",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: "Composite Decking" },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: "Vinyl Railing Installation" },
+      },
     ],
   },
 };
