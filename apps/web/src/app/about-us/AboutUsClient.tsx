@@ -680,10 +680,12 @@ export default function AboutUsClient() {
       <section className="bg-white px-6 py-16 md:py-24">
         <div className="mx-auto max-w-7xl">
           <motion.div
+            layout
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
+            viewport={{ once: true, margin: "-40px" }}
+            variants={staggerContainer}
+            className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
           >
             <SectionLabel>Service region</SectionLabel>
             <h2 className="font-heading mt-4 text-3xl font-bold text-navy md:text-4xl">
@@ -741,7 +743,7 @@ export default function AboutUsClient() {
                 <motion.article
                   key={area.slug}
                   variants={cardVariant}
-                  className="group rounded-2xl border border-slate-200/80 bg-slate-50/60 p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-turquoise/40 hover:bg-white hover:shadow-lg"
+                  className="group rounded-2xl border border-slate-200/80 bg-slate-50/60 p-5 shadow-sm transition-all duration-300 [transform:translateZ(0)] will-change-transform hover:-translate-y-1 hover:border-turquoise/40 hover:bg-white hover:shadow-md"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-heading text-lg font-bold text-navy transition duration-300 group-hover:text-turquoise">
@@ -756,11 +758,11 @@ export default function AboutUsClient() {
                   </p>
                   <Link
                     href={`/service-areas/${area.slug}`}
-                    className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-turquoise transition duration-300 hover:gap-2.5 hover:text-turquoise-dark"
+                    className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-turquoise transition-colors duration-200 hover:text-turquoise-dark"
                   >
                     View area page
                     <svg
-                      className="h-3.5 w-3.5"
+                      className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                       aria-hidden

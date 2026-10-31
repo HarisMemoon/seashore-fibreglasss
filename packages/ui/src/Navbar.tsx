@@ -35,7 +35,14 @@ export function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-5">
-      <nav className="site-nav relative mx-auto max-w-7xl overflow-hidden rounded-xl border border-[#7fd7e1]/20 bg-[rgba(6,18,30,0.45)] shadow-[0_10px_40px_rgba(0,0,0,0.3),0_0_0_1px_rgba(127,215,225,0.08)]  transition-all duration-300 py-0 px-4 md:px-5">
+      {/* <nav className="site-nav relative mx-auto max-w-7xl overflow-hidden rounded-xl border border-[#7fd7e1]/20 bg-[rgba(2,10,14,0.88)] min-[1001px]:bg-[rgba(8,18,30,0.45)] shadow-[0_10px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(127,215,225,0.08)] backdrop-blur-2xl transition-all duration-300 py-0 px-4 min-[1001px]:px-5"> */}
+      <nav
+        className={`transition-colors duration-200 ${
+          isMobileMenuOpen
+            ? "bg-[rgba(2,10,14,0.95)]"
+            : "bg-[rgba(2,10,14,0.88)]"
+        }site-nav relative mx-auto max-w-7xl overflow-hidden rounded-xl border border-[#7fd7e1]/20 bg-[rgba(2,10,14,0.88)] min-[1001px]:bg-[rgba(8,18,30,0.45)] shadow-[0_10px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(127,215,225,0.08)] backdrop-blur-2xl transition-all duration-300 py-0 px-4 min-[1001px]:px-5`}
+      >
         {/* Futuristic glow line at top */}
         <div className="absolute inset-x-[8%] top-0 h-px bg-gradient-to-r from-transparent via-[#7fd7e1]/10 to-transparent" />
 
@@ -120,7 +127,7 @@ export function Navbar() {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="overflow-hidden border-t border-[#7fd7e1]/15 lg:hidden">
+          <div className="overflow-hidden rounded-lg mb-5  border-t border-[#7fd7e1]/15 lg:hidden ">
             <div className="space-y-0.5 p-2">
               {navLinks.map((link) => (
                 <Link
