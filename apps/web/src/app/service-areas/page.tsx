@@ -9,6 +9,7 @@ import {
   SERVICE_AREAS_INDEX_META,
 } from "@seashore/content";
 import BreadcrumbJsonLd from "../BreadcrumbJsonLd";
+import { StatsStrip } from "@/components/StatsStrip";
 import { ServiceAreasMapWidget } from "@/components/ServiceAreasMapWidget";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -65,25 +66,15 @@ export default function ServiceAreasIndexPage() {
           </p>
 
           {/* Stats row */}
-          <div className="mt-10 flex flex-wrap gap-4 animate-fade-up [animation-delay:200ms]">
-            {[
-              { value: "13", label: "Shore towns" },
-              { value: "6", label: "Services per town" },
-              { value: "Free", label: "Deck inspections" },
-              { value: "2020", label: "Family-owned since" },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-2xl border border-white/10 bg-white/[0.06] px-6 py-4 backdrop-blur-md text-center"
-              >
-                <p className="font-heading text-2xl font-extrabold text-white">
-                  {stat.value}
-                </p>
-                <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/55">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
+          <div className="mt-10 max-w-3xl animate-fade-up [animation-delay:200ms]">
+            <StatsStrip
+              items={[
+                { value: "13", label: "Shore towns" },
+                { value: "6", label: "Services per town" },
+                { value: "Free", label: "Deck inspections" },
+                { value: "2020", label: "Family-owned since" },
+              ]}
+            />
           </div>
         </div>
       </section>

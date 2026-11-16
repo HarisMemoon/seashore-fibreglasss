@@ -7,6 +7,7 @@ import {
   SERVICES_INDEX_META,
 } from "@seashore/content";
 import BreadcrumbJsonLd from "../BreadcrumbJsonLd";
+import { StatsStrip } from "@/components/StatsStrip";
 
 const SERVICE_HIGHLIGHTS = [
   "Correct diagnosis before any recommendation",
@@ -104,24 +105,14 @@ export default function ServicesPage() {
                 Choose the right path for your deck
               </h2>
             </div>
-            <div className="grid grid-cols-2 gap-3 sm:flex">
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-center shadow-sm">
-                <p className="font-heading text-2xl font-extrabold text-navy">
-                  6
-                </p>
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                  Services
-                </p>
-              </div>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-center shadow-sm">
-                <p className="font-heading text-2xl font-extrabold text-navy">
-                  2020
-                </p>
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                  Family-owned since
-                </p>
-              </div>
-            </div>
+            <StatsStrip
+              variant="light"
+              className="shrink-0 md:w-[330px]"
+              items={[
+                { value: "6", label: "Services" },
+                { value: "2020", label: "Family-owned since" },
+              ]}
+            />
           </div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">

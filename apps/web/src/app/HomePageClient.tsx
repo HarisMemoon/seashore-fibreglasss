@@ -2189,13 +2189,13 @@ export default function HomePageClient() {
             </motion.div>
           </div>
           <div>
-            <div className="relative mx-auto max-w-7xl px-6">
-              <div className="flex flex-col gap-4 sm:grid sm:grid-cols-3 lg:grid-cols-5">
+            <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 min-[1050px]:grid-cols-4">
                 {TRUST_BADGES.map((badge, i) => {
                   const badgeIcons = [
                     <svg
                       key="lic"
-                      className="h-5 w-5"
+                      className="h-6 w-6"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -2208,7 +2208,7 @@ export default function HomePageClient() {
                     </svg>,
                     <svg
                       key="rev"
-                      className="h-5 w-5"
+                      className="h-6 w-6"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -2221,7 +2221,7 @@ export default function HomePageClient() {
                     </svg>,
                     <svg
                       key="fam"
-                      className="h-5 w-5"
+                      className="h-6 w-6"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -2234,7 +2234,7 @@ export default function HomePageClient() {
                     </svg>,
                     <svg
                       key="gua"
-                      className="h-5 w-5"
+                      className="h-6 w-6"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -2246,23 +2246,69 @@ export default function HomePageClient() {
                       />
                     </svg>,
                   ];
+
                   return (
                     <div
                       key={badge}
-                      className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 transition-all duration-300 hover:bg-white/94 hover:shadow-xl"
+                      className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-white/80 bg-[#F6EFE5] px-5 py-5 shadow-sm shadow-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:shadow-black/5"
                     >
-                      <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0D7989] to-[#1B3A5C] text-white shadow-sm">
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[#205466] text-white shadow-inner">
                         {badgeIcons[i]}
                       </div>
-                      <span className="text-sm font-bold text-amber-950">
+                      <span className="text-[15px] font-bold leading-tight text-[#4a3424]">
                         {badge}
                       </span>
-                      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-amber-100/40 to-transparent opacity-0 transition-all duration-700 group-hover:translate-x-full group-hover:opacity-100" />
                     </div>
                   );
                 })}
-                <div className="group relative col-span-2 flex items-center justify-center overflow-hidden rounded-2xl border border-amber-200/55 bg-white/80 px-6 py-5 shadow-lg shadow-amber-900/14 sm:order-first sm:col-span-1 transition-all duration-300 hover:bg-white/94 hover:shadow-xl">
-                  <BBBSeal />
+
+                <div className="col-span-1 mt-1 md:col-span-2 min-[1050px]:col-span-4">
+                  <div className="group relative flex flex-col items-center justify-between gap-6 overflow-hidden rounded-2xl border border-[#205466]/20 bg-gradient-to-br from-[#FBF8F3] via-[#F6EFE5] to-[#EFE5D6] px-6 py-7 shadow-md shadow-[#205466]/5 ring-1 ring-inset ring-white/80 transition-all duration-300 hover:border-[#205466]/35 hover:shadow-lg hover:shadow-[#205466]/10 md:flex-row md:gap-10 md:px-10 md:py-8">
+                    {/* Left Accent Bar (Desktop) / Top Accent Bar (Mobile) */}
+                    <div className="absolute inset-x-0 top-0 h-1 bg-[#205466]/80 md:inset-y-0 md:left-0 md:right-auto md:h-full md:w-1.5" />
+
+                    {/* Left Column: Seal + Primary Identity */}
+                    <div className="flex flex-col items-center gap-6 md:flex-row md:gap-8">
+                      {/* Soft Pedestal for the Seal */}
+                      <div className="flex flex-shrink-0 items-center justify-center rounded-2xl border border-[#205466]/10 bg-white/75 p-4 shadow-sm  transition-transform duration-300 group-hover:scale-[1.02]">
+                        <BBBSeal />
+                      </div>
+
+                      {/* Text Context */}
+                      <div className="flex flex-col items-center text-center md:items-start md:text-left">
+                        <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#205466]/15 bg-[#205466]/[0.07] px-3 py-1">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#205466]" />
+                          <span className="text-[11px]  uppercase tracking-widest text-[#205466]">
+                            Verified Accreditation
+                          </span>
+                        </div>
+
+                        <h3 className="mb-1.5 text-lg font-bold tracking-tight text-[#1b4352] sm:text-xl">
+                          Better Business Bureau® Accredited Business
+                        </h3>
+
+                        <p className="max-w-2xl text-[13.5px] leading-relaxed text-[#4a3424]/85 sm:text-sm">
+                          Seashore Fiberglass meets the strict BBB Standards for
+                          Trust—affirming our ongoing commitment to transparent
+                          practices, honoring promises, and addressing every
+                          customer’s needs in good faith.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Right Column: Official BBB Pillars */}
+                    <div className="hidden flex-shrink-0 flex-col items-end border-l border-[#4a3424]/10 pl-8 text-right min-[1050px]:flex">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#4a3424]/60">
+                        BBB Trust Standards
+                      </span>
+                      <span className="mt-0.5 text-base font-bold text-[#205466]">
+                        Accredited Business
+                      </span>
+                      <span className="mt-1 text-[12px] text-[#4a3424]/70">
+                        Honesty &bull; Transparency &bull; Integrity
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

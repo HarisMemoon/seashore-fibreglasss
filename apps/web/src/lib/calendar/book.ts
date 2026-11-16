@@ -4,6 +4,7 @@ import {
   BUSINESS_TIMEZONE,
   isWithinBusinessHours,
 } from "@/lib/googleCalendar";
+import { sendEmail, escapeHtml } from "@/lib/sendContactEmail";
 
 export type BookAppointmentInput = {
   name: string;
@@ -28,6 +29,8 @@ function validate(input: BookAppointmentInput): string[] {
     errors.push("Missing required field: name");
   if (!input.phone || input.phone.trim() === "")
     errors.push("Missing required field: phone");
+  if (!input.city || input.city.trim() === "")
+    errors.push("Missing required field: city");
   if (!input.preferredTime || input.preferredTime.trim() === "")
     errors.push("Missing required field: preferredTime");
   if (input.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email)) {
@@ -121,6 +124,54 @@ export async function bookAppointment(
     };
   } catch (error) {
     console.error("Calendar booking failed:", error);
+
+    // SAFETY NET — never lose the lead. If the calendar is unreachable,
+    // email the full booking request to the office via the existing
+    // contact-email transport (no new database, no new service). The
+    // office then confirms the booking with the customer by phone.
+    // If the email ALSO fails, log the complete request so it can be
+    // recovered from the server logs — silence is the only true loss.
+    try {
+      const whenEt = new Intl.DateTimeFormat("en-US", {
+        timeZone: BUSINESS_TIMEZONE,
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+      }).format(startTime);
+      const rows: Array<[string, string]> = [
+        ["Name", input.name],
+        ["Phone", input.phone],
+        ["Email", input.email ?? "—"],
+        ["City", input.city],
+        ["Address", input.address ?? "—"],
+        ["Preferred time (ET)", whenEt],
+        ["Notes", input.notes ?? "—"],
+        ["Source", input.source ?? "unknown"],
+      ];
+      const html = `<p><strong>The online calendar could not be reached, so this booking was NOT added to the calendar.</strong> Please call the customer to confirm this inspection manually.</p><table cellpadding="0" cellspacing="0">${rows
+        .map(
+          ([k, v]) =>
+            `<tr><td style="padding:8px 12px 8px 0;border-bottom:1px solid #e5e7eb;font-weight:600;vertical-align:top;">${escapeHtml(k)}</td><td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">${escapeHtml(v)}</td></tr>`,
+        )
+        .join("")}</table>`;
+      await sendEmail(
+        `[Seashore Fiberglass] CALENDAR DOWN — booking request from ${input.name}`,
+        html,
+      );
+      console.error(
+        "Booking request emailed to office as calendar-down fallback:",
+        JSON.stringify(input),
+      );
+    } catch (mailError) {
+      console.error(
+        "Calendar down AND fallback email failed. Full booking request:",
+        JSON.stringify(input),
+        mailError,
+      );
+    }
+
     return {
       ok: false,
       error: "Could not book the appointment. Please try again shortly.",

@@ -12,6 +12,8 @@ import {
 import { SOCIAL_PLATFORMS } from "@seashore/ui";
 import { ServiceAreasMapWidget } from "@/components/ServiceAreasMapWidget";
 import { ContactForm } from "./ContactForm";
+import { BookingWidget } from "./BookingWidget";
+
 import BreadcrumbJsonLd from "../BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
@@ -79,7 +81,7 @@ export default function ContactPage() {
                 Text Us
               </a>
               <a
-                href="#contact-form"
+                href="#book-inspection"
                 className="inline-flex items-center justify-center rounded-xl border border-turquoise/30 bg-turquoise/10 px-6 py-3.5 font-semibold text-turquoise transition hover:bg-turquoise/15"
               >
                 Schedule Free Inspection Online
@@ -87,6 +89,13 @@ export default function ContactPage() {
             </div>
           </div>
         </section>
+        {/* ── Online booking ──
+        <section
+          id="book-inspection"
+          className="mx-auto max-w-7xl scroll-mt-28 px-6 pt-14 md:pt-20"
+        >
+          <BookingWidget />
+        </section> */}
 
         <section className="mx-auto max-w-7xl px-6 py-14 md:py-20">
           <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">

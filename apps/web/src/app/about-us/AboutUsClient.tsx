@@ -18,6 +18,8 @@ import {
   PHONE,
 } from "@seashore/content";
 import { SOCIAL_PLATFORMS, BBBSeal } from "@seashore/ui";
+import { StatsStrip } from "@/components/StatsStrip";
+import { CtaBanner } from "@/components/CtaBanner";
 
 /* ─── Static data (not in content package, not approved-copy) ─── */
 const SERVICE_AREA_DETAILS = [
@@ -327,23 +329,8 @@ export default function AboutUsClient() {
             </motion.p>
 
             {/* Stats strip */}
-            <motion.div
-              variants={fadeUp}
-              className="mt-10 flex flex-wrap gap-4"
-            >
-              {HERO_STATS.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-2xl border border-white/10 bg-white/[0.06] px-6 py-4 text-center backdrop-blur-md"
-                >
-                  <p className="font-heading text-2xl font-extrabold text-white">
-                    {stat.value}
-                  </p>
-                  <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
+            <motion.div variants={fadeUp} className="mt-10 max-w-2xl">
+              <StatsStrip items={[...HERO_STATS]} />
             </motion.div>
 
             {/* Hero CTAs */}
@@ -680,12 +667,10 @@ export default function AboutUsClient() {
       <section className="bg-white px-6 py-16 md:py-24">
         <div className="mx-auto max-w-7xl">
           <motion.div
-            layout
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-40px" }}
-            variants={staggerContainer}
-            className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
+            viewport={{ once: true }}
+            variants={fadeUp}
           >
             <SectionLabel>Service region</SectionLabel>
             <h2 className="font-heading mt-4 text-3xl font-bold text-navy md:text-4xl">
@@ -727,23 +712,16 @@ export default function AboutUsClient() {
             </span>
           </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-40px" }}
-            variants={staggerContainer}
-            className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
-          >
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {filteredAreas.length === 0 ? (
               <p className="col-span-full py-8 text-center text-slate-400">
                 No towns match &ldquo;{areaSearch}&rdquo;
               </p>
             ) : (
               filteredAreas.map((area) => (
-                <motion.article
+                <article
                   key={area.slug}
-                  variants={cardVariant}
-                  className="group rounded-2xl border border-slate-200/80 bg-slate-50/60 p-5 shadow-sm transition-all duration-300 [transform:translateZ(0)] will-change-transform hover:-translate-y-1 hover:border-turquoise/40 hover:bg-white hover:shadow-md"
+                  className="group rounded-2xl border border-slate-200/80 bg-slate-50/60 p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-turquoise/40 hover:bg-white hover:shadow-lg"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-heading text-lg font-bold text-navy transition duration-300 group-hover:text-turquoise">
@@ -758,11 +736,11 @@ export default function AboutUsClient() {
                   </p>
                   <Link
                     href={`/service-areas/${area.slug}`}
-                    className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-turquoise transition-colors duration-200 hover:text-turquoise-dark"
+                    className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-turquoise transition duration-300 hover:gap-2.5 hover:text-turquoise-dark"
                   >
                     View area page
                     <svg
-                      className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1"
+                      className="h-3.5 w-3.5"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                       aria-hidden
@@ -774,17 +752,22 @@ export default function AboutUsClient() {
                       />
                     </svg>
                   </Link>
-                </motion.article>
+                </article>
               ))
             )}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* ══════════════════ CONNECT WITH US ══════════════════ */}
       <section className="border-t border-slate-100 bg-white px-6 py-16 md:py-24">
         <div className="mx-auto max-w-7xl">
-          <div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+          >
             <SectionLabel>Find us online</SectionLabel>
             <h2 className="font-heading mt-4 text-3xl font-bold text-navy md:text-4xl">
               Connect With Us & Verify Our Reputation
@@ -794,15 +777,22 @@ export default function AboutUsClient() {
               work across the Shore — on every platform where we share our
               story.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            variants={staggerContainer}
+            className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
+          >
             {SOCIAL_PLATFORMS.map((platform) => (
-              <a
+              <motion.a
                 key={platform.key}
                 href={platform.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                variants={cardVariant}
                 className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white to-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-turquoise/40 hover:shadow-xl"
               >
                 {/* Top accent bar */}
@@ -845,97 +835,13 @@ export default function AboutUsClient() {
                     />
                   </svg>
                 </span>
-              </a>
+              </motion.a>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
-      {/* ══════════════════ CTA ══════════════════ */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-        className="relative overflow-hidden border-t border-slate-100 bg-navy px-6 py-16 md:py-20"
-      >
-        <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-turquoise/10 blur-[80px] animate-float" />
-        <div
-          className="absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-orange/8 blur-[70px]"
-          style={{ animation: "float 8s ease-in-out infinite 2s" }}
-        />
-        <NoiseOverlay />
-        <div className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <h2 className="font-heading text-2xl font-bold text-white md:text-3xl">
-              Ready for an honest deck assessment?
-            </h2>
-            <p className="mt-3 max-w-xl text-white/65">
-              Free inspections, clear technical answers, and no pressure — the
-              way we have built our reputation since 2020.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            className="flex flex-col gap-3 sm:flex-row sm:items-center"
-          >
-            <Link
-              href="/contact"
-              className="inline-flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-orange to-orange-light px-8 py-4 font-bold text-white shadow-lg shadow-orange/25 transition hover:shadow-glow-orange"
-            >
-              {HERO_PRIMARY_CTA}
-            </Link>
-            <a
-              href={`tel:${PHONE.replace(/\D/g, "")}`}
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-4 font-semibold text-white backdrop-blur-md transition hover:border-white/30 hover:bg-white/10"
-            >
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-              Call {PHONE}
-            </a>
-            <a
-              href={`sms:+1${PHONE.replace(/\D/g, "")}`}
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-4 font-semibold text-white backdrop-blur-md transition hover:border-white/30 hover:bg-white/10"
-            >
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-                />
-              </svg>
-              Text us
-            </a>
-          </motion.div>
-        </div>
-      </motion.section>
+      {/* ══════════ CTA — shared component, consistent on every screen ══════════ */}
+      <CtaBanner />
     </main>
   );
 }
